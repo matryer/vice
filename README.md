@@ -39,3 +39,7 @@ for name := range names {
 * Install Vice with `go get github.com/matryer/vice/...`
 * Select a [messaging queue technology](https://github.com/matryer/vice/tree/master/queues)
 * Build a command to run your service
+
+## Acknowledgements 
+
+Special thanks go to David Hernandez, Jason Hancock and Piotr Rojek for their support on this project.
