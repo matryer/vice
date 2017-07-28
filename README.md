@@ -42,4 +42,4 @@ for name := range names {
 
 ## Acknowledgements 
 
-Special thanks go to David Hernandez, Jason Hancock and Piotr Rojek for their support on this project.
+Special thanks go to [David Hernandez](https://github.com/dahernan), [Jason Hancock](https://github.com/jasonhancock) and [Piotr Rojek](https://github.com/piotrrojek) for their support on this project.
