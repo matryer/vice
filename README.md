@@ -40,6 +40,8 @@ for name := range names {
 * Select a [messaging queue technology](https://github.com/matryer/vice/tree/master/queues)
 * Build a command to run your service
 
+Read the blog post: [Introducing vice: Go channels across many machines](https://medium.com/@matryer/introducing-vice-go-channels-across-many-machines-bcac1147d7e2)
+
 ## Acknowledgements 
 
 Special thanks go to [David Hernandez](https://github.com/dahernan), [Jason Hancock](https://github.com/jasonhancock) and [Piotr Rojek](https://github.com/piotrrojek) for their support on this project.
