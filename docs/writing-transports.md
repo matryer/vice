@@ -2,7 +2,7 @@
 
 Queuing transports implement the [vice.Transport](https://github.com/matryer/vice/blob/master/transport.go) interface.
 
-## Before you start
+## Before you start
 
 Ensure the technology is not already implemented by checking the [queues](https://github.com/matryer/vice/tree/master/queues) folder.
 
