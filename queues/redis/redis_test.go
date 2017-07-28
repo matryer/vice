@@ -2,18 +2,17 @@ package redis
 
 import (
 	"fmt"
-	"testing"
-
 	"sync"
+	"testing"
 	"time"
 
-	"github.com/cheekybits/is"
-	"github.com/matryer/vice/test"
+	"github.com/matryer/is"
+	"github.com/matryer/vice/vicetest"
 )
 
 func TestTransport(t *testing.T) {
 	transport := New()
-	test.Transport(t, transport)
+	vicetest.Transport(t, transport)
 }
 
 func TestConnection(t *testing.T) {
@@ -22,7 +21,7 @@ func TestConnection(t *testing.T) {
 	tr := New()
 
 	c, err := tr.newConnection()
-	is.NotNil(c)
+	is.True(c != nil)
 	is.NoErr(err)
 
 	err = c.Close()
@@ -48,7 +47,7 @@ func TestSubscriber(t *testing.T) {
 		defer close(doneChan)
 		for {
 			select {
-			case <-transport.StopChan():
+			case <-transport.Done():
 				return
 			case err := <-transport.ErrChan():
 				fmt.Println(err)
@@ -58,7 +57,7 @@ func TestSubscriber(t *testing.T) {
 				is.Equal(msg, msgToReceive)
 				wg.Done()
 			case <-time.After(2 * time.Second):
-				is.Fail("time out: transport.Receive")
+				is.Fail() // time out: transport.Receive
 				wg.Done()
 			default:
 				once.Do(func() {
@@ -94,7 +93,7 @@ func TestPublisher(t *testing.T) {
 		defer close(doneChan)
 		for {
 			select {
-			case <-transport.StopChan():
+			case <-transport.Done():
 				return
 			case err := <-transport.ErrChan():
 				is.NoErr(err)
@@ -102,7 +101,7 @@ func TestPublisher(t *testing.T) {
 				is.Equal(msg, msgToSend)
 				wg.Done()
 			case <-time.After(2 * time.Second):
-				is.Fail("time out: transport.Receive")
+				is.Fail() // time out: transport.Receive
 			default:
 				once.Do(func() {
 					close(waitChan)

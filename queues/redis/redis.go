@@ -1,3 +1,4 @@
+// Package redis provides a Vice implementation for REDIS.
 package redis
 
 import (
@@ -168,7 +169,8 @@ func (t *Transport) ErrChan() <-chan error {
 	return t.errChan
 }
 
-// Stop stops the transport. StopChan will be closed
+// Stop stops the transport.
+// The channel returned from Done() will be closed
 // when the transport has stopped.
 func (t *Transport) Stop() {
 	for _, c := range t.clients {
@@ -179,8 +181,8 @@ func (t *Transport) Stop() {
 	close(t.stopchan)
 }
 
-// StopChan gets a channel which is closed when the
+// Done gets a channel which is closed when the
 // transport has successfully stopped.
-func (t *Transport) StopChan() chan struct{} {
+func (t *Transport) Done() chan struct{} {
 	return t.stopchan
 }

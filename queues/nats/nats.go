@@ -1,3 +1,4 @@
+// Package nats provides a Vice implementation for NATS.
 package nats
 
 import (
@@ -145,7 +146,8 @@ func (t *Transport) ErrChan() <-chan error {
 	return t.errChan
 }
 
-// Stop stops the transport. StopChan will be closed
+// Stop stops the transport.
+// The channel returned from Done() will be closed
 // when the transport has stopped.
 func (t *Transport) Stop() {
 	for _, s := range t.subscriptions {
@@ -157,8 +159,8 @@ func (t *Transport) Stop() {
 	close(t.stopchan)
 }
 
-// StopChan gets a channel which is closed when the
+// Done gets a channel which is closed when the
 // transport has successfully stopped.
-func (t *Transport) StopChan() chan struct{} {
+func (t *Transport) Done() chan struct{} {
 	return t.stopchan
 }

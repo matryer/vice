@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cheekybits/is"
-	"github.com/matryer/vice/test"
+	"github.com/matryer/is"
+	"github.com/matryer/vice/vicetest"
 	"github.com/nsqio/go-nsq"
 )
 
@@ -16,7 +16,7 @@ func TestTransport(t *testing.T) {
 
 	transport, err := New()
 	is.NoErr(err)
-	test.Transport(t, transport)
+	vicetest.Transport(t, transport)
 }
 
 func TestSend(t *testing.T) {
@@ -26,7 +26,7 @@ func TestSend(t *testing.T) {
 	is.NoErr(err)
 	defer func() {
 		transport.Stop()
-		<-transport.StopChan()
+		<-transport.Done()
 	}()
 
 	testConsumer := NewNSQTestConsumer(t, "test_send", "test")
@@ -35,14 +35,14 @@ func TestSend(t *testing.T) {
 	select {
 	case transport.Send("test_send") <- []byte("hello vice"):
 	case <-time.After(1 * time.Second):
-		is.Fail("time out: transport.Send")
+		is.Fail() // timeout: transport.Send
 	}
 
 	select {
 	case msg := <-testConsumer.messages:
 		is.Equal(string(msg.Body), []byte("hello vice"))
 	case <-time.After(2 * time.Second):
-		is.Fail("time out: testConsumer <- messages")
+		is.Fail() // timeout: testConsumer <- messages
 	}
 
 	is.Equal(testConsumer.Count(), 1)
@@ -50,7 +50,7 @@ func TestSend(t *testing.T) {
 	// make sure Send with same name returns the same
 	// channel
 	is.Equal(transport.Send("test_send"), transport.Send("test_send"))
-	is.NotEqual(transport.Send("test_send"), transport.Send("different"))
+	is.True(transport.Send("test_send") != transport.Send("different"))
 
 }
 
@@ -61,13 +61,13 @@ func TestSend(t *testing.T) {
 // 	is.NoErr(err)
 // 	defer func() {
 // 		transport.Stop()
-// 		<-transport.StopChan()
+// 		<-transport.Done()
 // 	}()
 
 // 	select {
 // 	case transport.Send("test_send_err") <- []byte("hello vice"):
 // 	case <-time.After(1 * time.Second):
-// 		is.Fail("time out: transport.Send")
+// 		is.Fail("timeout: transport.Send")
 // 	}
 
 // 	// expect an error...
@@ -79,7 +79,7 @@ func TestSend(t *testing.T) {
 // 		is.Equal(err.Err.Error(), "dial tcp: lookup no-such-host: no such host")
 // 		is.Equal(err.Error(), "dial tcp: lookup no-such-host: no such host: |test_send_err| <- `hello vice`")
 // 	case <-time.After(2 * time.Second):
-// 		is.Fail("time out: transport.SendErrs()")
+// 		is.Fail("timeout: transport.SendErrs()")
 // 	}
 
 // 	// SendErrs should always be the same channel
@@ -94,7 +94,7 @@ func TestReceive(t *testing.T) {
 	is.NoErr(err)
 	defer func() {
 		transport.Stop()
-		<-transport.StopChan()
+		<-transport.Done()
 	}()
 
 	testProducer := NewNSQTestProducer(t, "test_receive")
@@ -105,7 +105,7 @@ func TestReceive(t *testing.T) {
 	case msg := <-ch:
 		is.Equal(msg, []byte("hello vice"))
 	case <-time.After(2 * time.Second):
-		is.Fail("time out: transport.Receive")
+		is.Fail() // timeout: transport.Receive
 	}
 
 }
@@ -117,7 +117,7 @@ func TestReceive(t *testing.T) {
 // 	is.NoErr(err)
 // 	defer func() {
 // 		transport.Stop()
-// 		<-transport.StopChan()
+// 		<-transport.Done()
 // 	}()
 
 // 	_ = transport.Receive("test_receive_err")
@@ -129,7 +129,7 @@ func TestReceive(t *testing.T) {
 // 		is.Equal(err.Err.Error(), "dial tcp: lookup no-such-host: no such host")
 // 		is.Equal(err.Error(), "dial tcp: lookup no-such-host: no such host: |test_receive_err|")
 // 	case <-time.After(2 * time.Second):
-// 		is.Fail("time out: transport.Receive")
+// 		is.Fail("timeout: transport.Receive")
 // 	}
 
 // }

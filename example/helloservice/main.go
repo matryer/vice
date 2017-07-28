@@ -18,7 +18,7 @@ func main() {
 	}
 	defer func() {
 		transport.Stop()
-		<-transport.StopChan()
+		<-transport.Done()
 	}()
 	if err := run(transport); err != nil {
 		log.Println(err)

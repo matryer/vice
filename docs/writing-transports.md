@@ -8,25 +8,25 @@ Ensure the technology is not already implemented by checking the [queues](https:
 
 ## Specification test
 
-To ensure a transport works as expected, call `test.Transport` from the `test` package along with your other transport specific unit tests:
+To ensure a transport works as expected, call `vicetest.Transport` from the `test` package along with your other transport specific unit tests:
 
 ```
 package my_transport
 
 import (
 	"testing"
-	"github.com/matryer/vice/test"
+	"github.com/matryer/vice/vicetest"
 )
 
 func TestTransport(t *testing.T) {
 	transport := New()
-	test.Transport(t, transport)
+	vicetest.Transport(t, transport)
 }
 ```
 
-The `test.Transport` function takes a `testing.T`, and a _fresh_ instance of your transport. Transports should be cleaned before running this test, as messages left-over from previous tests may interfere.
+The `vicetest.Transport` function takes a `testing.T`, and a _fresh_ instance of your transport. Transports should be cleaned before running this test, as messages left-over from previous tests may interfere.
 
-If `test.Transport` passes, your transport performs as expected and can be contributed to the project.
+If `vicetest.Transport` passes, your transport performs as expected and can be contributed to the project.
 
 ## Defaults
 

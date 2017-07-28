@@ -1,4 +1,4 @@
-package test
+package vicetest
 
 import (
 	"fmt"
@@ -57,7 +57,7 @@ func testStandardTransportBehaviour(t *testing.T, transport vice.Transport) {
 		defer close(doneChan)
 		for {
 			select {
-			case <-transport.StopChan():
+			case <-transport.Done():
 				return
 
 			case err := <-transport.ErrChan():

@@ -19,9 +19,9 @@ type Transport interface {
 	// Stop stops the transport. StopChan will be closed
 	// when the transport has stopped.
 	Stop()
-	// StopChan gets a channel which is closed when the
+	// Done gets a channel which is closed when the
 	// transport has successfully stopped.
-	StopChan() chan struct{}
+	Done() chan struct{}
 }
 
 // Err represents a vice error.

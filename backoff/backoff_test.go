@@ -7,10 +7,10 @@ import (
 )
 
 func TestBackoff(t *testing.T) {
-	okAfter := 5
+	okAfter := 2
 	calls := 0
 
-	err := Do(100*time.Millisecond, 1*time.Second, 10, func() error {
+	err := Do(100*time.Millisecond, 1*time.Second, 3, func() error {
 		calls++
 		if calls > okAfter {
 			return nil
@@ -20,7 +20,7 @@ func TestBackoff(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Error should be nil but is: %v", err)
 	}
-	if calls > 10 {
+	if calls > 3 {
 		t.Fatalf("Calls should be < 10 but is: %v", calls)
 	}
 }

@@ -1,3 +1,4 @@
+// Package nsq provides a Vice implementation for NSQ.
 package nsq
 
 import (
@@ -172,7 +173,8 @@ func (t *Transport) makeProducer(name string) (chan []byte, error) {
 	return ch, nil
 }
 
-// Stop stops the transport. StopChan will be closed
+// Stop stops the transport.
+// The channel returned from Done() will be closed
 // when the transport has stopped.
 func (t *Transport) Stop() {
 	// stops and waits for the producers
@@ -186,8 +188,8 @@ func (t *Transport) Stop() {
 	close(t.stopchan)
 }
 
-// StopChan gets a channel which is closed when the
+// Done gets a channel which is closed when the
 // transport has successfully stopped.
-func (t *Transport) StopChan() chan struct{} {
+func (t *Transport) Done() chan struct{} {
 	return t.stopchan
 }

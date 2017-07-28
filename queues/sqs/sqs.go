@@ -1,3 +1,4 @@
+// Package sqs provides a Vice implementation for Amazon Simple Queue Service.
 package sqs
 
 import (
@@ -58,7 +59,7 @@ func (t *Transport) Receive(name string) <-chan []byte {
 		return ch
 	}
 
-	region := RegionFromUrl(name)
+	region := regionFromURL(name)
 	svc := t.NewService(region)
 	ch = t.makeSubscriber(svc, name)
 
@@ -66,8 +67,8 @@ func (t *Transport) Receive(name string) <-chan []byte {
 	return ch
 }
 
-// RegionFromUrl parses an sqs url and returns the aws region
-func RegionFromUrl(url string) string {
+// regionFromURL parses an sqs url and returns the aws region
+func regionFromURL(url string) string {
 	pieces := strings.Split(url, ".")
 	if len(pieces) > 2 {
 		return pieces[1]
@@ -132,7 +133,7 @@ func (t *Transport) Send(name string) chan<- []byte {
 		return ch
 	}
 
-	region := RegionFromUrl(name)
+	region := regionFromURL(name)
 	svc := t.NewService(region)
 	ch, err := t.makePublisher(svc, name)
 	if err != nil {
@@ -173,7 +174,8 @@ func (t *Transport) ErrChan() <-chan error {
 	return t.errChan
 }
 
-// Stop stops the transport. StopChan will be closed
+// Stop stops the transport.
+// The channel returned from Done() will be closed
 // when the transport has stopped.
 func (t *Transport) Stop() {
 	close(t.stopSubChan)
@@ -181,8 +183,8 @@ func (t *Transport) Stop() {
 	close(t.stopchan)
 }
 
-// StopChan gets a channel which is closed when the
+// Done gets a channel which is closed when the
 // transport has successfully stopped.
-func (t *Transport) StopChan() chan struct{} {
+func (t *Transport) Done() chan struct{} {
 	return t.stopchan
 }

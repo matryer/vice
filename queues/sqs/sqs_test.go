@@ -6,8 +6,8 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/sqs"
 	"github.com/aws/aws-sdk-go/service/sqs/sqsiface"
-	"github.com/cheekybits/is"
-	"github.com/matryer/vice/test"
+	"github.com/matryer/is"
+	"github.com/matryer/vice/vicetest"
 )
 
 func TestTransport(t *testing.T) {
@@ -16,20 +16,19 @@ func TestTransport(t *testing.T) {
 		chs:    make(map[string]chan string),
 		finish: make(chan bool),
 	}
-
 	transport.NewService = func(region string) sqsiface.SQSAPI {
 		return svc
 	}
-	test.Transport(t, transport)
+	vicetest.Transport(t, transport)
 	close(svc.finish)
 }
 
 func TestParseRegion(t *testing.T) {
 	is := is.New(t)
-	reg := RegionFromUrl("http://sqs.us-east-2.amazonaws.com/123456789012/MyQueue")
+	reg := regionFromURL("http://sqs.us-east-2.amazonaws.com/123456789012/MyQueue")
 	is.Equal("us-east-2", reg)
 
-	reg = RegionFromUrl("http://localhost/foo")
+	reg = regionFromURL("http://localhost/foo")
 	is.Equal("", reg)
 }
 
