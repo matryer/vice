@@ -8,6 +8,10 @@ import (
 	"github.com/matryer/vice/queues/nsq"
 )
 
+// To run this, install NSQ and start it with nsqd command.
+// Run this program: go run main.go
+// Send a name: curl -d 'Mat' 'http://127.0.0.1:4151/pub?topic=names'
+
 // Greeter is a service that greets people.
 func Greeter(ctx context.Context, names <-chan []byte,
 	greetings chan<- []byte, errs <-chan error) {
