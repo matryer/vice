@@ -25,10 +25,10 @@ func TestTransport(t *testing.T) {
 
 func TestParseRegion(t *testing.T) {
 	is := is.New(t)
-	reg := regionFromURL("http://sqs.us-east-2.amazonaws.com/123456789012/MyQueue")
+	reg := RegionFromURL("http://sqs.us-east-2.amazonaws.com/123456789012/MyQueue")
 	is.Equal("us-east-2", reg)
 
-	reg = regionFromURL("http://localhost/foo")
+	reg = RegionFromURL("http://localhost/foo")
 	is.Equal("", reg)
 }
 

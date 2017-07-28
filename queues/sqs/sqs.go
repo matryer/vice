@@ -59,7 +59,7 @@ func (t *Transport) Receive(name string) <-chan []byte {
 		return ch
 	}
 
-	region := regionFromURL(name)
+	region := RegionFromURL(name)
 	svc := t.NewService(region)
 	ch = t.makeSubscriber(svc, name)
 
@@ -67,8 +67,8 @@ func (t *Transport) Receive(name string) <-chan []byte {
 	return ch
 }
 
-// regionFromURL parses an sqs url and returns the aws region
-func regionFromURL(url string) string {
+// RegionFromURL parses an sqs url and returns the aws region
+func RegionFromURL(url string) string {
 	pieces := strings.Split(url, ".")
 	if len(pieces) > 2 {
 		return pieces[1]
