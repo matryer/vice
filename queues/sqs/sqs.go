@@ -133,7 +133,7 @@ func (t *Transport) Send(name string) chan<- []byte {
 		return ch
 	}
 
-	region := regionFromURL(name)
+	region := RegionFromURL(name)
 	svc := t.NewService(region)
 	ch, err := t.makePublisher(svc, name)
 	if err != nil {
