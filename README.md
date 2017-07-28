@@ -1,6 +1,6 @@
 ![](docs/vicelogo-small.png)
 
-`Go channels <-> Message queues`
+# Go channels at horizontal scale
 
 * Use Go channels transparently over a [messaging queue technology of your choice](https://github.com/matryer/vice/tree/master/queues) (Currently [NATS](http://nats.io), [Redis](http://redis.io) or [NSQ](http://nsq.io), [Amazon SQS](https://aws.amazon.com/sqs/))
 * Swap `vice.Transport` to change underlying queueing technologies transparently
