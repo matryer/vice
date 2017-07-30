@@ -98,9 +98,7 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 	}
 
 	sub, err := c.Subscribe(name, func(m *nats.Msg) {
-		data := m.Data
-		ch <- data
-		return
+		ch <- m.Data
 	})
 	if err != nil {
 		return nil, err
