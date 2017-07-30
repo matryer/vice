@@ -74,7 +74,6 @@ func (t *Transport) Receive(name string) <-chan []byte {
 	t.Lock()
 	defer t.Unlock()
 
-	ch := make(chan []byte)
 	ch, ok := t.receiveChans[name]
 	if ok {
 		return ch
@@ -83,6 +82,7 @@ func (t *Transport) Receive(name string) <-chan []byte {
 	ch, err := t.makeSubscriber(name)
 	if err != nil {
 		t.errChan <- vice.Err{Name: name, Err: err}
+		return make(chan []byte)
 	}
 
 	t.receiveChans[name] = ch
@@ -90,13 +90,12 @@ func (t *Transport) Receive(name string) <-chan []byte {
 }
 
 func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
-	ch := make(chan []byte)
-
 	c, err := t.newConnection()
 	if err != nil {
 		return nil, err
 	}
 
+	ch := make(chan []byte)
 	sub, err := c.Subscribe(name, func(m *nats.Msg) {
 		ch <- m.Data
 	})
@@ -113,7 +112,6 @@ func (t *Transport) Send(name string) chan<- []byte {
 	t.Lock()
 	defer t.Unlock()
 
-	ch := make(chan []byte)
 	ch, ok := t.sendChans[name]
 	if ok {
 		return ch
@@ -130,12 +128,12 @@ func (t *Transport) Send(name string) chan<- []byte {
 }
 
 func (t *Transport) makePublisher(name string) (chan []byte, error) {
-	ch := make(chan []byte)
-
 	c, err := t.newConnection()
 	if err != nil {
 		return nil, err
 	}
+
+	ch := make(chan []byte)
 
 	go func() {
 		for {
