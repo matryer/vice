@@ -1,14 +1,12 @@
 package nats
 
 import (
+	"sync"
 	"testing"
 	"time"
 
-	"github.com/matryer/vice"
-
-	"sync"
-
 	"github.com/matryer/is"
+	"github.com/matryer/vice"
 	"github.com/matryer/vice/vicetest"
 	"github.com/nats-io/nats"
 )
