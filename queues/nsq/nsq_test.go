@@ -7,23 +7,22 @@ import (
 	"time"
 
 	"github.com/matryer/is"
+	"github.com/matryer/vice"
 	"github.com/matryer/vice/vicetest"
 	"github.com/nsqio/go-nsq"
 )
 
 func TestTransport(t *testing.T) {
-	is := is.New(t)
-
-	transport, err := New()
-	is.NoErr(err)
-	vicetest.Transport(t, transport)
+	new := func() vice.Transport {
+		return New()
+	}
+	vicetest.Transport(t, new)
 }
 
 func TestSend(t *testing.T) {
 	is := is.New(t)
 
-	transport, err := New()
-	is.NoErr(err)
+	transport := New()
 	defer func() {
 		transport.Stop()
 		<-transport.Done()
@@ -90,8 +89,7 @@ func TestSend(t *testing.T) {
 func TestReceive(t *testing.T) {
 	is := is.New(t)
 
-	transport, err := New()
-	is.NoErr(err)
+	transport := New()
 	defer func() {
 		transport.Stop()
 		<-transport.Done()
