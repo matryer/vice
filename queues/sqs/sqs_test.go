@@ -7,19 +7,26 @@ import (
 	"github.com/aws/aws-sdk-go/service/sqs"
 	"github.com/aws/aws-sdk-go/service/sqs/sqsiface"
 	"github.com/matryer/is"
+	"github.com/matryer/vice"
 	"github.com/matryer/vice/vicetest"
 )
 
 func TestTransport(t *testing.T) {
-	transport := New()
 	svc := &mockSQSClient{
 		chs:    make(map[string]chan string),
 		finish: make(chan bool),
 	}
-	transport.NewService = func(region string) sqsiface.SQSAPI {
-		return svc
+
+	new := func() vice.Transport {
+		transport := New()
+		transport.NewService = func(region string) sqsiface.SQSAPI {
+			return svc
+		}
+
+		return transport
 	}
-	vicetest.Transport(t, transport)
+
+	vicetest.Transport(t, new)
 	close(svc.finish)
 }
 

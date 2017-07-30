@@ -7,12 +7,15 @@ import (
 	"time"
 
 	"github.com/matryer/is"
+	"github.com/matryer/vice"
 	"github.com/matryer/vice/vicetest"
 )
 
 func TestTransport(t *testing.T) {
-	transport := New()
-	vicetest.Transport(t, transport)
+	new := func() vice.Transport {
+		return New()
+	}
+	vicetest.Transport(t, new)
 }
 
 func TestConnection(t *testing.T) {

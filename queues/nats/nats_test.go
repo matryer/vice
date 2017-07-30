@@ -4,6 +4,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/matryer/vice"
+
 	"sync"
 
 	"github.com/matryer/is"
@@ -12,8 +14,11 @@ import (
 )
 
 func TestTransport(t *testing.T) {
-	transport := New()
-	vicetest.Transport(t, transport)
+	new := func() vice.Transport {
+		return New()
+	}
+
+	vicetest.Transport(t, new)
 }
 
 func TestReceive(t *testing.T) {

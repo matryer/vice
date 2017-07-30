@@ -22,9 +22,13 @@ import (
 // can interfere with the test.
 // After the tests are run, the transport is closed (since that is part
 // of the spec).
-func Transport(t *testing.T, transport vice.Transport) {
-	testStandardTransportBehaviour(t, transport)
-	testSendChannelsDontBlock(t, transport)
+func Transport(t *testing.T, transport func() vice.Transport) {
+	t.Run("testStandardTransportBehaviour", func(t *testing.T) {
+		testStandardTransportBehaviour(t, transport())
+	})
+	t.Run("testSendChannelsDontBlock", func(t *testing.T) {
+		testSendChannelsDontBlock(t, transport())
+	})
 }
 
 // testSendChannelsDontBlock ensures that send channels don't block, even

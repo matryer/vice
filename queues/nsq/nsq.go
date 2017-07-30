@@ -47,7 +47,7 @@ type Transport struct {
 }
 
 // New makes a new Transport.
-func New() (*Transport, error) {
+func New() *Transport {
 	return &Transport{
 		sendChans:    make(map[string]chan []byte),
 		receiveChans: make(map[string]chan []byte),
@@ -67,7 +67,7 @@ func New() (*Transport, error) {
 		ConnectConsumer: func(consumer *nsq.Consumer) error {
 			return consumer.ConnectToNSQD(DefaultTCPAddr)
 		},
-	}, nil
+	}
 }
 
 // ErrChan gets the channel on which errors are sent.
