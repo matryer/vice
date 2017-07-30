@@ -8,6 +8,8 @@
 * Develop against in-memory implementation before putting it into the wild
 * Independent unit tests (no need for running queue technology)
 
+PROJECT STATUS: BETA - Aiming for v1.0 release later this year
+
 ## Usage
 
 This code receives names on the `|names|` queue, and sends greetings on the `|greetings|`
