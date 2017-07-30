@@ -10,10 +10,7 @@ import (
 	"github.com/matryer/vice"
 )
 
-// TODO: if there are left over messages in NSQ (persisted) then
-// the test panics with negative WaitGroup counter
-
-// Transport runs standard transport tests. All Transport types should pass
+// Transport runs standard transport tests. All Transport types pass
 // this test.
 //
 // For more information see https://github.com/matryer/vice/blob/master/docs/writing-transports.md
