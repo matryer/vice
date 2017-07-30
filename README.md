@@ -8,7 +8,7 @@
 * Develop against in-memory implementation before putting it into the wild
 * Independent unit tests (no need for running queue technology)
 
-PROJECT STATUS: BETA - Aiming for v1.0 release later this year
+PROJECT STATUS: BETA - Aiming for v1.0 release in October 2017.
 
 ## Usage
 
