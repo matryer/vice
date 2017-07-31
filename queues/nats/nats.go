@@ -95,7 +95,7 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 		return nil, err
 	}
 
-	ch := make(chan []byte)
+	ch := make(chan []byte, 1024)
 	sub, err := c.Subscribe(name, func(m *nats.Msg) {
 		ch <- m.Data
 	})
@@ -133,7 +133,7 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 		return nil, err
 	}
 
-	ch := make(chan []byte)
+	ch := make(chan []byte, 1024)
 
 	go func() {
 		for {
