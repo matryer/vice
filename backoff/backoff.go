@@ -5,10 +5,9 @@ import (
 	"time"
 )
 
-// Do retries the function f backing off the double of time each retry until a successfully call is made.
-// initialBackoff is minimal time to wait for the next call
-// maxBackoff is the maximum time between calls, if is 0 there is no maximum
-// maxCalls is the maximum number of call to the function, if is 0 there is no maximum
+// Do retries the function f backing off the double of time each retry until a successful call is made.
+// initialBackoff is minimal time to wait for the next call.
+// maxCalls is the maximum number of call to the function, if is 0 there is no maximum.
 func Do(initialBackoff, maxBackoff time.Duration, maxCalls int, f func() error) error {
 	backoff := time.Duration(0)
 	calls := 0
