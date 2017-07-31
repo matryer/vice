@@ -13,6 +13,8 @@ import (
 // Transport runs standard transport tests. All Transport types pass
 // this test.
 //
+// The transport argument should construct a clean Transport.
+//
 // For more information see https://github.com/matryer/vice/blob/master/docs/writing-transports.md
 //
 // Transports should be initialised with a clean state. Old persisted messages

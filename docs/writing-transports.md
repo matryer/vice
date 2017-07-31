@@ -19,14 +19,20 @@ import (
 )
 
 func TestTransport(t *testing.T) {
-	transport := New()
-	vicetest.Transport(t, transport)
+	vicetest.Transport(t, func() vice.Transport {
+		return yourtransport.New()
+	})
 }
 ```
 
-The `vicetest.Transport` function takes a `testing.T`, and a _fresh_ instance of your transport. Transports should be cleaned before running this test, as messages left-over from previous tests may interfere.
+The `vicetest.Transport` function takes a `testing.T`, and a function that creates a _fresh_ instance of your transport. Transports should be cleaned before running this test, as messages left-over from previous tests may interfere.
 
 If `vicetest.Transport` passes, your transport performs as expected and can be contributed to the project.
+
+## Stopping
+
+Transports should accept a context, which when cancelled should shut them down. Once a Transport is shut down, it should
+close the channel returned by the `Done()` method.
 
 ## Defaults
 
