@@ -33,10 +33,7 @@ func main() {
 	ctx := context.Background()
 	ctx, cancel := context.WithTimeout(ctx, 1*time.Minute)
 	defer cancel()
-	transport, err := nsq.New()
-	if err != nil {
-		log.Fatalln(err)
-	}
+	transport := nsq.New()
 	defer func() {
 		transport.Stop()
 		<-transport.Done()
