@@ -39,7 +39,7 @@ func TestSend(t *testing.T) {
 
 	select {
 	case msg := <-testConsumer.messages:
-		is.Equal(string(msg.Body), []byte("hello vice"))
+		is.Equal(string(msg.Body), "hello vice")
 	case <-time.After(2 * time.Second):
 		is.Fail() // timeout: testConsumer <- messages
 	}
