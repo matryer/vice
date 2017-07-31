@@ -90,7 +90,7 @@ func (t *Transport) Receive(name string) <-chan []byte {
 }
 
 func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
-	ch := make(chan []byte)
+	ch := make(chan []byte, 1024)
 
 	c, err := t.newConnection()
 	if err != nil {
@@ -130,7 +130,7 @@ func (t *Transport) Send(name string) chan<- []byte {
 }
 
 func (t *Transport) makePublisher(name string) (chan []byte, error) {
-	ch := make(chan []byte)
+	ch := make(chan []byte, 1024)
 
 	c, err := t.newConnection()
 	if err != nil {
