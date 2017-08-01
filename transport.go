@@ -15,10 +15,6 @@ type Transport interface {
 	// ErrChan gets a channel through which errors
 	// are sent.
 	ErrChan() <-chan error
-
-	// Stop stops the transport. The channel returned from Done() will be closed
-	// when the transport has stopped.
-	Stop()
 	// Done gets a channel which is closed when the
 	// transport has successfully stopped.
 	Done() chan struct{}
