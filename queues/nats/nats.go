@@ -3,6 +3,7 @@ package nats
 
 import (
 	"sync"
+	"time"
 
 	"github.com/matryer/vice"
 	"github.com/nats-io/go-nats"
@@ -17,6 +18,7 @@ var _ vice.Transport = (*Transport)(nil)
 // Transport is a vice.Transport for NATS queue.
 type Transport struct {
 	*sync.Mutex
+	wg *sync.WaitGroup
 
 	receiveChans map[string]chan []byte
 	sendChans    map[string]chan []byte
@@ -42,6 +44,7 @@ func New(opts ...Option) *Transport {
 
 	return &Transport{
 		Mutex: &sync.Mutex{},
+		wg:    &sync.WaitGroup{},
 
 		NatsAddr: DefaultAddr,
 
@@ -135,14 +138,20 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 
 	ch := make(chan []byte, 1024)
 
+	t.wg.Add(1)
 	go func() {
+		defer t.wg.Done()
 		for {
 			select {
 			case <-t.stopPubChan:
+				if len(ch) != 0 && t.natsConn.IsConnected() {
+					continue
+				}
 				return
 			case msg := <-ch:
 				if err := c.Publish(name, msg); err != nil {
 					t.errChan <- vice.Err{Message: msg, Name: name, Err: err}
+					time.Sleep(1 * time.Second)
 				}
 			default:
 			}
@@ -169,8 +178,12 @@ func (t *Transport) Stop() {
 	}
 
 	close(t.stopPubChan)
+	t.wg.Wait()
+
+	t.natsConn.Flush()
 	t.natsConn.Close()
 	t.natsConn = nil
+
 	close(t.stopchan)
 }
 
