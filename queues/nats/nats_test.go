@@ -8,7 +8,7 @@ import (
 	"github.com/matryer/is"
 	"github.com/matryer/vice"
 	"github.com/matryer/vice/vicetest"
-	"github.com/nats-io/nats"
+	"github.com/nats-io/go-nats"
 )
 
 func TestTransport(t *testing.T) {
