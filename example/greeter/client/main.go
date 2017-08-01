@@ -27,10 +27,7 @@ func main() {
 		case <-ctx.Done():
 		}
 	}()
-	transport, err := nsq.New()
-	if err != nil {
-		log.Fatalln(err)
-	}
+	transport := nsq.New()
 	names := transport.Send("names")
 	greetings := transport.Receive("greetings")
 	go func() {
