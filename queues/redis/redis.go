@@ -10,13 +10,6 @@ import (
 
 // Transport is a vice.Transport for redis.
 type Transport struct {
-	// Exported fields
-	Network    string
-	Addr       string
-	Password   string
-	DB         int64
-	MaxRetries int
-
 	sm        sync.Mutex
 	sendChans map[string]chan []byte
 
