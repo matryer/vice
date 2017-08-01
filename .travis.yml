@@ -1,0 +1,30 @@
+language: go
+
+go:
+  - 1.8.x
+  - tip
+
+before_install:
+  - go get github.com/golang/lint/golint
+
+  # install nsq
+  - wget https://s3.amazonaws.com/bitly-downloads/nsq/nsq-1.0.0-compat.linux-amd64.go1.8.tar.gz
+  - tar xzvf nsq-1.0.0-compat.linux-amd64.go1.8.tar.gz
+  - sudo mv nsq-1.0.0-compat.linux-amd64.go1.8/* /bin/ 
+  - nsqlookupd &
+  - nsqd --lookupd-tcp-address=127.0.0.1:4160 &
+  - nsqadmin --lookupd-http-address=127.0.0.1:4161 &
+  # install gnatsd
+  - wget https://github.com/nats-io/gnatsd/releases/download/v1.0.2/gnatsd-v1.0.2-linux-amd64.zip
+  - unzip -d gnatsd -j gnatsd-v1.0.2-linux-amd64.zip
+  - ./gnatsd/gnatsd &
+
+before_script:
+  - go vet ./...
+  - golint ./...
+
+services:
+  - redis
+
+script:
+  - go test -v ./...
