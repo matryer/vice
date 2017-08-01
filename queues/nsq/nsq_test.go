@@ -1,6 +1,7 @@
 package nsq
 
 import (
+	"context"
 	"log"
 	"sync/atomic"
 	"testing"
@@ -13,19 +14,24 @@ import (
 )
 
 func TestTransport(t *testing.T) {
-	new := func() vice.Transport {
-		return New()
+	new := func(ctx context.Context) vice.Transport {
+		return New(ctx)
 	}
 	vicetest.Transport(t, new)
 }
 
 func TestSend(t *testing.T) {
 	is := is.New(t)
-
-	transport := New()
+	ctx, cancel := context.WithCancel(context.Background())
+	transport := New(ctx)
 	defer func() {
-		transport.Stop()
-		<-transport.Done()
+		cancel()
+		select {
+		case <-transport.Done():
+			return
+		case <-time.After(1 * time.Second):
+			is.Fail() // timed out waiting for transport to stop
+		}
 	}()
 
 	testConsumer := NewNSQTestConsumer(t, "test_send", "test")
@@ -39,7 +45,7 @@ func TestSend(t *testing.T) {
 
 	select {
 	case msg := <-testConsumer.messages:
-		is.Equal(string(msg.Body), []byte("hello vice"))
+		is.Equal(string(msg.Body), "hello vice")
 	case <-time.After(2 * time.Second):
 		is.Fail() // timeout: testConsumer <- messages
 	}
@@ -58,10 +64,12 @@ func TestSend(t *testing.T) {
 
 // 	transport, err := New("no-such-host:4150")
 // 	is.NoErr(err)
-// 	defer func() {
-// 		transport.Stop()
-// 		<-transport.Done()
-// 	}()
+// ctx, cancel := context.WithCancel(context.Background())
+// transport := New(ctx)
+// defer func() {
+// 	cancel()
+// 	<-transport.Done()
+// }()
 
 // 	select {
 // 	case transport.Send("test_send_err") <- []byte("hello vice"):
@@ -89,10 +97,16 @@ func TestSend(t *testing.T) {
 func TestReceive(t *testing.T) {
 	is := is.New(t)
 
-	transport := New()
+	ctx, cancel := context.WithCancel(context.Background())
+	transport := New(ctx)
 	defer func() {
-		transport.Stop()
-		<-transport.Done()
+		cancel()
+		select {
+		case <-transport.Done():
+			return
+		case <-time.After(1 * time.Second):
+			is.Fail() // timed out waiting for transport to stop
+		}
 	}()
 
 	testProducer := NewNSQTestProducer(t, "test_receive")

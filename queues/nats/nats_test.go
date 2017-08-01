@@ -1,6 +1,7 @@
 package nats
 
 import (
+	"context"
 	"sync"
 	"testing"
 	"time"
@@ -12,8 +13,8 @@ import (
 )
 
 func TestTransport(t *testing.T) {
-	new := func() vice.Transport {
-		return New()
+	new := func(ctx context.Context) vice.Transport {
+		return New(ctx)
 	}
 
 	vicetest.Transport(t, new)

@@ -2,6 +2,8 @@
 package nsq
 
 import (
+	"context"
+	"log"
 	"sync"
 	"time"
 
@@ -18,6 +20,8 @@ var _ vice.Transport = (*Transport)(nil)
 
 // Transport is a vice.Transport for NSQ.
 type Transport struct {
+	ctx context.Context
+
 	sm        sync.Mutex
 	sendChans map[string]chan []byte
 
@@ -27,10 +31,11 @@ type Transport struct {
 	errChan chan error
 	// stopchan is closed when everything has stopped.
 	stopchan chan struct{}
-	// stopProdChan is closed when producers should stop.
-	stopProdChan chan struct{}
 
 	consumers []*nsq.Consumer
+
+	// consumersWG tracks running consumers.
+	consumersWG sync.WaitGroup
 
 	// producersWG tracks running producers
 	producersWG sync.WaitGroup
@@ -47,14 +52,14 @@ type Transport struct {
 }
 
 // New makes a new Transport.
-func New() *Transport {
-	return &Transport{
+func New(ctx context.Context) *Transport {
+	t := &Transport{
+		ctx:          ctx,
 		sendChans:    make(map[string]chan []byte),
 		receiveChans: make(map[string]chan []byte),
 
-		stopchan:     make(chan struct{}),
-		stopProdChan: make(chan struct{}),
-		errChan:      make(chan error, 10),
+		stopchan: make(chan struct{}),
+		errChan:  make(chan error, 10),
 
 		consumers: []*nsq.Consumer{},
 
@@ -68,6 +73,14 @@ func New() *Transport {
 			return consumer.ConnectToNSQD(DefaultTCPAddr)
 		},
 	}
+	go func() {
+		// wait for everything to stop before closing the stop channel
+		<-ctx.Done()
+		t.consumersWG.Wait()
+		t.producersWG.Wait()
+		close(t.stopchan)
+	}()
+	return t
 }
 
 // ErrChan gets the channel on which errors are sent.
@@ -80,7 +93,6 @@ func (t *Transport) ErrChan() <-chan error {
 func (t *Transport) Receive(name string) <-chan []byte {
 	t.rm.Lock()
 	defer t.rm.Unlock()
-
 	ch, ok := t.receiveChans[name]
 	if ok {
 		return ch
@@ -98,7 +110,7 @@ func (t *Transport) Receive(name string) <-chan []byte {
 }
 
 func (t *Transport) makeConsumer(name string) (chan []byte, error) {
-	ch := make(chan []byte)
+	ch := make(chan []byte, 1024)
 	consumer, err := t.NewConsumer(name)
 	if err != nil {
 		return nil, err
@@ -106,17 +118,29 @@ func (t *Transport) makeConsumer(name string) (chan []byte, error) {
 	consumer.AddHandler(nsq.HandlerFunc(func(message *nsq.Message) error {
 		body := message.Body
 		message.Finish() // sends the ACK to avoid long blocking
+		log.Println("consumer: received message", string(body))
 		ch <- body
 		return nil
 	}))
 
 	err = backoff.Do(1*time.Second, 10*time.Minute, 0, func() error {
-		return t.ConnectConsumer(consumer)
+		if err := t.ConnectConsumer(consumer); err != nil {
+			return err
+		}
+		return nil
 	})
 	if err != nil {
 		return nil, err
 	}
+	t.consumersWG.Add(1)
 	t.consumers = append(t.consumers, consumer)
+	go func() {
+		<-t.ctx.Done()
+		consumer.Stop()
+		<-consumer.StopChan
+		close(ch)
+		t.consumersWG.Done()
+	}()
 	return ch, nil
 }
 
@@ -125,7 +149,6 @@ func (t *Transport) makeConsumer(name string) (chan []byte, error) {
 func (t *Transport) Send(name string) chan<- []byte {
 	t.sm.Lock()
 	defer t.sm.Unlock()
-
 	ch, ok := t.sendChans[name]
 	if ok {
 		return ch
@@ -144,7 +167,7 @@ func (t *Transport) Send(name string) chan<- []byte {
 }
 
 func (t *Transport) makeProducer(name string) (chan []byte, error) {
-	ch := make(chan []byte)
+	ch := make(chan []byte, 1024)
 	producer, err := t.NewProducer()
 	if err != nil {
 		return nil, err
@@ -152,16 +175,20 @@ func (t *Transport) makeProducer(name string) (chan []byte, error) {
 	t.producersWG.Add(1)
 	go func() {
 		defer func() {
-			producer.Stop()
+			producer.Stop() // blocks until finished
+			close(ch)
 			t.producersWG.Done()
 		}()
 		for {
 			select {
-			case <-t.stopProdChan:
+			case <-t.ctx.Done():
 				return
 			case msg := <-ch:
 				err = backoff.Do(1*time.Second, 10*time.Minute, 10, func() error {
-					return producer.Publish(name, msg)
+					if err := producer.Publish(name, msg); err != nil {
+						return err
+					}
+					return nil
 				})
 				if err != nil {
 					t.errChan <- vice.Err{Message: msg, Name: name, Err: err}
@@ -171,21 +198,6 @@ func (t *Transport) makeProducer(name string) (chan []byte, error) {
 		}
 	}()
 	return ch, nil
-}
-
-// Stop stops the transport.
-// The channel returned from Done() will be closed
-// when the transport has stopped.
-func (t *Transport) Stop() {
-	// stops and waits for the producers
-	close(t.stopProdChan)
-	t.producersWG.Wait()
-
-	for _, c := range t.consumers {
-		c.Stop()
-		<-c.StopChan
-	}
-	close(t.stopchan)
 }
 
 // Done gets a channel which is closed when the
