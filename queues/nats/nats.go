@@ -99,7 +99,7 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 	}
 
 	ch := make(chan []byte, 1024)
-	sub, err := c.Subscribe(name, func(m *nats.Msg) {
+	sub, err := c.QueueSubscribe(name, "vice-"+name, func(m *nats.Msg) {
 		ch <- m.Data
 	})
 	if err != nil {
