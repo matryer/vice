@@ -73,7 +73,7 @@ func TestSubscriber(t *testing.T) {
 	<-waitChan
 
 	wg.Add(1)
-	cmd := client2.Publish("test_receive", string(msgToReceive))
+	cmd := client2.RPush("test_receive", string(msgToReceive))
 	is.NoErr(cmd.Err())
 	wg.Wait()
 	transport.Stop()

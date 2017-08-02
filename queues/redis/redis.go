@@ -3,6 +3,7 @@ package redis
 
 import (
 	"sync"
+	"time"
 
 	"github.com/matryer/vice"
 	"gopkg.in/redis.v3"
@@ -91,14 +92,9 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 	}
 
 	ch := make(chan []byte, 1024)
-	ps, err := c.Subscribe(name)
-	if err != nil {
-		return make(chan []byte), err
-	}
-
 	go func() {
 		for {
-			m, err := ps.ReceiveMessage()
+			data, err := c.BRPop(0*time.Second, name).Result()
 			if err != nil {
 				select {
 				case <-t.stopSubChan:
@@ -108,8 +104,8 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 					continue
 				}
 			}
-			data := []byte(m.Payload)
-			ch <- data
+
+			ch <- []byte(data[len(data)-1])
 		}
 	}()
 	return ch, nil
@@ -156,7 +152,7 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 				}
 				return
 			case msg := <-ch:
-				err := c.Publish(name, string(msg)).Err()
+				err := c.RPush(name, string(msg)).Err()
 				if err != nil {
 					t.errChan <- vice.Err{Message: msg, Name: name, Err: err}
 				}
