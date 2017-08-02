@@ -49,20 +49,24 @@ type mockSQSClient struct {
 func (m *mockSQSClient) SendMessage(s *sqs.SendMessageInput) (*sqs.SendMessageOutput, error) {
 	q := *s.QueueUrl
 	m.mutex.Lock()
-	if _, ok := m.chs[q]; !ok {
-		m.chs[q] = make(chan string, 200)
+	ch, ok := m.chs[q]
+	if !ok {
+		ch = make(chan string, 200)
+		m.chs[q] = ch
 	}
 	m.mutex.Unlock()
 
-	m.chs[q] <- *s.MessageBody
+	ch <- *s.MessageBody
 	return &sqs.SendMessageOutput{}, nil
 }
 
 func (m *mockSQSClient) ReceiveMessage(s *sqs.ReceiveMessageInput) (*sqs.ReceiveMessageOutput, error) {
 	q := *s.QueueUrl
 	m.mutex.Lock()
-	if _, ok := m.chs[q]; !ok {
-		m.chs[q] = make(chan string, 200)
+	ch, ok := m.chs[q]
+	if !ok {
+		ch = make(chan string, 200)
+		m.chs[q] = ch
 	}
 	m.mutex.Unlock()
 
@@ -70,7 +74,7 @@ func (m *mockSQSClient) ReceiveMessage(s *sqs.ReceiveMessageInput) (*sqs.Receive
 	msg := &sqs.Message{}
 
 	select {
-	case temp := <-m.chs[q]:
+	case temp := <-ch:
 		msg.Body = &temp
 		out.Messages = append(out.Messages, msg)
 	case <-m.finish:
