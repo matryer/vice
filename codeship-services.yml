@@ -1,0 +1,6 @@
+vice:
+  build: ./
+  links:
+    - redis
+redis:
+  image: redis
