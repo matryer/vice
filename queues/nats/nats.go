@@ -7,6 +7,7 @@ import (
 
 	"github.com/matryer/vice"
 	"github.com/nats-io/go-nats"
+	"github.com/nats-io/go-nats-streaming"
 )
 
 // DefaultAddr is the NATS default TCP address.
@@ -14,6 +15,14 @@ const DefaultAddr = nats.DefaultURL
 
 // make sure Transport satisfies vice.Transport interface.
 var _ vice.Transport = (*Transport)(nil)
+
+type unsubscriber interface {
+	Unsubscribe() error
+}
+
+type publisher interface {
+	Publish(subject string, data []byte) error
+}
 
 // Transport is a vice.Transport for NATS queue.
 type Transport struct {
@@ -28,8 +37,12 @@ type Transport struct {
 	stopchan    chan struct{}
 	stopPubChan chan struct{}
 
-	subscriptions []*nats.Subscription
-	natsConn      *nats.Conn
+	subscriptions      []unsubscriber
+	natsConn           *nats.Conn
+	natsStreamingConn  stan.Conn
+	natsStreaming      bool
+	streamingClusterID string
+	streamingClientID  string
 
 	// exported fields
 	NatsAddr string
@@ -55,16 +68,30 @@ func New(opts ...Option) *Transport {
 		stopchan:    make(chan struct{}),
 		stopPubChan: make(chan struct{}),
 
-		subscriptions: []*nats.Subscription{},
+		subscriptions: []unsubscriber{},
 
-		natsConn: options.Conn,
+		natsConn:           options.Conn,
+		natsStreaming:      options.UseStreaming,
+		streamingClusterID: options.StreamingClusterID,
+		streamingClientID:  options.StreamingClientID,
 	}
+}
+
+func (t *Transport) newStreamingConnection() (stan.Conn, error) {
+	var err error
+
+	if t.natsStreamingConn != nil {
+		return t.natsStreamingConn, nil
+	}
+
+	t.natsStreamingConn, err = stan.Connect(t.streamingClusterID, t.streamingClientID, stan.NatsConn(t.natsConn))
+	return t.natsStreamingConn, err
 }
 
 func (t *Transport) newConnection() (*nats.Conn, error) {
 	var err error
 	if t.natsConn != nil {
-		return t.natsConn, nil
+		return t.natsConn, err
 	}
 
 	t.natsConn, err = nats.Connect(t.NatsAddr)
@@ -99,9 +126,21 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 	}
 
 	ch := make(chan []byte, 1024)
-	sub, err := c.QueueSubscribe(name, "vice-"+name, func(m *nats.Msg) {
-		ch <- m.Data
-	})
+
+	var sub unsubscriber
+	if t.natsStreaming {
+		s, err := t.newStreamingConnection()
+		if err != nil {
+			return nil, err
+		}
+		sub, err = s.QueueSubscribe(name, "vice-"+name, func(m *stan.Msg) {
+			ch <- m.Data
+		}, stan.DurableName("vice-"+name))
+	} else {
+		sub, err = c.QueueSubscribe(name, "vice-"+name, func(m *nats.Msg) {
+			ch <- m.Data
+		})
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -131,9 +170,21 @@ func (t *Transport) Send(name string) chan<- []byte {
 }
 
 func (t *Transport) makePublisher(name string) (chan []byte, error) {
-	c, err := t.newConnection()
+	var (
+		c   publisher
+		err error
+	)
+
+	c, err = t.newConnection()
 	if err != nil {
 		return nil, err
+	}
+
+	if t.natsStreaming {
+		c, err = t.newStreamingConnection()
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	ch := make(chan []byte, 1024)
@@ -179,6 +230,10 @@ func (t *Transport) Stop() {
 
 	close(t.stopPubChan)
 	t.wg.Wait()
+
+	if t.natsStreamingConn != nil {
+		t.natsStreamingConn.Close()
+	}
 
 	t.natsConn.Flush()
 	t.natsConn.Close()

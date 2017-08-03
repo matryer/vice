@@ -14,10 +14,10 @@ before_install:
   - nsqlookupd &
   - nsqd --lookupd-tcp-address=127.0.0.1:4160 &
   - nsqadmin --lookupd-http-address=127.0.0.1:4161 &
-  # install gnatsd
-  - wget https://github.com/nats-io/gnatsd/releases/download/v1.0.2/gnatsd-v1.0.2-linux-amd64.zip
-  - unzip -d gnatsd -j gnatsd-v1.0.2-linux-amd64.zip
-  - ./gnatsd/gnatsd &
+  # install gnatsd & nats-streaming
+  - wget https://github.com/nats-io/nats-streaming-server/releases/download/v0.5.0/nats-streaming-server-v0.5.0-linux-amd64.zip
+  - unzip -d gnatsd -j nats-streaming-server-v0.5.0-linux-amd64.zip
+  - ./gnatsd/nats-streaming-server &
 
 before_script:
   - go vet ./...
@@ -27,4 +27,4 @@ services:
   - redis
 
 script:
-  - go test -v ./...
+  - go test -v -race ./...
