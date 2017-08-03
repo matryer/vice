@@ -1,5 +1,5 @@
 - type: parallel
   steps:
     - service: vice
-      name: "ensure go formatted"
-      command: ./bin/check-fmt.sh
+      name: "ensure gofmt"
+      command: bin/check-gofmt
