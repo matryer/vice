@@ -11,9 +11,9 @@ before_install:
   - wget https://s3.amazonaws.com/bitly-downloads/nsq/nsq-1.0.0-compat.linux-amd64.go1.8.tar.gz
   - tar xzvf nsq-1.0.0-compat.linux-amd64.go1.8.tar.gz
   - sudo mv nsq-1.0.0-compat.linux-amd64.go1.8/bin/* /bin/ 
-  - nsqlookupd &
-  - nsqd --lookupd-tcp-address=127.0.0.1:4160 &
-  - nsqadmin --lookupd-http-address=127.0.0.1:4161 &
+  - nsqlookupd 2> /dev/null &
+  - nsqd --lookupd-tcp-address=127.0.0.1:4160 2> /dev/null &
+  - nsqadmin --lookupd-http-address=127.0.0.1:4161 2> /dev/null &
   # install gnatsd & nats-streaming
   - wget https://github.com/nats-io/nats-streaming-server/releases/download/v0.5.0/nats-streaming-server-v0.5.0-linux-amd64.zip
   - unzip -d gnatsd -j nats-streaming-server-v0.5.0-linux-amd64.zip
