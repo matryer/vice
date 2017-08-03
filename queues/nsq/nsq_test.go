@@ -1,6 +1,7 @@
 package nsq
 
 import (
+	"io/ioutil"
 	"log"
 	"sync/atomic"
 	"testing"
@@ -12,17 +13,38 @@ import (
 	"github.com/nsqio/go-nsq"
 )
 
-func TestTransport(t *testing.T) {
-	new := func() vice.Transport {
-		return New()
+func newTestTransport() vice.Transport {
+	transport := New()
+	transport.NewProducer = func() (*nsq.Producer, error) {
+		producer, err := nsq.NewProducer(DefaultTCPAddr, nsq.NewConfig())
+		if err != nil {
+			return nil, err
+		}
+		logger := log.New(ioutil.Discard, "logger: ", log.Lshortfile)
+		producer.SetLogger(logger, nsq.LogLevelError)
+		return producer, nil
 	}
-	vicetest.Transport(t, new)
+	transport.NewConsumer = func(name string) (*nsq.Consumer, error) {
+		consumer, err := nsq.NewConsumer(name, "vice", nsq.NewConfig())
+		if err != nil {
+			return nil, err
+		}
+		logger := log.New(ioutil.Discard, "logger: ", log.Lshortfile)
+		consumer.SetLogger(logger, nsq.LogLevelError)
+		return consumer, nil
+	}
+
+	return transport
+}
+
+func TestTransport(t *testing.T) {
+	vicetest.Transport(t, newTestTransport)
 }
 
 func TestSend(t *testing.T) {
 	is := is.New(t)
 
-	transport := New()
+	transport := newTestTransport()
 	defer func() {
 		transport.Stop()
 		<-transport.Done()
@@ -89,7 +111,7 @@ func TestSend(t *testing.T) {
 func TestReceive(t *testing.T) {
 	is := is.New(t)
 
-	transport := New()
+	transport := newTestTransport()
 	defer func() {
 		transport.Stop()
 		<-transport.Done()
@@ -144,7 +166,9 @@ type NSQTestConsumer struct {
 func NewNSQTestConsumer(t *testing.T, topic, channel string) *NSQTestConsumer {
 	is := is.New(t)
 
+	logger := log.New(ioutil.Discard, "logger: ", log.Lshortfile)
 	consumer, err := nsq.NewConsumer(topic, channel, nsq.NewConfig())
+	consumer.SetLogger(logger, nsq.LogLevelError)
 	is.NoErr(err)
 
 	testConsumer := &NSQTestConsumer{
