@@ -14,8 +14,7 @@ import (
 
 // Transport is a vice.Transport for Amazon's SQS
 type Transport struct {
-	// Exported fields
-	MaxRetries int
+	wg *sync.WaitGroup
 
 	sm        sync.Mutex
 	sendChans map[string]chan []byte
@@ -34,6 +33,7 @@ type Transport struct {
 // New returns a new transport
 func New() *Transport {
 	return &Transport{
+		wg:           &sync.WaitGroup{},
 		sendChans:    make(map[string]chan []byte),
 		receiveChans: make(map[string]chan []byte),
 		errChan:      make(chan error, 10),
@@ -147,10 +147,15 @@ func (t *Transport) Send(name string) chan<- []byte {
 func (t *Transport) makePublisher(svc sqsiface.SQSAPI, name string) (chan []byte, error) {
 	ch := make(chan []byte, 1024)
 
+	t.wg.Add(1)
 	go func() {
+		defer t.wg.Done()
 		for {
 			select {
 			case <-t.stopPubChan:
+				if len(ch) != 0 {
+					continue
+				}
 				return
 
 			case msg := <-ch:
@@ -180,6 +185,7 @@ func (t *Transport) ErrChan() <-chan error {
 func (t *Transport) Stop() {
 	close(t.stopSubChan)
 	close(t.stopPubChan)
+	t.wg.Wait()
 	close(t.stopchan)
 }
 
