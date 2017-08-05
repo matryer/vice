@@ -14,9 +14,6 @@ import (
 
 // Transport is a vice.Transport for Amazon's SQS
 type Transport struct {
-	// Exported fields
-	MaxRetries int
-
 	sm        sync.Mutex
 	sendChans map[string]chan []byte
 
@@ -28,7 +25,7 @@ type Transport struct {
 	stopPubChan chan struct{}
 	stopSubChan chan struct{}
 
-	NewService func(region string) sqsiface.SQSAPI
+	NewService func(region string) (sqsiface.SQSAPI, error)
 }
 
 // New returns a new transport
@@ -41,9 +38,13 @@ func New() *Transport {
 		stopPubChan:  make(chan struct{}),
 		stopSubChan:  make(chan struct{}),
 
-		NewService: func(region string) sqsiface.SQSAPI {
+		NewService: func(region string) (sqsiface.SQSAPI, error) {
 			awsConfig := aws.NewConfig().WithRegion(region)
-			return sqs.New(session.New(awsConfig))
+			s, err := session.NewSession(awsConfig)
+			if err != nil {
+				return nil, err
+			}
+			return sqs.New(s), nil
 		},
 	}
 }
@@ -59,9 +60,11 @@ func (t *Transport) Receive(name string) <-chan []byte {
 		return ch
 	}
 
-	region := RegionFromURL(name)
-	svc := t.NewService(region)
-	ch = t.makeSubscriber(svc, name)
+	ch, err := t.makeSubscriber(name)
+	if err != nil {
+		t.errChan <- vice.Err{Name: name, Err: err}
+		return make(chan []byte)
+	}
 
 	t.receiveChans[name] = ch
 	return ch
@@ -77,7 +80,13 @@ func RegionFromURL(url string) string {
 	return ""
 }
 
-func (t *Transport) makeSubscriber(svc sqsiface.SQSAPI, name string) chan []byte {
+func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
+	region := RegionFromURL(name)
+	svc, err := t.NewService(region)
+	if err != nil {
+		return nil, err
+	}
+
 	ch := make(chan []byte, 1024)
 
 	params := &sqs.ReceiveMessageInput{
@@ -118,7 +127,7 @@ func (t *Transport) makeSubscriber(svc sqsiface.SQSAPI, name string) chan []byte
 			}
 		}
 	}()
-	return ch
+	return ch, nil
 }
 
 // Send gets a channel on which messages with the
@@ -133,18 +142,23 @@ func (t *Transport) Send(name string) chan<- []byte {
 		return ch
 	}
 
-	region := RegionFromURL(name)
-	svc := t.NewService(region)
-	ch, err := t.makePublisher(svc, name)
+	ch, err := t.makePublisher(name)
 	if err != nil {
 		t.errChan <- vice.Err{Name: name, Err: err}
 		return make(chan []byte)
 	}
+
 	t.sendChans[name] = ch
 	return ch
 }
 
-func (t *Transport) makePublisher(svc sqsiface.SQSAPI, name string) (chan []byte, error) {
+func (t *Transport) makePublisher(name string) (chan []byte, error) {
+	region := RegionFromURL(name)
+	svc, err := t.NewService(region)
+	if err != nil {
+		return nil, err
+	}
+
 	ch := make(chan []byte, 1024)
 
 	go func() {
