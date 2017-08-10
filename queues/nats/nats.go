@@ -79,7 +79,6 @@ func New(opts ...Option) *Transport {
 
 func (t *Transport) newStreamingConnection() (stan.Conn, error) {
 	var err error
-
 	if t.natsStreamingConn != nil {
 		return t.natsStreamingConn, nil
 	}
@@ -129,10 +128,12 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 
 	var sub unsubscriber
 	if t.natsStreaming {
-		s, err := t.newStreamingConnection()
+		var s stan.Conn
+		s, err = t.newStreamingConnection()
 		if err != nil {
 			return nil, err
 		}
+
 		sub, err = s.QueueSubscribe(name, "vice-"+name, func(m *stan.Msg) {
 			ch <- m.Data
 		}, stan.DurableName("vice-"+name))
@@ -204,7 +205,6 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 					t.errChan <- vice.Err{Message: msg, Name: name, Err: err}
 					time.Sleep(1 * time.Second)
 				}
-			default:
 			}
 		}
 	}()

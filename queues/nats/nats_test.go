@@ -58,16 +58,16 @@ func TestReceive(t *testing.T) {
 	time.Sleep(time.Millisecond * 10)
 
 	nc, err := nats.Connect(nats.DefaultURL)
-	defer nc.Close()
 	if err != nil {
 		is.Fail() // couldn't connect to nats server
 	}
+	defer nc.Close()
 
 	ns, err := stan.Connect("test-cluster", "bla")
-	defer ns.Close()
 	if err != nil {
 		is.Fail() // couldn't connect to nats server
 	}
+	defer ns.Close()
 
 	wg.Add(2)
 	err = nc.Publish("test_receive", []byte("hello vice"))
