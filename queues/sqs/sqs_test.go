@@ -19,8 +19,8 @@ func TestTransport(t *testing.T) {
 
 	new := func() vice.Transport {
 		transport := New()
-		transport.NewService = func(region string) sqsiface.SQSAPI {
-			return svc
+		transport.NewService = func(region string) (sqsiface.SQSAPI, error) {
+			return svc, nil
 		}
 
 		return transport
