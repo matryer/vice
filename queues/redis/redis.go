@@ -14,8 +14,8 @@ type Transport struct {
 	sendChans    map[string]chan []byte
 	receiveChans map[string]chan []byte
 
-	*sync.Mutex
-	wg *sync.WaitGroup
+	sync.Mutex
+	wg sync.WaitGroup
 
 	errChan     chan error
 	stopchan    chan struct{}
@@ -35,8 +35,6 @@ func New(opts ...Option) *Transport {
 	return &Transport{
 		sendChans:    make(map[string]chan []byte),
 		receiveChans: make(map[string]chan []byte),
-		Mutex:        &sync.Mutex{},
-		wg:           &sync.WaitGroup{},
 		errChan:      make(chan error, 10),
 		stopchan:     make(chan struct{}),
 		stopPubChan:  make(chan struct{}),

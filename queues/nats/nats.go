@@ -26,8 +26,8 @@ type publisher interface {
 
 // Transport is a vice.Transport for NATS queue.
 type Transport struct {
-	*sync.Mutex
-	wg *sync.WaitGroup
+	sync.Mutex
+	wg sync.WaitGroup
 
 	receiveChans map[string]chan []byte
 	sendChans    map[string]chan []byte
@@ -56,9 +56,6 @@ func New(opts ...Option) *Transport {
 	}
 
 	return &Transport{
-		Mutex: &sync.Mutex{},
-		wg:    &sync.WaitGroup{},
-
 		NatsAddr: DefaultAddr,
 
 		receiveChans: make(map[string]chan []byte),

@@ -14,8 +14,8 @@ import (
 
 // Transport is a vice.Transport for Amazon's SQS
 type Transport struct {
-	wg *sync.WaitGroup
-  
+	wg sync.WaitGroup
+
 	sm        sync.Mutex
 	sendChans map[string]chan []byte
 
@@ -33,7 +33,6 @@ type Transport struct {
 // New returns a new transport
 func New() *Transport {
 	return &Transport{
-		wg:           &sync.WaitGroup{},
 		sendChans:    make(map[string]chan []byte),
 		receiveChans: make(map[string]chan []byte),
 		errChan:      make(chan error, 10),
