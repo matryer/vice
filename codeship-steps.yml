@@ -1,0 +1,8 @@
+- type: parallel
+  steps:
+    - service: vice
+      name: "ensure gofmt"
+      command: bin/check-gofmt
+    - service: vice
+      name: "test redis queue"
+      command: bin/test -v ./queues/redis/...

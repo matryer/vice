@@ -2,18 +2,44 @@ package redis
 
 import (
 	"fmt"
+	"net/url"
+	"os"
 	"sync"
 	"testing"
 	"time"
+
+	redis "gopkg.in/redis.v3"
 
 	"github.com/matryer/is"
 	"github.com/matryer/vice"
 	"github.com/matryer/vice/vicetest"
 )
 
+var options = func() []Option { return nil }
+
+func TestMain(m *testing.M) {
+	// if in CI derive the connection params
+	if os.Getenv("GO_ENV") == "ci" {
+		url, err := url.Parse(os.Getenv("REDIS_PORT"))
+		if err != nil {
+			panic(err)
+		}
+
+		options = func() []Option {
+			return []Option{WithClient(redis.NewClient(&redis.Options{
+				Network: url.Scheme,
+				Addr:    fmt.Sprintf("%s:%s", url.Hostname(), url.Port()),
+			}))}
+		}
+	}
+
+	// run the test suite
+	os.Exit(m.Run())
+}
+
 func TestTransport(t *testing.T) {
 	new := func() vice.Transport {
-		return New()
+		return New(options()...)
 	}
 	vicetest.Transport(t, new)
 }
@@ -21,7 +47,7 @@ func TestTransport(t *testing.T) {
 func TestConnection(t *testing.T) {
 	is := is.New(t)
 
-	tr := New()
+	tr := New(options()...)
 
 	c, err := tr.newConnection()
 	is.True(c != nil)
@@ -35,7 +61,7 @@ func TestSubscriber(t *testing.T) {
 	is := is.New(t)
 	msgToReceive := []byte("hello vice")
 
-	transport := New()
+	transport := New(options()...)
 
 	client2, err := transport.newConnection()
 	is.NoErr(err)
@@ -85,7 +111,7 @@ func TestPublisher(t *testing.T) {
 	is := is.New(t)
 	msgToSend := []byte("hello vice")
 
-	transport := New()
+	transport := New(options()...)
 	var wg sync.WaitGroup
 	doneChan := make(chan struct{})
 

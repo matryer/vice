@@ -1,0 +1,8 @@
+vice:
+  build: ./
+  environment:
+    GO_ENV: "ci"
+  links:
+    - redis
+redis:
+  image: redis
