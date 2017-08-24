@@ -6,6 +6,7 @@ go:
 
 before_install:
   - go get github.com/golang/lint/golint
+  - go get honnef.co/go/tools/cmd/megacheck
 
   # install nsq
   - wget https://s3.amazonaws.com/bitly-downloads/nsq/nsq-1.0.0-compat.linux-amd64.go1.8.tar.gz
@@ -22,6 +23,7 @@ before_install:
 before_script:
   - go vet ./...
   - golint ./...
+  - megacheck ./...
 
 services:
   - redis
