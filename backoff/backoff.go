@@ -10,7 +10,7 @@ import (
 // maxBackoff is the maximum time between calls, if is 0 there is no maximum
 // maxCalls is the maximum number of call to the function, if is 0 there is no maximum
 func Do(initialBackoff, maxBackoff time.Duration, maxCalls int, f func() error) error {
-	backoff := time.Duration(0)
+	backoff := time.Duration(initialBackoff)
 	calls := 0
 	for {
 		err := f()
@@ -21,12 +21,9 @@ func Do(initialBackoff, maxBackoff time.Duration, maxCalls int, f func() error) 
 		if calls >= maxCalls && maxCalls != 0 {
 			return err
 		}
-		switch {
-		case backoff == 0:
-			backoff = initialBackoff
-		case backoff > maxBackoff && maxBackoff != 0:
+		if backoff > maxBackoff && maxBackoff != 0 {
 			backoff = maxBackoff
-		default:
+		} else {
 			backoff *= 2
 		}
 		time.Sleep(backoff)
