@@ -1,6 +1,6 @@
 package redis
 
-import "gopkg.in/redis.v3"
+import redis "gopkg.in/redis.v5"
 
 type Options struct {
 	Client *redis.Client

@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/matryer/vice"
-	"gopkg.in/redis.v3"
+	"gopkg.in/redis.v5"
 )
 
 // Transport is a vice.Transport for redis.
