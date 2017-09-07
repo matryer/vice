@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/matryer/vice"
-	"gopkg.in/redis.v3"
+	"gopkg.in/redis.v5"
 )
 
 // Transport is a vice.Transport for redis.
@@ -32,7 +32,7 @@ func New(opts ...Option) *Transport {
 		o(&options)
 	}
 
-	return &Transport{
+	trans := &Transport{
 		sendChans:    make(map[string]chan []byte),
 		receiveChans: make(map[string]chan []byte),
 		errChan:      make(chan error, 10),
@@ -41,12 +41,8 @@ func New(opts ...Option) *Transport {
 		stopSubChan:  make(chan struct{}),
 		client:       options.Client,
 	}
-}
-
-func (t *Transport) newConnection() (*redis.Client, error) {
-	var err error
-	if t.client != nil {
-		return t.client, nil
+	if trans.client != nil {
+		return trans
 	}
 
 	t.client = redis.NewClient(&redis.Options{
@@ -58,8 +54,10 @@ func (t *Transport) newConnection() (*redis.Client, error) {
 	})
 
 	// test connection
-	_, err = t.client.Ping().Result()
-	return t.client, err
+	if _, err = t.client.Ping().Result(); err != nil {
+		panic(err)
+	}
+	return
 }
 
 // Receive gets a channel on which to receive messages
@@ -84,10 +82,6 @@ func (t *Transport) Receive(name string) <-chan []byte {
 }
 
 func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
-	c, err := t.newConnection()
-	if err != nil {
-		return nil, err
-	}
 
 	ch := make(chan []byte, 1024)
 	go func() {
@@ -130,11 +124,6 @@ func (t *Transport) Send(name string) chan<- []byte {
 }
 
 func (t *Transport) makePublisher(name string) (chan []byte, error) {
-	c, err := t.newConnection()
-	if err != nil {
-		return nil, err
-	}
-
 	ch := make(chan []byte, 1024)
 	t.wg.Add(1)
 	go func() {
@@ -145,7 +134,10 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 				if len(ch) != 0 {
 					_, err := t.client.Ping().Result()
 					if err == nil {
-						continue
+						// for continue statement, it may not be run `msg :=<-ch`.
+						// so publisher's channel may exist some bytes stream, it need to send to queue
+						c.RPush(name, string(<-ch))
+						return
 					}
 				}
 				return
