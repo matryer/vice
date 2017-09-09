@@ -80,7 +80,7 @@ func TestSubscriber(t *testing.T) {
 
 	q, err := rmqch.QueueDeclare(
 		"test_receive", // name
-		false,          // durable
+		true,           // durable
 		false,          // delete when unused
 		false,          // exclusive
 		false,          // no-wait
@@ -94,8 +94,9 @@ func TestSubscriber(t *testing.T) {
 		false,  // mandatory
 		false,  // immediate
 		amqp.Publishing{
-			ContentType: "text/plain",
-			Body:        msgToReceive,
+			DeliveryMode: amqp.Persistent,
+			ContentType:  "text/plain",
+			Body:         msgToReceive,
 		})
 	is.NoErr(err)
 	wg.Wait()

@@ -97,7 +97,7 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 
 	q, err := rmqch.QueueDeclare(
 		name,  // name
-		false, // durable
+		true,  // durable
 		false, // delete when used
 		false, // exclusive
 		false, // no-wait
@@ -107,10 +107,20 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 		return nil, err
 	}
 
+	// fair load balancing messages on queue when there are multiple receivers
+	err = rmqch.Qos(
+		1,     // prefetch count
+		0,     // prefetch size
+		false, // global
+	)
+	if err != nil {
+		return nil, err
+	}
+
 	msgs, err := rmqch.Consume(
 		q.Name, // queue
 		"",     // consumer
-		true,   // auto-ack
+		false,  // auto-ack
 		false,  // exclusive
 		false,  // no-local
 		false,  // no-wait
@@ -127,6 +137,7 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 			select {
 			case d := <-msgs:
 				ch <- d.Body
+				d.Ack(false)
 			case <-t.stopSubChan:
 				return
 			}
@@ -168,7 +179,7 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 
 	q, err := rmqch.QueueDeclare(
 		name,  // name
-		false, // durable
+		true,  // durable
 		false, // delete when unused
 		false, // exclusive
 		false, // no-wait
@@ -197,8 +208,9 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 					false,  // mandatory
 					false,  // immediate
 					amqp.Publishing{
-						ContentType: "text/plain",
-						Body:        msg,
+						DeliveryMode: amqp.Persistent,
+						ContentType:  "text/plain",
+						Body:         msg,
 					})
 				if err != nil {
 					t.errChan <- vice.Err{Message: msg, Name: name, Err: err}
