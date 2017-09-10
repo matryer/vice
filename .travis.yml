@@ -27,6 +27,7 @@ before_script:
 
 services:
   - redis
+  - rabbitmq
 
 script:
   - go test -v -timeout 20s -race ./...
