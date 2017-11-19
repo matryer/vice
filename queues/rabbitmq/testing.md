@@ -12,4 +12,4 @@ docker run -d --hostname rabbitmq-test-host --name rabbitmq-test -p 5672:5672 -p
 
 ## Starting container
 
-docker start rabbitmq--test
+docker start rabbitmq-test

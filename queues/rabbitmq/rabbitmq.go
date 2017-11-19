@@ -189,7 +189,7 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 		return nil, err
 	}
 
-	ch := make(chan []byte, 1024)
+	ch := make(chan []byte)
 	t.wg.Add(1)
 	go func() {
 		defer t.wg.Done()
@@ -197,9 +197,12 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 		for {
 			select {
 			case <-t.stopPubChan:
-				if len(ch) != 0 {
-					continue
-				}
+				// uncomment the following code if using buffered channel
+				/*
+					if len(ch) != 0 {
+						continue
+					}
+				*/
 				return
 			case msg := <-ch:
 				err = rmqch.Publish(
