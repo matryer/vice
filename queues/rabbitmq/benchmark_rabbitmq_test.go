@@ -5,6 +5,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/matryer/is"
 )
 
 func BenchmarkTransport(b *testing.B) {
@@ -13,6 +15,8 @@ func BenchmarkTransport(b *testing.B) {
 			b.Fatal("old messages may have confused test")
 		}
 	}()
+
+	is := is.New(b)
 
 	transport := New()
 	transport1 := New()
@@ -30,7 +34,7 @@ func BenchmarkTransport(b *testing.B) {
 				return
 
 			case err := <-transport.ErrChan():
-				b.Fatal("failed with ", err)
+				is.NoErr(err)
 
 			// test local load balancing with the same transport
 			case msg := <-transport.Receive("vicechannel1"):
@@ -96,6 +100,8 @@ func BenchmarkTransport2(b *testing.B) {
 		}
 	}()
 
+	is := is.New(b)
+
 	transport := New()
 	transport1 := New()
 
@@ -110,7 +116,7 @@ func BenchmarkTransport2(b *testing.B) {
 				return
 
 			case err := <-transport.ErrChan():
-				b.Fatal("failed with ", err)
+				is.NoErr(err)
 
 				// test local load balancing with the same transport
 			case <-transport1.Receive("vicechannelbench"):
@@ -138,6 +144,8 @@ func BenchmarkTransport3(b *testing.B) {
 		}
 	}()
 
+	is := is.New(b)
+
 	transport := New()
 
 	doneChan := make(chan struct{})
@@ -150,7 +158,7 @@ func BenchmarkTransport3(b *testing.B) {
 				return
 
 			case err := <-transport.ErrChan():
-				b.Fatal("failed with ", err)
+				is.NoErr(err)
 			}
 		}
 	}()
