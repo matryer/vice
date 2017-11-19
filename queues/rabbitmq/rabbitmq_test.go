@@ -75,8 +75,8 @@ func TestSubscriber(t *testing.T) {
 
 	wg.Add(1)
 	rmqch, err := client2.Channel()
-	defer rmqch.Close()
 	is.NoErr(err)
+	defer rmqch.Close()
 
 	q, err := rmqch.QueueDeclare(
 		"test_receive", // name
