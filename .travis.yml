@@ -11,7 +11,7 @@ before_install:
   # install nsq
   - wget https://s3.amazonaws.com/bitly-downloads/nsq/nsq-1.0.0-compat.linux-amd64.go1.8.tar.gz
   - tar xzvf nsq-1.0.0-compat.linux-amd64.go1.8.tar.gz
-  - sudo mv nsq-1.0.0-compat.linux-amd64.go1.8/bin/* /bin/ 
+  - sudo mv nsq-1.0.0-compat.linux-amd64.go1.8/bin/* /bin/
   - nsqlookupd 2> /dev/null &
   - nsqd --lookupd-tcp-address=127.0.0.1:4160 2> /dev/null &
   - nsqadmin --lookupd-http-address=127.0.0.1:4161 2> /dev/null &
@@ -29,6 +29,7 @@ before_script:
 
 services:
   - redis
+  - rabbitmq
 
 script:
-  - go test -v -timeout 20s -race ./...
+  - go test -v -timeout 30s -race ./...
