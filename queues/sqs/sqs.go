@@ -31,6 +31,9 @@ type Transport struct {
 }
 
 // New returns a new transport
+// Credentials are automatically sourced using the AWS SDK credential chain,
+// for more info see the AWS SDK docs:
+// https://godoc.org/github.com/aws/aws-sdk-go#hdr-Configuring_Credentials
 func New() *Transport {
 	return &Transport{
 		sendChans:    make(map[string]chan []byte),
