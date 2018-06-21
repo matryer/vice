@@ -2,8 +2,10 @@
 package sqs
 
 import (
+	"fmt"
 	"strings"
 	"sync"
+	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -14,7 +16,9 @@ import (
 
 // Transport is a vice.Transport for Amazon's SQS
 type Transport struct {
-	wg sync.WaitGroup
+	batchSize     int
+	batchInterval time.Duration
+	wg            *sync.WaitGroup
 
 	sm        sync.Mutex
 	sendChans map[string]chan []byte
@@ -34,14 +38,25 @@ type Transport struct {
 // Credentials are automatically sourced using the AWS SDK credential chain,
 // for more info see the AWS SDK docs:
 // https://godoc.org/github.com/aws/aws-sdk-go#hdr-Configuring_Credentials
-func New() *Transport {
+func New(batchSize int, batchInterval time.Duration) *Transport {
+	if batchSize > 10 {
+		batchSize = 10
+	}
+
+	if batchInterval == 0 {
+		batchInterval = 200 * time.Millisecond
+	}
+
 	return &Transport{
-		sendChans:    make(map[string]chan []byte),
-		receiveChans: make(map[string]chan []byte),
-		errChan:      make(chan error, 10),
-		stopchan:     make(chan struct{}),
-		stopPubChan:  make(chan struct{}),
-		stopSubChan:  make(chan struct{}),
+		wg:            &sync.WaitGroup{},
+		batchSize:     batchSize,
+		batchInterval: batchInterval,
+		sendChans:     make(map[string]chan []byte),
+		receiveChans:  make(map[string]chan []byte),
+		errChan:       make(chan error, 10),
+		stopchan:      make(chan struct{}),
+		stopPubChan:   make(chan struct{}),
+		stopSubChan:   make(chan struct{}),
 
 		NewService: func(region string) (sqsiface.SQSAPI, error) {
 			awsConfig := aws.NewConfig().WithRegion(region)
@@ -169,6 +184,16 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 	t.wg.Add(1)
 	go func() {
 		defer t.wg.Done()
+		var accum []*sqs.SendMessageBatchRequestEntry
+
+		defer func() {
+			if t.batchSize == 0 && len(accum) == 0 {
+				return
+			}
+
+			t.sendBatch(svc, name, accum)
+			accum = make([]*sqs.SendMessageBatchRequestEntry, 0, t.batchSize)
+		}()
 		for {
 			select {
 			case <-t.stopPubChan:
@@ -178,19 +203,59 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 				return
 
 			case msg := <-ch:
-				params := &sqs.SendMessageInput{
-					MessageBody: aws.String(string(msg)),
-					QueueUrl:    aws.String(name),
-				}
-				_, err := svc.SendMessage(params)
-				if err != nil {
-					t.errChan <- vice.Err{Message: msg, Name: name, Err: err}
+				if t.batchSize == 0 {
+					params := &sqs.SendMessageInput{
+						MessageBody: aws.String(string(msg)),
+						QueueUrl:    aws.String(name),
+					}
+					_, err := svc.SendMessage(params)
+					if err != nil {
+						t.errChan <- vice.Err{Message: msg, Name: name, Err: err}
+					}
 					continue
 				}
+
+				id := fmt.Sprintf("%d", time.Now().UnixNano())
+				accum = append(accum, &sqs.SendMessageBatchRequestEntry{
+					MessageBody: aws.String(string(msg)),
+					Id:          aws.String(id),
+				})
+				if len(accum) < t.batchSize {
+					continue
+				}
+
+				t.sendBatch(svc, name, accum)
+				accum = make([]*sqs.SendMessageBatchRequestEntry, 0, t.batchSize)
+			case <-time.After(t.batchInterval):
+				if len(accum) == 0 {
+					continue
+				}
+
+				t.sendBatch(svc, name, accum)
+				accum = make([]*sqs.SendMessageBatchRequestEntry, 0, t.batchSize)
 			}
 		}
 	}()
+
 	return ch, nil
+}
+
+func (t *Transport) sendBatch(svc sqsiface.SQSAPI, name string, entries []*sqs.SendMessageBatchRequestEntry) {
+	batchParams := &sqs.SendMessageBatchInput{
+		Entries:  entries,
+		QueueUrl: aws.String(name),
+	}
+
+	resp, err := svc.SendMessageBatch(batchParams)
+	if err != nil {
+		t.errChan <- vice.Err{Name: name, Err: err}
+		return
+	}
+
+	for _, v := range resp.Failed {
+		err := fmt.Errorf("%s", *v.Message)
+		t.errChan <- vice.Err{Name: name, Err: err}
+	}
 }
 
 // ErrChan gets the channel on which errors are sent.
