@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cheekybits/is"
+	"github.com/matryer/is"
 	"github.com/matryer/vice"
 )
 
@@ -38,7 +38,7 @@ func testSendChannelsDontBlock(t *testing.T, newTransport func() vice.Transport)
 	case transport.Send("something") <- []byte("message"):
 		return
 	case <-time.After(1 * time.Second):
-		is.Fail("send channels shouldn't block")
+		is.Fail() // send channels shouldn't block
 	}
 }
 
@@ -48,7 +48,7 @@ func testStandardTransportBehaviour(t *testing.T, newTransport func() vice.Trans
 	is := is.New(t)
 	defer func() {
 		if r := recover(); r != nil {
-			is.Fail("old messages may have confused test:", r)
+			is.Fail() // old messages may have confused test
 		}
 	}()
 
@@ -130,9 +130,9 @@ func testStandardTransportBehaviour(t *testing.T, newTransport func() vice.Trans
 	is.Equal(len(messages["vicechannel2"]), 100)
 	is.Equal(len(messages["vicechannel3"]), 100)
 
-	is.NotEqual(len(messages["vicechannel4.1"]), 100)
-	is.NotEqual(len(messages["vicechannel4.2"]), 100)
-	is.NotEqual(len(messages["vicechannel4.3"]), 100)
+	is.True(len(messages["vicechannel4.1"]) != 100)
+	is.True(len(messages["vicechannel4.2"]) != 100)
+	is.True(len(messages["vicechannel4.3"]) != 100)
 
 	is.Equal(len(messages["vicechannel4.1"])+len(messages["vicechannel4.2"])+len(messages["vicechannel4.3"]), 100)
 }

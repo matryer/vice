@@ -21,8 +21,11 @@ func TestDefaultTransport(t *testing.T) {
 	vicetest.Transport(t, new)
 }
 func TestStreamingTransport(t *testing.T) {
+	is := is.New(t)
 	new := func() vice.Transport {
-		return New(WithStreaming("test-cluster", uuid.NewV4().String()))
+		u, err := uuid.NewV4()
+		is.NoErr(err)
+		return New(WithStreaming("test-cluster", u.String()))
 	}
 
 	vicetest.Transport(t, new)
@@ -31,8 +34,10 @@ func TestStreamingTransport(t *testing.T) {
 func TestReceive(t *testing.T) {
 	is := is.New(t)
 
+	u, err := uuid.NewV4()
+	is.NoErr(err)
 	transport := New()
-	streamTransport := New(WithStreaming("test-cluster", uuid.NewV4().String()))
+	streamTransport := New(WithStreaming("test-cluster", u.String()))
 
 	var wg sync.WaitGroup
 
@@ -86,8 +91,10 @@ func TestReceive(t *testing.T) {
 func TestSend(t *testing.T) {
 	is := is.New(t)
 
+	u, err := uuid.NewV4()
+	is.NoErr(err)
 	transport := New()
-	streamTransport := New(WithStreaming("test-cluster", uuid.NewV4().String()))
+	streamTransport := New(WithStreaming("test-cluster", u.String()))
 
 	var wg sync.WaitGroup
 
