@@ -2,7 +2,6 @@ package sqs
 
 import (
 	"strconv"
-	"sync"
 	"testing"
 	"time"
 
@@ -12,19 +11,18 @@ import (
 
 	"github.com/aws/aws-sdk-go/service/sqs"
 	"github.com/aws/aws-sdk-go/service/sqs/sqsiface"
-	"github.com/matryer/is"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
-func TestTransport(t *testing.T) {
+func TestMultiTransport(t *testing.T) {
 	svc := &mockSQSClient{
 		chs:    make(map[string]chan string),
 		finish: make(chan bool),
 	}
 
-	new := func() vice.Transport {
-		transport := New(0, 10*time.Second)
+	newT := func() vice.Transport {
+		transport := NewMulti(1, 0, 10*time.Second)
 		transport.NewService = func(region string) (sqsiface.SQSAPI, error) {
 			return svc, nil
 		}
@@ -32,12 +30,12 @@ func TestTransport(t *testing.T) {
 		return transport
 	}
 
-	vicetest.Transport(t, new)
+	vicetest.Transport(t, newT)
 	close(svc.finish)
 }
 
-func Test_Transport_BatchesWrites(t *testing.T) {
-	newTransport := New(10, 200*time.Millisecond)
+func Test_MultiTransport_SingleWriterBatchesWrites(t *testing.T) {
+	newTransport := NewMulti(1, 10, 1000*time.Millisecond)
 	svc := new(sqsfakes.FakeSQSAPI)
 	svc.SendMessageBatchReturns(&sqs.SendMessageBatchOutput{}, nil)
 	newTransport.NewService = func(region string) (sqsiface.SQSAPI, error) { return svc, nil }
@@ -47,30 +45,29 @@ func Test_Transport_BatchesWrites(t *testing.T) {
 		stream <- []byte(strconv.Itoa(i))
 	}
 	time.Sleep(100 * time.Millisecond)
-
 	require.Equal(t, 3, svc.SendMessageBatchCallCount())
 
 	batch0 := svc.SendMessageBatchArgsForCall(0)
 	require.Equal(t, 10, len(batch0.Entries))
 	for i := 0; i < 10; i++ {
-		assert.Equal(t, strconv.Itoa(i), *batch0.Entries[i].MessageBody)
+		assert.Contains(t, *batch0.Entries[i].MessageBody, strconv.Itoa(i))
 	}
 
 	batch1 := svc.SendMessageBatchArgsForCall(1)
 	require.Equal(t, 10, len(batch1.Entries))
 	for i := 0; i < 10; i++ {
-		assert.Equal(t, strconv.Itoa(i+10), *batch1.Entries[i].MessageBody)
+		assert.Contains(t, *batch1.Entries[i].MessageBody, strconv.Itoa(i))
 	}
 
 	batch2 := svc.SendMessageBatchArgsForCall(2)
 	require.Equal(t, 10, len(batch2.Entries))
 	for i := 0; i < 10; i++ {
-		assert.Equal(t, strconv.Itoa(i+20), *batch2.Entries[i].MessageBody)
+		assert.Contains(t, *batch2.Entries[i].MessageBody, strconv.Itoa(i))
 	}
 }
 
-func Test_Transport_BatchFlushesOnReturn(t *testing.T) {
-	newTransport := New(10, 1000*time.Millisecond)
+func Test_MultiTransport_SingleWriterBatchFlushesOnReturn(t *testing.T) {
+	newTransport := NewMulti(1, 10, 1000*time.Millisecond)
 	svc := new(sqsfakes.FakeSQSAPI)
 	svc.SendMessageBatchReturns(&sqs.SendMessageBatchOutput{}, nil)
 	newTransport.NewService = func(region string) (sqsiface.SQSAPI, error) { return svc, nil }
@@ -93,54 +90,40 @@ func Test_Transport_BatchFlushesOnReturn(t *testing.T) {
 	}
 }
 
-func TestParseRegion(t *testing.T) {
-	is := is.New(t)
-	reg := RegionFromURL("http://sqs.us-east-2.amazonaws.com/123456789012/MyQueue")
-	is.Equal("us-east-2", reg)
-
-	reg = RegionFromURL("http://localhost/svcWriter")
-	is.Equal("", reg)
-}
-
-type mockSQSClient struct {
-	sqsiface.SQSAPI
-	chs    map[string]chan string
-	mutex  sync.Mutex
-	finish chan bool
-}
-
-func (m *mockSQSClient) SendMessage(s *sqs.SendMessageInput) (*sqs.SendMessageOutput, error) {
-	q := *s.QueueUrl
-	m.mutex.Lock()
-	ch, ok := m.chs[q]
-	if !ok {
-		ch = make(chan string, 200)
-		m.chs[q] = ch
+func Test_MultiTransport_MultipleWritersBatchesWrites(t *testing.T) {
+	newTransport := NewMulti(3, 10, 1000*time.Millisecond)
+	var svcs []*sqsfakes.FakeSQSAPI
+	for i := 0; i < 3; i++ {
+		svc := new(sqsfakes.FakeSQSAPI)
+		svc.SendMessageBatchStub = func(input *sqs.SendMessageBatchInput) (*sqs.SendMessageBatchOutput, error) {
+			time.Sleep(200 * time.Millisecond)
+			return &sqs.SendMessageBatchOutput{}, nil
+		}
+		svcs = append(svcs, svc)
 	}
-	m.mutex.Unlock()
 
-	ch <- *s.MessageBody
-	return &sqs.SendMessageOutput{}, nil
-}
-
-func (m *mockSQSClient) ReceiveMessage(s *sqs.ReceiveMessageInput) (*sqs.ReceiveMessageOutput, error) {
-	q := *s.QueueUrl
-	m.mutex.Lock()
-	ch, ok := m.chs[q]
-	if !ok {
-		ch = make(chan string, 200)
-		m.chs[q] = ch
+	var numWriters int
+	newTransport.NewService = func(region string) (sqsiface.SQSAPI, error) {
+		svc := svcs[numWriters]
+		numWriters++
+		return svc, nil
 	}
-	m.mutex.Unlock()
 
-	out := &sqs.ReceiveMessageOutput{}
-	msg := &sqs.Message{}
-
-	select {
-	case temp := <-ch:
-		msg.Body = &temp
-		out.Messages = append(out.Messages, msg)
-	case <-m.finish:
+	stream := newTransport.Send("svcWriter")
+	for i := 0; i < 30; i++ {
+		stream <- []byte(strconv.Itoa(i))
 	}
-	return out, nil
+	time.Sleep(100 * time.Millisecond)
+
+	require.Equal(t, 3, numWriters)
+
+	for i := 0; i < 3; i++ {
+		svc := svcs[i]
+		require.Equal(t, 1, svc.SendMessageBatchCallCount())
+		batch := svc.SendMessageBatchArgsForCall(0)
+		require.Equal(t, 10, len(batch.Entries))
+		for j := 0; j < 10; j++ {
+			assert.Contains(t, *batch.Entries[j].MessageBody, strconv.Itoa(j))
+		}
+	}
 }
