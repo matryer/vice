@@ -8,7 +8,7 @@
 * Develop against in-memory implementation before putting it into the wild
 * Independent unit tests (no need for running queue technology)
 
-PROJECT STATUS: BETA - Aiming for v1.0 release in October 2017.
+PROJECT STATUS: [v1 released](https://github.com/matryer/vice/releases/tag/v1.0.0)
 
 ## Usage
 
