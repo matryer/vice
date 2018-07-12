@@ -31,7 +31,7 @@ type Err struct {
 	Err     error
 }
 
-func (e Err) Error() string {
+func (e *Err) Error() string {
 	if len(e.Message) > 0 {
 		return fmt.Sprintf("%s: |%s| <- `%s`", e.Err, e.Name, string(e.Message))
 	}

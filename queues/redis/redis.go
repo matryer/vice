@@ -75,7 +75,7 @@ func (t *Transport) Receive(name string) <-chan []byte {
 
 	ch, err := t.makeSubscriber(name)
 	if err != nil {
-		t.errChan <- vice.Err{Name: name, Err: err}
+		t.errChan <- &vice.Err{Name: name, Err: err}
 		return make(chan []byte)
 	}
 
@@ -98,7 +98,7 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 				case <-t.stopSubChan:
 					return
 				default:
-					t.errChan <- vice.Err{Name: name, Err: err}
+					t.errChan <- &vice.Err{Name: name, Err: err}
 					continue
 				}
 			}
@@ -122,7 +122,7 @@ func (t *Transport) Send(name string) chan<- []byte {
 
 	ch, err := t.makePublisher(name)
 	if err != nil {
-		t.errChan <- vice.Err{Name: name, Err: err}
+		t.errChan <- &vice.Err{Name: name, Err: err}
 		return make(chan []byte)
 	}
 	t.sendChans[name] = ch
@@ -152,7 +152,7 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 			case msg := <-ch:
 				err := c.RPush(name, string(msg)).Err()
 				if err != nil {
-					t.errChan <- vice.Err{Message: msg, Name: name, Err: err}
+					t.errChan <- &vice.Err{Message: msg, Name: name, Err: err}
 				}
 			}
 		}
