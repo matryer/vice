@@ -90,7 +90,7 @@ func (t *Transport) Receive(name string) <-chan []byte {
 		// failed to make a consumer, so send an error down the
 		// ReceiveErrs channel and return an empty channel to
 		// avoid panic.
-		t.errChan <- vice.Err{Name: name, Err: err}
+		t.errChan <- &vice.Err{Name: name, Err: err}
 		return make(chan []byte)
 	}
 	t.receiveChans[name] = ch
@@ -136,7 +136,7 @@ func (t *Transport) Send(name string) chan<- []byte {
 		// failed to make a producer, send an error down the
 		// sendErrsChan and return an empty channel so we don't
 		// panic.
-		t.errChan <- vice.Err{Name: name, Err: err}
+		t.errChan <- &vice.Err{Name: name, Err: err}
 		return make(chan []byte)
 	}
 	t.sendChans[name] = ch
@@ -164,7 +164,7 @@ func (t *Transport) makeProducer(name string) (chan []byte, error) {
 					return producer.Publish(name, msg)
 				})
 				if err != nil {
-					t.errChan <- vice.Err{Message: msg, Name: name, Err: err}
+					t.errChan <- &vice.Err{Message: msg, Name: name, Err: err}
 					continue
 				}
 			}

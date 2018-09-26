@@ -92,7 +92,7 @@ func (t *MultiTransport) Receive(name string) <-chan []byte {
 
 	ch, err := t.makeSubscriber(name)
 	if err != nil {
-		t.errChan <- vice.Err{Name: name, Err: err}
+		t.errChan <- &vice.Err{Name: name, Err: err}
 		return make(chan []byte)
 	}
 
@@ -124,7 +124,7 @@ func (t *MultiTransport) makeSubscriber(name string) (chan []byte, error) {
 			default:
 				resp, err := svc.ReceiveMessage(params)
 				if err != nil {
-					t.errChan <- vice.Err{Name: name, Err: err}
+					t.errChan <- &vice.Err{Name: name, Err: err}
 					continue
 				}
 
@@ -137,7 +137,7 @@ func (t *MultiTransport) makeSubscriber(name string) (chan []byte, error) {
 							}
 							_, err := svc.DeleteMessage(delParams)
 							if err != nil {
-								t.errChan <- vice.Err{Name: name, Err: err}
+								t.errChan <- &vice.Err{Name: name, Err: err}
 								continue
 							}
 						}
@@ -164,7 +164,7 @@ func (t *MultiTransport) Send(name string) chan<- []byte {
 
 	ch, err := t.makePublishers(name)
 	if err != nil {
-		t.errChan <- vice.Err{Name: name, Err: err}
+		t.errChan <- &vice.Err{Name: name, Err: err}
 		return make(chan []byte)
 	}
 
@@ -353,7 +353,7 @@ func (s *svcWriter) sendMessage(name string, msg sqs.SendMessageBatchRequestEntr
 		QueueUrl:    aws.String(name),
 	})
 	if err != nil {
-		s.errChan <- vice.Err{Message: []byte(*msg.MessageBody), Name: name, Err: err}
+		s.errChan <- &vice.Err{Message: []byte(*msg.MessageBody), Name: name, Err: err}
 	}
 }
 
@@ -374,11 +374,11 @@ func (s *svcWriter) sendBatch(name string, batch sendMsgBatch) {
 
 	resp, err := s.svc.SendMessageBatch(batchParams)
 	if err != nil {
-		s.errChan <- vice.Err{Name: name, Err: err}
+		s.errChan <- &vice.Err{Name: name, Err: err}
 		return
 	}
 
 	for _, v := range resp.Failed {
-		s.errChan <- vice.Err{Name: name, Err: fmt.Errorf("%s", *v.Message)}
+		s.errChan <- &vice.Err{Name: name, Err: fmt.Errorf("%s", *v.Message)}
 	}
 }

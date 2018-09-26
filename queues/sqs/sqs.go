@@ -82,7 +82,7 @@ func (t *Transport) Receive(name string) <-chan []byte {
 
 	ch, err := t.makeSubscriber(name)
 	if err != nil {
-		t.errChan <- vice.Err{Name: name, Err: err}
+		t.errChan <- &vice.Err{Name: name, Err: err}
 		return make(chan []byte)
 	}
 
@@ -124,7 +124,7 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 			default:
 				resp, err := svc.ReceiveMessage(params)
 				if err != nil {
-					t.errChan <- vice.Err{Name: name, Err: err}
+					t.errChan <- &vice.Err{Name: name, Err: err}
 					continue
 				}
 
@@ -137,7 +137,7 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 							}
 							_, err := svc.DeleteMessage(delParams)
 							if err != nil {
-								t.errChan <- vice.Err{Name: name, Err: err}
+								t.errChan <- &vice.Err{Name: name, Err: err}
 								continue
 							}
 						}
@@ -164,7 +164,7 @@ func (t *Transport) Send(name string) chan<- []byte {
 
 	ch, err := t.makePublisher(name)
 	if err != nil {
-		t.errChan <- vice.Err{Name: name, Err: err}
+		t.errChan <- &vice.Err{Name: name, Err: err}
 		return make(chan []byte)
 	}
 
@@ -210,7 +210,7 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 					}
 					_, err := svc.SendMessage(params)
 					if err != nil {
-						t.errChan <- vice.Err{Message: msg, Name: name, Err: err}
+						t.errChan <- &vice.Err{Message: msg, Name: name, Err: err}
 					}
 					continue
 				}
@@ -248,13 +248,13 @@ func (t *Transport) sendBatch(svc sqsiface.SQSAPI, name string, entries []*sqs.S
 
 	resp, err := svc.SendMessageBatch(batchParams)
 	if err != nil {
-		t.errChan <- vice.Err{Name: name, Err: err}
+		t.errChan <- &vice.Err{Name: name, Err: err}
 		return
 	}
 
 	for _, v := range resp.Failed {
 		err := fmt.Errorf("%s", *v.Message)
-		t.errChan <- vice.Err{Name: name, Err: err}
+		t.errChan <- &vice.Err{Name: name, Err: err}
 	}
 }
 
