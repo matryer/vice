@@ -104,6 +104,12 @@ func (t *Transport) makeSubscriber(topic string) (chan []byte, error) {
 		return nil, token.Error()
 	}
 	if token := cli.Subscribe(SharedQueuePrefix+topic, t.subQoS, func(c mqtt.Client, msg mqtt.Message) {
+		if !cli.IsConnected() {
+			if token := cli.Connect(); token.Wait() && token.Error() != nil {
+				t.errChan <- &vice.Err{Name: topic, Err: token.Error(), Message: msg.Payload()}
+			}
+			return
+		}
 		ch <- msg.Payload()
 	}); token.WaitTimeout(t.subTimeout) && token.Error() != nil {
 		return nil, token.Error()
@@ -151,6 +157,12 @@ func (t *Transport) makePublisher(topic string) (chan []byte, error) {
 				cli.Disconnect(100)
 				return
 			case msg := <-ch:
+				if !cli.IsConnected() {
+					if token := cli.Connect(); token.Wait() && token.Error() != nil {
+						t.errChan <- &vice.Err{Name: topic, Err: token.Error(), Message: msg}
+					}
+					continue
+				}
 				if token := cli.Publish(topic, t.pubQoS, t.pubRetained, msg); token.WaitTimeout(t.pubTimeout) && token.Error() != nil {
 					t.errChan <- &vice.Err{Name: topic, Err: token.Error()}
 				}
