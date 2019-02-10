@@ -4,7 +4,7 @@ go:
   - 1.11.x
 
 before_install:
-  - go get github.com/golang/lint/golint
+  - go get golang.org/x/lint/golint
   - go get honnef.co/go/tools/cmd/megacheck
 
   # install nsq

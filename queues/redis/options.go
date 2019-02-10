@@ -1,6 +1,6 @@
 package redis
 
-import "gopkg.in/redis.v3"
+import "github.com/go-redis/redis"
 
 type Options struct {
 	Client *redis.Client

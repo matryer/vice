@@ -5,8 +5,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/go-redis/redis"
 	"github.com/matryer/vice"
-	"gopkg.in/redis.v3"
 )
 
 // Transport is a vice.Transport for redis.
