@@ -18,6 +18,9 @@ before_install:
   - wget https://github.com/nats-io/nats-streaming-server/releases/download/v0.5.0/nats-streaming-server-v0.5.0-linux-amd64.zip
   - unzip -d gnatsd -j nats-streaming-server-v0.5.0-linux-amd64.zip
   - ./gnatsd/nats-streaming-server &
+  # install EMQ
+  - docker pull emqx/emqx:v3.0.0
+  - docker run -d -p 127.0.0.1:1883:1883 --name mqtt -e 'EMQX_ALLOW_ANONYMOUS=true' emqx/emqx:v3.0.0
   # give the queues some time to start.
   - sleep 5
 
@@ -29,6 +32,7 @@ before_script:
 services:
   - redis
   - rabbitmq
+  - docker
 
 script:
   - go test -v -timeout 30s -race ./...
