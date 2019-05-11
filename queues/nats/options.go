@@ -1,6 +1,6 @@
 package nats
 
-import "github.com/nats-io/go-nats"
+import "github.com/nats-io/nats.go"
 
 // Options can be used to create a customized transport.
 type Options struct {

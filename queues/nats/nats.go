@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/matryer/vice"
-	"github.com/nats-io/go-nats"
-	"github.com/nats-io/go-nats-streaming"
+	"github.com/nats-io/nats.go"
+	"github.com/nats-io/stan.go"
 )
 
 // DefaultAddr is the NATS default TCP address.
