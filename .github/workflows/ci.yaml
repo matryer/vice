@@ -25,11 +25,11 @@ jobs:
         ports:
           - "5672:5672"
       nsq:
-        image: "nsqio/nsq:v1.2.1"
+        image: "nsqio/nsq:v1.0.0"
         ports:
           - "4150:4150"
       nats:
-        image: "bitnami/nats:1.4.0"
+        image: "nats-streaming:0.5.0"
         ports:
           - "4222:4222"
     steps:
