@@ -26,6 +26,12 @@ jobs:
       - name: Get source
         uses: actions/checkout@v3
 
+      - name: Go vet
+        run: go vet ./...
+
+      - name: Go test
+        run: go test -v -timeout 30s -race ./...
+
     services:
       redis:
         image: "redis:7"
