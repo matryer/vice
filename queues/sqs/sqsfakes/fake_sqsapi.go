@@ -2,9 +2,9 @@
 package sqsfakes
 
 import (
+	"context"
 	"sync"
 
-	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/request"
 	"github.com/aws/aws-sdk-go/service/sqs"
 	"github.com/aws/aws-sdk-go/service/sqs/sqsiface"
@@ -24,21 +24,6 @@ type FakeSQSAPI struct {
 		result1 *sqs.AddPermissionOutput
 		result2 error
 	}
-	AddPermissionWithContextStub        func(aws.Context, *sqs.AddPermissionInput, ...request.Option) (*sqs.AddPermissionOutput, error)
-	addPermissionWithContextMutex       sync.RWMutex
-	addPermissionWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.AddPermissionInput
-		arg3 []request.Option
-	}
-	addPermissionWithContextReturns struct {
-		result1 *sqs.AddPermissionOutput
-		result2 error
-	}
-	addPermissionWithContextReturnsOnCall map[int]struct {
-		result1 *sqs.AddPermissionOutput
-		result2 error
-	}
 	AddPermissionRequestStub        func(*sqs.AddPermissionInput) (*request.Request, *sqs.AddPermissionOutput)
 	addPermissionRequestMutex       sync.RWMutex
 	addPermissionRequestArgsForCall []struct {
@@ -51,6 +36,21 @@ type FakeSQSAPI struct {
 	addPermissionRequestReturnsOnCall map[int]struct {
 		result1 *request.Request
 		result2 *sqs.AddPermissionOutput
+	}
+	AddPermissionWithContextStub        func(context.Context, *sqs.AddPermissionInput, ...request.Option) (*sqs.AddPermissionOutput, error)
+	addPermissionWithContextMutex       sync.RWMutex
+	addPermissionWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.AddPermissionInput
+		arg3 []request.Option
+	}
+	addPermissionWithContextReturns struct {
+		result1 *sqs.AddPermissionOutput
+		result2 error
+	}
+	addPermissionWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.AddPermissionOutput
+		result2 error
 	}
 	ChangeMessageVisibilityStub        func(*sqs.ChangeMessageVisibilityInput) (*sqs.ChangeMessageVisibilityOutput, error)
 	changeMessageVisibilityMutex       sync.RWMutex
@@ -65,34 +65,6 @@ type FakeSQSAPI struct {
 		result1 *sqs.ChangeMessageVisibilityOutput
 		result2 error
 	}
-	ChangeMessageVisibilityWithContextStub        func(aws.Context, *sqs.ChangeMessageVisibilityInput, ...request.Option) (*sqs.ChangeMessageVisibilityOutput, error)
-	changeMessageVisibilityWithContextMutex       sync.RWMutex
-	changeMessageVisibilityWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.ChangeMessageVisibilityInput
-		arg3 []request.Option
-	}
-	changeMessageVisibilityWithContextReturns struct {
-		result1 *sqs.ChangeMessageVisibilityOutput
-		result2 error
-	}
-	changeMessageVisibilityWithContextReturnsOnCall map[int]struct {
-		result1 *sqs.ChangeMessageVisibilityOutput
-		result2 error
-	}
-	ChangeMessageVisibilityRequestStub        func(*sqs.ChangeMessageVisibilityInput) (*request.Request, *sqs.ChangeMessageVisibilityOutput)
-	changeMessageVisibilityRequestMutex       sync.RWMutex
-	changeMessageVisibilityRequestArgsForCall []struct {
-		arg1 *sqs.ChangeMessageVisibilityInput
-	}
-	changeMessageVisibilityRequestReturns struct {
-		result1 *request.Request
-		result2 *sqs.ChangeMessageVisibilityOutput
-	}
-	changeMessageVisibilityRequestReturnsOnCall map[int]struct {
-		result1 *request.Request
-		result2 *sqs.ChangeMessageVisibilityOutput
-	}
 	ChangeMessageVisibilityBatchStub        func(*sqs.ChangeMessageVisibilityBatchInput) (*sqs.ChangeMessageVisibilityBatchOutput, error)
 	changeMessageVisibilityBatchMutex       sync.RWMutex
 	changeMessageVisibilityBatchArgsForCall []struct {
@@ -103,21 +75,6 @@ type FakeSQSAPI struct {
 		result2 error
 	}
 	changeMessageVisibilityBatchReturnsOnCall map[int]struct {
-		result1 *sqs.ChangeMessageVisibilityBatchOutput
-		result2 error
-	}
-	ChangeMessageVisibilityBatchWithContextStub        func(aws.Context, *sqs.ChangeMessageVisibilityBatchInput, ...request.Option) (*sqs.ChangeMessageVisibilityBatchOutput, error)
-	changeMessageVisibilityBatchWithContextMutex       sync.RWMutex
-	changeMessageVisibilityBatchWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.ChangeMessageVisibilityBatchInput
-		arg3 []request.Option
-	}
-	changeMessageVisibilityBatchWithContextReturns struct {
-		result1 *sqs.ChangeMessageVisibilityBatchOutput
-		result2 error
-	}
-	changeMessageVisibilityBatchWithContextReturnsOnCall map[int]struct {
 		result1 *sqs.ChangeMessageVisibilityBatchOutput
 		result2 error
 	}
@@ -134,6 +91,49 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.ChangeMessageVisibilityBatchOutput
 	}
+	ChangeMessageVisibilityBatchWithContextStub        func(context.Context, *sqs.ChangeMessageVisibilityBatchInput, ...request.Option) (*sqs.ChangeMessageVisibilityBatchOutput, error)
+	changeMessageVisibilityBatchWithContextMutex       sync.RWMutex
+	changeMessageVisibilityBatchWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.ChangeMessageVisibilityBatchInput
+		arg3 []request.Option
+	}
+	changeMessageVisibilityBatchWithContextReturns struct {
+		result1 *sqs.ChangeMessageVisibilityBatchOutput
+		result2 error
+	}
+	changeMessageVisibilityBatchWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.ChangeMessageVisibilityBatchOutput
+		result2 error
+	}
+	ChangeMessageVisibilityRequestStub        func(*sqs.ChangeMessageVisibilityInput) (*request.Request, *sqs.ChangeMessageVisibilityOutput)
+	changeMessageVisibilityRequestMutex       sync.RWMutex
+	changeMessageVisibilityRequestArgsForCall []struct {
+		arg1 *sqs.ChangeMessageVisibilityInput
+	}
+	changeMessageVisibilityRequestReturns struct {
+		result1 *request.Request
+		result2 *sqs.ChangeMessageVisibilityOutput
+	}
+	changeMessageVisibilityRequestReturnsOnCall map[int]struct {
+		result1 *request.Request
+		result2 *sqs.ChangeMessageVisibilityOutput
+	}
+	ChangeMessageVisibilityWithContextStub        func(context.Context, *sqs.ChangeMessageVisibilityInput, ...request.Option) (*sqs.ChangeMessageVisibilityOutput, error)
+	changeMessageVisibilityWithContextMutex       sync.RWMutex
+	changeMessageVisibilityWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.ChangeMessageVisibilityInput
+		arg3 []request.Option
+	}
+	changeMessageVisibilityWithContextReturns struct {
+		result1 *sqs.ChangeMessageVisibilityOutput
+		result2 error
+	}
+	changeMessageVisibilityWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.ChangeMessageVisibilityOutput
+		result2 error
+	}
 	CreateQueueStub        func(*sqs.CreateQueueInput) (*sqs.CreateQueueOutput, error)
 	createQueueMutex       sync.RWMutex
 	createQueueArgsForCall []struct {
@@ -144,21 +144,6 @@ type FakeSQSAPI struct {
 		result2 error
 	}
 	createQueueReturnsOnCall map[int]struct {
-		result1 *sqs.CreateQueueOutput
-		result2 error
-	}
-	CreateQueueWithContextStub        func(aws.Context, *sqs.CreateQueueInput, ...request.Option) (*sqs.CreateQueueOutput, error)
-	createQueueWithContextMutex       sync.RWMutex
-	createQueueWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.CreateQueueInput
-		arg3 []request.Option
-	}
-	createQueueWithContextReturns struct {
-		result1 *sqs.CreateQueueOutput
-		result2 error
-	}
-	createQueueWithContextReturnsOnCall map[int]struct {
 		result1 *sqs.CreateQueueOutput
 		result2 error
 	}
@@ -175,6 +160,21 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.CreateQueueOutput
 	}
+	CreateQueueWithContextStub        func(context.Context, *sqs.CreateQueueInput, ...request.Option) (*sqs.CreateQueueOutput, error)
+	createQueueWithContextMutex       sync.RWMutex
+	createQueueWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.CreateQueueInput
+		arg3 []request.Option
+	}
+	createQueueWithContextReturns struct {
+		result1 *sqs.CreateQueueOutput
+		result2 error
+	}
+	createQueueWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.CreateQueueOutput
+		result2 error
+	}
 	DeleteMessageStub        func(*sqs.DeleteMessageInput) (*sqs.DeleteMessageOutput, error)
 	deleteMessageMutex       sync.RWMutex
 	deleteMessageArgsForCall []struct {
@@ -188,34 +188,6 @@ type FakeSQSAPI struct {
 		result1 *sqs.DeleteMessageOutput
 		result2 error
 	}
-	DeleteMessageWithContextStub        func(aws.Context, *sqs.DeleteMessageInput, ...request.Option) (*sqs.DeleteMessageOutput, error)
-	deleteMessageWithContextMutex       sync.RWMutex
-	deleteMessageWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.DeleteMessageInput
-		arg3 []request.Option
-	}
-	deleteMessageWithContextReturns struct {
-		result1 *sqs.DeleteMessageOutput
-		result2 error
-	}
-	deleteMessageWithContextReturnsOnCall map[int]struct {
-		result1 *sqs.DeleteMessageOutput
-		result2 error
-	}
-	DeleteMessageRequestStub        func(*sqs.DeleteMessageInput) (*request.Request, *sqs.DeleteMessageOutput)
-	deleteMessageRequestMutex       sync.RWMutex
-	deleteMessageRequestArgsForCall []struct {
-		arg1 *sqs.DeleteMessageInput
-	}
-	deleteMessageRequestReturns struct {
-		result1 *request.Request
-		result2 *sqs.DeleteMessageOutput
-	}
-	deleteMessageRequestReturnsOnCall map[int]struct {
-		result1 *request.Request
-		result2 *sqs.DeleteMessageOutput
-	}
 	DeleteMessageBatchStub        func(*sqs.DeleteMessageBatchInput) (*sqs.DeleteMessageBatchOutput, error)
 	deleteMessageBatchMutex       sync.RWMutex
 	deleteMessageBatchArgsForCall []struct {
@@ -226,21 +198,6 @@ type FakeSQSAPI struct {
 		result2 error
 	}
 	deleteMessageBatchReturnsOnCall map[int]struct {
-		result1 *sqs.DeleteMessageBatchOutput
-		result2 error
-	}
-	DeleteMessageBatchWithContextStub        func(aws.Context, *sqs.DeleteMessageBatchInput, ...request.Option) (*sqs.DeleteMessageBatchOutput, error)
-	deleteMessageBatchWithContextMutex       sync.RWMutex
-	deleteMessageBatchWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.DeleteMessageBatchInput
-		arg3 []request.Option
-	}
-	deleteMessageBatchWithContextReturns struct {
-		result1 *sqs.DeleteMessageBatchOutput
-		result2 error
-	}
-	deleteMessageBatchWithContextReturnsOnCall map[int]struct {
 		result1 *sqs.DeleteMessageBatchOutput
 		result2 error
 	}
@@ -257,6 +214,49 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.DeleteMessageBatchOutput
 	}
+	DeleteMessageBatchWithContextStub        func(context.Context, *sqs.DeleteMessageBatchInput, ...request.Option) (*sqs.DeleteMessageBatchOutput, error)
+	deleteMessageBatchWithContextMutex       sync.RWMutex
+	deleteMessageBatchWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.DeleteMessageBatchInput
+		arg3 []request.Option
+	}
+	deleteMessageBatchWithContextReturns struct {
+		result1 *sqs.DeleteMessageBatchOutput
+		result2 error
+	}
+	deleteMessageBatchWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.DeleteMessageBatchOutput
+		result2 error
+	}
+	DeleteMessageRequestStub        func(*sqs.DeleteMessageInput) (*request.Request, *sqs.DeleteMessageOutput)
+	deleteMessageRequestMutex       sync.RWMutex
+	deleteMessageRequestArgsForCall []struct {
+		arg1 *sqs.DeleteMessageInput
+	}
+	deleteMessageRequestReturns struct {
+		result1 *request.Request
+		result2 *sqs.DeleteMessageOutput
+	}
+	deleteMessageRequestReturnsOnCall map[int]struct {
+		result1 *request.Request
+		result2 *sqs.DeleteMessageOutput
+	}
+	DeleteMessageWithContextStub        func(context.Context, *sqs.DeleteMessageInput, ...request.Option) (*sqs.DeleteMessageOutput, error)
+	deleteMessageWithContextMutex       sync.RWMutex
+	deleteMessageWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.DeleteMessageInput
+		arg3 []request.Option
+	}
+	deleteMessageWithContextReturns struct {
+		result1 *sqs.DeleteMessageOutput
+		result2 error
+	}
+	deleteMessageWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.DeleteMessageOutput
+		result2 error
+	}
 	DeleteQueueStub        func(*sqs.DeleteQueueInput) (*sqs.DeleteQueueOutput, error)
 	deleteQueueMutex       sync.RWMutex
 	deleteQueueArgsForCall []struct {
@@ -267,21 +267,6 @@ type FakeSQSAPI struct {
 		result2 error
 	}
 	deleteQueueReturnsOnCall map[int]struct {
-		result1 *sqs.DeleteQueueOutput
-		result2 error
-	}
-	DeleteQueueWithContextStub        func(aws.Context, *sqs.DeleteQueueInput, ...request.Option) (*sqs.DeleteQueueOutput, error)
-	deleteQueueWithContextMutex       sync.RWMutex
-	deleteQueueWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.DeleteQueueInput
-		arg3 []request.Option
-	}
-	deleteQueueWithContextReturns struct {
-		result1 *sqs.DeleteQueueOutput
-		result2 error
-	}
-	deleteQueueWithContextReturnsOnCall map[int]struct {
 		result1 *sqs.DeleteQueueOutput
 		result2 error
 	}
@@ -298,6 +283,21 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.DeleteQueueOutput
 	}
+	DeleteQueueWithContextStub        func(context.Context, *sqs.DeleteQueueInput, ...request.Option) (*sqs.DeleteQueueOutput, error)
+	deleteQueueWithContextMutex       sync.RWMutex
+	deleteQueueWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.DeleteQueueInput
+		arg3 []request.Option
+	}
+	deleteQueueWithContextReturns struct {
+		result1 *sqs.DeleteQueueOutput
+		result2 error
+	}
+	deleteQueueWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.DeleteQueueOutput
+		result2 error
+	}
 	GetQueueAttributesStub        func(*sqs.GetQueueAttributesInput) (*sqs.GetQueueAttributesOutput, error)
 	getQueueAttributesMutex       sync.RWMutex
 	getQueueAttributesArgsForCall []struct {
@@ -308,21 +308,6 @@ type FakeSQSAPI struct {
 		result2 error
 	}
 	getQueueAttributesReturnsOnCall map[int]struct {
-		result1 *sqs.GetQueueAttributesOutput
-		result2 error
-	}
-	GetQueueAttributesWithContextStub        func(aws.Context, *sqs.GetQueueAttributesInput, ...request.Option) (*sqs.GetQueueAttributesOutput, error)
-	getQueueAttributesWithContextMutex       sync.RWMutex
-	getQueueAttributesWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.GetQueueAttributesInput
-		arg3 []request.Option
-	}
-	getQueueAttributesWithContextReturns struct {
-		result1 *sqs.GetQueueAttributesOutput
-		result2 error
-	}
-	getQueueAttributesWithContextReturnsOnCall map[int]struct {
 		result1 *sqs.GetQueueAttributesOutput
 		result2 error
 	}
@@ -339,6 +324,21 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.GetQueueAttributesOutput
 	}
+	GetQueueAttributesWithContextStub        func(context.Context, *sqs.GetQueueAttributesInput, ...request.Option) (*sqs.GetQueueAttributesOutput, error)
+	getQueueAttributesWithContextMutex       sync.RWMutex
+	getQueueAttributesWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.GetQueueAttributesInput
+		arg3 []request.Option
+	}
+	getQueueAttributesWithContextReturns struct {
+		result1 *sqs.GetQueueAttributesOutput
+		result2 error
+	}
+	getQueueAttributesWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.GetQueueAttributesOutput
+		result2 error
+	}
 	GetQueueUrlStub        func(*sqs.GetQueueUrlInput) (*sqs.GetQueueUrlOutput, error)
 	getQueueUrlMutex       sync.RWMutex
 	getQueueUrlArgsForCall []struct {
@@ -349,21 +349,6 @@ type FakeSQSAPI struct {
 		result2 error
 	}
 	getQueueUrlReturnsOnCall map[int]struct {
-		result1 *sqs.GetQueueUrlOutput
-		result2 error
-	}
-	GetQueueUrlWithContextStub        func(aws.Context, *sqs.GetQueueUrlInput, ...request.Option) (*sqs.GetQueueUrlOutput, error)
-	getQueueUrlWithContextMutex       sync.RWMutex
-	getQueueUrlWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.GetQueueUrlInput
-		arg3 []request.Option
-	}
-	getQueueUrlWithContextReturns struct {
-		result1 *sqs.GetQueueUrlOutput
-		result2 error
-	}
-	getQueueUrlWithContextReturnsOnCall map[int]struct {
 		result1 *sqs.GetQueueUrlOutput
 		result2 error
 	}
@@ -380,6 +365,21 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.GetQueueUrlOutput
 	}
+	GetQueueUrlWithContextStub        func(context.Context, *sqs.GetQueueUrlInput, ...request.Option) (*sqs.GetQueueUrlOutput, error)
+	getQueueUrlWithContextMutex       sync.RWMutex
+	getQueueUrlWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.GetQueueUrlInput
+		arg3 []request.Option
+	}
+	getQueueUrlWithContextReturns struct {
+		result1 *sqs.GetQueueUrlOutput
+		result2 error
+	}
+	getQueueUrlWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.GetQueueUrlOutput
+		result2 error
+	}
 	ListDeadLetterSourceQueuesStub        func(*sqs.ListDeadLetterSourceQueuesInput) (*sqs.ListDeadLetterSourceQueuesOutput, error)
 	listDeadLetterSourceQueuesMutex       sync.RWMutex
 	listDeadLetterSourceQueuesArgsForCall []struct {
@@ -393,20 +393,31 @@ type FakeSQSAPI struct {
 		result1 *sqs.ListDeadLetterSourceQueuesOutput
 		result2 error
 	}
-	ListDeadLetterSourceQueuesWithContextStub        func(aws.Context, *sqs.ListDeadLetterSourceQueuesInput, ...request.Option) (*sqs.ListDeadLetterSourceQueuesOutput, error)
-	listDeadLetterSourceQueuesWithContextMutex       sync.RWMutex
-	listDeadLetterSourceQueuesWithContextArgsForCall []struct {
-		arg1 aws.Context
+	ListDeadLetterSourceQueuesPagesStub        func(*sqs.ListDeadLetterSourceQueuesInput, func(*sqs.ListDeadLetterSourceQueuesOutput, bool) bool) error
+	listDeadLetterSourceQueuesPagesMutex       sync.RWMutex
+	listDeadLetterSourceQueuesPagesArgsForCall []struct {
+		arg1 *sqs.ListDeadLetterSourceQueuesInput
+		arg2 func(*sqs.ListDeadLetterSourceQueuesOutput, bool) bool
+	}
+	listDeadLetterSourceQueuesPagesReturns struct {
+		result1 error
+	}
+	listDeadLetterSourceQueuesPagesReturnsOnCall map[int]struct {
+		result1 error
+	}
+	ListDeadLetterSourceQueuesPagesWithContextStub        func(context.Context, *sqs.ListDeadLetterSourceQueuesInput, func(*sqs.ListDeadLetterSourceQueuesOutput, bool) bool, ...request.Option) error
+	listDeadLetterSourceQueuesPagesWithContextMutex       sync.RWMutex
+	listDeadLetterSourceQueuesPagesWithContextArgsForCall []struct {
+		arg1 context.Context
 		arg2 *sqs.ListDeadLetterSourceQueuesInput
-		arg3 []request.Option
+		arg3 func(*sqs.ListDeadLetterSourceQueuesOutput, bool) bool
+		arg4 []request.Option
 	}
-	listDeadLetterSourceQueuesWithContextReturns struct {
-		result1 *sqs.ListDeadLetterSourceQueuesOutput
-		result2 error
+	listDeadLetterSourceQueuesPagesWithContextReturns struct {
+		result1 error
 	}
-	listDeadLetterSourceQueuesWithContextReturnsOnCall map[int]struct {
-		result1 *sqs.ListDeadLetterSourceQueuesOutput
-		result2 error
+	listDeadLetterSourceQueuesPagesWithContextReturnsOnCall map[int]struct {
+		result1 error
 	}
 	ListDeadLetterSourceQueuesRequestStub        func(*sqs.ListDeadLetterSourceQueuesInput) (*request.Request, *sqs.ListDeadLetterSourceQueuesOutput)
 	listDeadLetterSourceQueuesRequestMutex       sync.RWMutex
@@ -421,6 +432,21 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.ListDeadLetterSourceQueuesOutput
 	}
+	ListDeadLetterSourceQueuesWithContextStub        func(context.Context, *sqs.ListDeadLetterSourceQueuesInput, ...request.Option) (*sqs.ListDeadLetterSourceQueuesOutput, error)
+	listDeadLetterSourceQueuesWithContextMutex       sync.RWMutex
+	listDeadLetterSourceQueuesWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.ListDeadLetterSourceQueuesInput
+		arg3 []request.Option
+	}
+	listDeadLetterSourceQueuesWithContextReturns struct {
+		result1 *sqs.ListDeadLetterSourceQueuesOutput
+		result2 error
+	}
+	listDeadLetterSourceQueuesWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.ListDeadLetterSourceQueuesOutput
+		result2 error
+	}
 	ListQueueTagsStub        func(*sqs.ListQueueTagsInput) (*sqs.ListQueueTagsOutput, error)
 	listQueueTagsMutex       sync.RWMutex
 	listQueueTagsArgsForCall []struct {
@@ -431,21 +457,6 @@ type FakeSQSAPI struct {
 		result2 error
 	}
 	listQueueTagsReturnsOnCall map[int]struct {
-		result1 *sqs.ListQueueTagsOutput
-		result2 error
-	}
-	ListQueueTagsWithContextStub        func(aws.Context, *sqs.ListQueueTagsInput, ...request.Option) (*sqs.ListQueueTagsOutput, error)
-	listQueueTagsWithContextMutex       sync.RWMutex
-	listQueueTagsWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.ListQueueTagsInput
-		arg3 []request.Option
-	}
-	listQueueTagsWithContextReturns struct {
-		result1 *sqs.ListQueueTagsOutput
-		result2 error
-	}
-	listQueueTagsWithContextReturnsOnCall map[int]struct {
 		result1 *sqs.ListQueueTagsOutput
 		result2 error
 	}
@@ -462,6 +473,21 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.ListQueueTagsOutput
 	}
+	ListQueueTagsWithContextStub        func(context.Context, *sqs.ListQueueTagsInput, ...request.Option) (*sqs.ListQueueTagsOutput, error)
+	listQueueTagsWithContextMutex       sync.RWMutex
+	listQueueTagsWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.ListQueueTagsInput
+		arg3 []request.Option
+	}
+	listQueueTagsWithContextReturns struct {
+		result1 *sqs.ListQueueTagsOutput
+		result2 error
+	}
+	listQueueTagsWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.ListQueueTagsOutput
+		result2 error
+	}
 	ListQueuesStub        func(*sqs.ListQueuesInput) (*sqs.ListQueuesOutput, error)
 	listQueuesMutex       sync.RWMutex
 	listQueuesArgsForCall []struct {
@@ -475,20 +501,31 @@ type FakeSQSAPI struct {
 		result1 *sqs.ListQueuesOutput
 		result2 error
 	}
-	ListQueuesWithContextStub        func(aws.Context, *sqs.ListQueuesInput, ...request.Option) (*sqs.ListQueuesOutput, error)
-	listQueuesWithContextMutex       sync.RWMutex
-	listQueuesWithContextArgsForCall []struct {
-		arg1 aws.Context
+	ListQueuesPagesStub        func(*sqs.ListQueuesInput, func(*sqs.ListQueuesOutput, bool) bool) error
+	listQueuesPagesMutex       sync.RWMutex
+	listQueuesPagesArgsForCall []struct {
+		arg1 *sqs.ListQueuesInput
+		arg2 func(*sqs.ListQueuesOutput, bool) bool
+	}
+	listQueuesPagesReturns struct {
+		result1 error
+	}
+	listQueuesPagesReturnsOnCall map[int]struct {
+		result1 error
+	}
+	ListQueuesPagesWithContextStub        func(context.Context, *sqs.ListQueuesInput, func(*sqs.ListQueuesOutput, bool) bool, ...request.Option) error
+	listQueuesPagesWithContextMutex       sync.RWMutex
+	listQueuesPagesWithContextArgsForCall []struct {
+		arg1 context.Context
 		arg2 *sqs.ListQueuesInput
-		arg3 []request.Option
+		arg3 func(*sqs.ListQueuesOutput, bool) bool
+		arg4 []request.Option
 	}
-	listQueuesWithContextReturns struct {
-		result1 *sqs.ListQueuesOutput
-		result2 error
+	listQueuesPagesWithContextReturns struct {
+		result1 error
 	}
-	listQueuesWithContextReturnsOnCall map[int]struct {
-		result1 *sqs.ListQueuesOutput
-		result2 error
+	listQueuesPagesWithContextReturnsOnCall map[int]struct {
+		result1 error
 	}
 	ListQueuesRequestStub        func(*sqs.ListQueuesInput) (*request.Request, *sqs.ListQueuesOutput)
 	listQueuesRequestMutex       sync.RWMutex
@@ -503,6 +540,21 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.ListQueuesOutput
 	}
+	ListQueuesWithContextStub        func(context.Context, *sqs.ListQueuesInput, ...request.Option) (*sqs.ListQueuesOutput, error)
+	listQueuesWithContextMutex       sync.RWMutex
+	listQueuesWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.ListQueuesInput
+		arg3 []request.Option
+	}
+	listQueuesWithContextReturns struct {
+		result1 *sqs.ListQueuesOutput
+		result2 error
+	}
+	listQueuesWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.ListQueuesOutput
+		result2 error
+	}
 	PurgeQueueStub        func(*sqs.PurgeQueueInput) (*sqs.PurgeQueueOutput, error)
 	purgeQueueMutex       sync.RWMutex
 	purgeQueueArgsForCall []struct {
@@ -513,21 +565,6 @@ type FakeSQSAPI struct {
 		result2 error
 	}
 	purgeQueueReturnsOnCall map[int]struct {
-		result1 *sqs.PurgeQueueOutput
-		result2 error
-	}
-	PurgeQueueWithContextStub        func(aws.Context, *sqs.PurgeQueueInput, ...request.Option) (*sqs.PurgeQueueOutput, error)
-	purgeQueueWithContextMutex       sync.RWMutex
-	purgeQueueWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.PurgeQueueInput
-		arg3 []request.Option
-	}
-	purgeQueueWithContextReturns struct {
-		result1 *sqs.PurgeQueueOutput
-		result2 error
-	}
-	purgeQueueWithContextReturnsOnCall map[int]struct {
 		result1 *sqs.PurgeQueueOutput
 		result2 error
 	}
@@ -544,6 +581,21 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.PurgeQueueOutput
 	}
+	PurgeQueueWithContextStub        func(context.Context, *sqs.PurgeQueueInput, ...request.Option) (*sqs.PurgeQueueOutput, error)
+	purgeQueueWithContextMutex       sync.RWMutex
+	purgeQueueWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.PurgeQueueInput
+		arg3 []request.Option
+	}
+	purgeQueueWithContextReturns struct {
+		result1 *sqs.PurgeQueueOutput
+		result2 error
+	}
+	purgeQueueWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.PurgeQueueOutput
+		result2 error
+	}
 	ReceiveMessageStub        func(*sqs.ReceiveMessageInput) (*sqs.ReceiveMessageOutput, error)
 	receiveMessageMutex       sync.RWMutex
 	receiveMessageArgsForCall []struct {
@@ -554,21 +606,6 @@ type FakeSQSAPI struct {
 		result2 error
 	}
 	receiveMessageReturnsOnCall map[int]struct {
-		result1 *sqs.ReceiveMessageOutput
-		result2 error
-	}
-	ReceiveMessageWithContextStub        func(aws.Context, *sqs.ReceiveMessageInput, ...request.Option) (*sqs.ReceiveMessageOutput, error)
-	receiveMessageWithContextMutex       sync.RWMutex
-	receiveMessageWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.ReceiveMessageInput
-		arg3 []request.Option
-	}
-	receiveMessageWithContextReturns struct {
-		result1 *sqs.ReceiveMessageOutput
-		result2 error
-	}
-	receiveMessageWithContextReturnsOnCall map[int]struct {
 		result1 *sqs.ReceiveMessageOutput
 		result2 error
 	}
@@ -585,6 +622,21 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.ReceiveMessageOutput
 	}
+	ReceiveMessageWithContextStub        func(context.Context, *sqs.ReceiveMessageInput, ...request.Option) (*sqs.ReceiveMessageOutput, error)
+	receiveMessageWithContextMutex       sync.RWMutex
+	receiveMessageWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.ReceiveMessageInput
+		arg3 []request.Option
+	}
+	receiveMessageWithContextReturns struct {
+		result1 *sqs.ReceiveMessageOutput
+		result2 error
+	}
+	receiveMessageWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.ReceiveMessageOutput
+		result2 error
+	}
 	RemovePermissionStub        func(*sqs.RemovePermissionInput) (*sqs.RemovePermissionOutput, error)
 	removePermissionMutex       sync.RWMutex
 	removePermissionArgsForCall []struct {
@@ -595,21 +647,6 @@ type FakeSQSAPI struct {
 		result2 error
 	}
 	removePermissionReturnsOnCall map[int]struct {
-		result1 *sqs.RemovePermissionOutput
-		result2 error
-	}
-	RemovePermissionWithContextStub        func(aws.Context, *sqs.RemovePermissionInput, ...request.Option) (*sqs.RemovePermissionOutput, error)
-	removePermissionWithContextMutex       sync.RWMutex
-	removePermissionWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.RemovePermissionInput
-		arg3 []request.Option
-	}
-	removePermissionWithContextReturns struct {
-		result1 *sqs.RemovePermissionOutput
-		result2 error
-	}
-	removePermissionWithContextReturnsOnCall map[int]struct {
 		result1 *sqs.RemovePermissionOutput
 		result2 error
 	}
@@ -626,6 +663,21 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.RemovePermissionOutput
 	}
+	RemovePermissionWithContextStub        func(context.Context, *sqs.RemovePermissionInput, ...request.Option) (*sqs.RemovePermissionOutput, error)
+	removePermissionWithContextMutex       sync.RWMutex
+	removePermissionWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.RemovePermissionInput
+		arg3 []request.Option
+	}
+	removePermissionWithContextReturns struct {
+		result1 *sqs.RemovePermissionOutput
+		result2 error
+	}
+	removePermissionWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.RemovePermissionOutput
+		result2 error
+	}
 	SendMessageStub        func(*sqs.SendMessageInput) (*sqs.SendMessageOutput, error)
 	sendMessageMutex       sync.RWMutex
 	sendMessageArgsForCall []struct {
@@ -639,34 +691,6 @@ type FakeSQSAPI struct {
 		result1 *sqs.SendMessageOutput
 		result2 error
 	}
-	SendMessageWithContextStub        func(aws.Context, *sqs.SendMessageInput, ...request.Option) (*sqs.SendMessageOutput, error)
-	sendMessageWithContextMutex       sync.RWMutex
-	sendMessageWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.SendMessageInput
-		arg3 []request.Option
-	}
-	sendMessageWithContextReturns struct {
-		result1 *sqs.SendMessageOutput
-		result2 error
-	}
-	sendMessageWithContextReturnsOnCall map[int]struct {
-		result1 *sqs.SendMessageOutput
-		result2 error
-	}
-	SendMessageRequestStub        func(*sqs.SendMessageInput) (*request.Request, *sqs.SendMessageOutput)
-	sendMessageRequestMutex       sync.RWMutex
-	sendMessageRequestArgsForCall []struct {
-		arg1 *sqs.SendMessageInput
-	}
-	sendMessageRequestReturns struct {
-		result1 *request.Request
-		result2 *sqs.SendMessageOutput
-	}
-	sendMessageRequestReturnsOnCall map[int]struct {
-		result1 *request.Request
-		result2 *sqs.SendMessageOutput
-	}
 	SendMessageBatchStub        func(*sqs.SendMessageBatchInput) (*sqs.SendMessageBatchOutput, error)
 	sendMessageBatchMutex       sync.RWMutex
 	sendMessageBatchArgsForCall []struct {
@@ -677,21 +701,6 @@ type FakeSQSAPI struct {
 		result2 error
 	}
 	sendMessageBatchReturnsOnCall map[int]struct {
-		result1 *sqs.SendMessageBatchOutput
-		result2 error
-	}
-	SendMessageBatchWithContextStub        func(aws.Context, *sqs.SendMessageBatchInput, ...request.Option) (*sqs.SendMessageBatchOutput, error)
-	sendMessageBatchWithContextMutex       sync.RWMutex
-	sendMessageBatchWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.SendMessageBatchInput
-		arg3 []request.Option
-	}
-	sendMessageBatchWithContextReturns struct {
-		result1 *sqs.SendMessageBatchOutput
-		result2 error
-	}
-	sendMessageBatchWithContextReturnsOnCall map[int]struct {
 		result1 *sqs.SendMessageBatchOutput
 		result2 error
 	}
@@ -708,6 +717,49 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.SendMessageBatchOutput
 	}
+	SendMessageBatchWithContextStub        func(context.Context, *sqs.SendMessageBatchInput, ...request.Option) (*sqs.SendMessageBatchOutput, error)
+	sendMessageBatchWithContextMutex       sync.RWMutex
+	sendMessageBatchWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.SendMessageBatchInput
+		arg3 []request.Option
+	}
+	sendMessageBatchWithContextReturns struct {
+		result1 *sqs.SendMessageBatchOutput
+		result2 error
+	}
+	sendMessageBatchWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.SendMessageBatchOutput
+		result2 error
+	}
+	SendMessageRequestStub        func(*sqs.SendMessageInput) (*request.Request, *sqs.SendMessageOutput)
+	sendMessageRequestMutex       sync.RWMutex
+	sendMessageRequestArgsForCall []struct {
+		arg1 *sqs.SendMessageInput
+	}
+	sendMessageRequestReturns struct {
+		result1 *request.Request
+		result2 *sqs.SendMessageOutput
+	}
+	sendMessageRequestReturnsOnCall map[int]struct {
+		result1 *request.Request
+		result2 *sqs.SendMessageOutput
+	}
+	SendMessageWithContextStub        func(context.Context, *sqs.SendMessageInput, ...request.Option) (*sqs.SendMessageOutput, error)
+	sendMessageWithContextMutex       sync.RWMutex
+	sendMessageWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.SendMessageInput
+		arg3 []request.Option
+	}
+	sendMessageWithContextReturns struct {
+		result1 *sqs.SendMessageOutput
+		result2 error
+	}
+	sendMessageWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.SendMessageOutput
+		result2 error
+	}
 	SetQueueAttributesStub        func(*sqs.SetQueueAttributesInput) (*sqs.SetQueueAttributesOutput, error)
 	setQueueAttributesMutex       sync.RWMutex
 	setQueueAttributesArgsForCall []struct {
@@ -718,21 +770,6 @@ type FakeSQSAPI struct {
 		result2 error
 	}
 	setQueueAttributesReturnsOnCall map[int]struct {
-		result1 *sqs.SetQueueAttributesOutput
-		result2 error
-	}
-	SetQueueAttributesWithContextStub        func(aws.Context, *sqs.SetQueueAttributesInput, ...request.Option) (*sqs.SetQueueAttributesOutput, error)
-	setQueueAttributesWithContextMutex       sync.RWMutex
-	setQueueAttributesWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.SetQueueAttributesInput
-		arg3 []request.Option
-	}
-	setQueueAttributesWithContextReturns struct {
-		result1 *sqs.SetQueueAttributesOutput
-		result2 error
-	}
-	setQueueAttributesWithContextReturnsOnCall map[int]struct {
 		result1 *sqs.SetQueueAttributesOutput
 		result2 error
 	}
@@ -749,6 +786,21 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.SetQueueAttributesOutput
 	}
+	SetQueueAttributesWithContextStub        func(context.Context, *sqs.SetQueueAttributesInput, ...request.Option) (*sqs.SetQueueAttributesOutput, error)
+	setQueueAttributesWithContextMutex       sync.RWMutex
+	setQueueAttributesWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.SetQueueAttributesInput
+		arg3 []request.Option
+	}
+	setQueueAttributesWithContextReturns struct {
+		result1 *sqs.SetQueueAttributesOutput
+		result2 error
+	}
+	setQueueAttributesWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.SetQueueAttributesOutput
+		result2 error
+	}
 	TagQueueStub        func(*sqs.TagQueueInput) (*sqs.TagQueueOutput, error)
 	tagQueueMutex       sync.RWMutex
 	tagQueueArgsForCall []struct {
@@ -759,21 +811,6 @@ type FakeSQSAPI struct {
 		result2 error
 	}
 	tagQueueReturnsOnCall map[int]struct {
-		result1 *sqs.TagQueueOutput
-		result2 error
-	}
-	TagQueueWithContextStub        func(aws.Context, *sqs.TagQueueInput, ...request.Option) (*sqs.TagQueueOutput, error)
-	tagQueueWithContextMutex       sync.RWMutex
-	tagQueueWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.TagQueueInput
-		arg3 []request.Option
-	}
-	tagQueueWithContextReturns struct {
-		result1 *sqs.TagQueueOutput
-		result2 error
-	}
-	tagQueueWithContextReturnsOnCall map[int]struct {
 		result1 *sqs.TagQueueOutput
 		result2 error
 	}
@@ -790,6 +827,21 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.TagQueueOutput
 	}
+	TagQueueWithContextStub        func(context.Context, *sqs.TagQueueInput, ...request.Option) (*sqs.TagQueueOutput, error)
+	tagQueueWithContextMutex       sync.RWMutex
+	tagQueueWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.TagQueueInput
+		arg3 []request.Option
+	}
+	tagQueueWithContextReturns struct {
+		result1 *sqs.TagQueueOutput
+		result2 error
+	}
+	tagQueueWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.TagQueueOutput
+		result2 error
+	}
 	UntagQueueStub        func(*sqs.UntagQueueInput) (*sqs.UntagQueueOutput, error)
 	untagQueueMutex       sync.RWMutex
 	untagQueueArgsForCall []struct {
@@ -800,21 +852,6 @@ type FakeSQSAPI struct {
 		result2 error
 	}
 	untagQueueReturnsOnCall map[int]struct {
-		result1 *sqs.UntagQueueOutput
-		result2 error
-	}
-	UntagQueueWithContextStub        func(aws.Context, *sqs.UntagQueueInput, ...request.Option) (*sqs.UntagQueueOutput, error)
-	untagQueueWithContextMutex       sync.RWMutex
-	untagQueueWithContextArgsForCall []struct {
-		arg1 aws.Context
-		arg2 *sqs.UntagQueueInput
-		arg3 []request.Option
-	}
-	untagQueueWithContextReturns struct {
-		result1 *sqs.UntagQueueOutput
-		result2 error
-	}
-	untagQueueWithContextReturnsOnCall map[int]struct {
 		result1 *sqs.UntagQueueOutput
 		result2 error
 	}
@@ -831,6 +868,21 @@ type FakeSQSAPI struct {
 		result1 *request.Request
 		result2 *sqs.UntagQueueOutput
 	}
+	UntagQueueWithContextStub        func(context.Context, *sqs.UntagQueueInput, ...request.Option) (*sqs.UntagQueueOutput, error)
+	untagQueueWithContextMutex       sync.RWMutex
+	untagQueueWithContextArgsForCall []struct {
+		arg1 context.Context
+		arg2 *sqs.UntagQueueInput
+		arg3 []request.Option
+	}
+	untagQueueWithContextReturns struct {
+		result1 *sqs.UntagQueueOutput
+		result2 error
+	}
+	untagQueueWithContextReturnsOnCall map[int]struct {
+		result1 *sqs.UntagQueueOutput
+		result2 error
+	}
 	invocations      map[string][][]interface{}
 	invocationsMutex sync.RWMutex
 }
@@ -841,15 +893,17 @@ func (fake *FakeSQSAPI) AddPermission(arg1 *sqs.AddPermissionInput) (*sqs.AddPer
 	fake.addPermissionArgsForCall = append(fake.addPermissionArgsForCall, struct {
 		arg1 *sqs.AddPermissionInput
 	}{arg1})
+	stub := fake.AddPermissionStub
+	fakeReturns := fake.addPermissionReturns
 	fake.recordInvocation("AddPermission", []interface{}{arg1})
 	fake.addPermissionMutex.Unlock()
-	if fake.AddPermissionStub != nil {
-		return fake.AddPermissionStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.addPermissionReturns.result1, fake.addPermissionReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) AddPermissionCallCount() int {
@@ -858,13 +912,22 @@ func (fake *FakeSQSAPI) AddPermissionCallCount() int {
 	return len(fake.addPermissionArgsForCall)
 }
 
+func (fake *FakeSQSAPI) AddPermissionCalls(stub func(*sqs.AddPermissionInput) (*sqs.AddPermissionOutput, error)) {
+	fake.addPermissionMutex.Lock()
+	defer fake.addPermissionMutex.Unlock()
+	fake.AddPermissionStub = stub
+}
+
 func (fake *FakeSQSAPI) AddPermissionArgsForCall(i int) *sqs.AddPermissionInput {
 	fake.addPermissionMutex.RLock()
 	defer fake.addPermissionMutex.RUnlock()
-	return fake.addPermissionArgsForCall[i].arg1
+	argsForCall := fake.addPermissionArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) AddPermissionReturns(result1 *sqs.AddPermissionOutput, result2 error) {
+	fake.addPermissionMutex.Lock()
+	defer fake.addPermissionMutex.Unlock()
 	fake.AddPermissionStub = nil
 	fake.addPermissionReturns = struct {
 		result1 *sqs.AddPermissionOutput
@@ -873,6 +936,8 @@ func (fake *FakeSQSAPI) AddPermissionReturns(result1 *sqs.AddPermissionOutput, r
 }
 
 func (fake *FakeSQSAPI) AddPermissionReturnsOnCall(i int, result1 *sqs.AddPermissionOutput, result2 error) {
+	fake.addPermissionMutex.Lock()
+	defer fake.addPermissionMutex.Unlock()
 	fake.AddPermissionStub = nil
 	if fake.addPermissionReturnsOnCall == nil {
 		fake.addPermissionReturnsOnCall = make(map[int]struct {
@@ -886,74 +951,23 @@ func (fake *FakeSQSAPI) AddPermissionReturnsOnCall(i int, result1 *sqs.AddPermis
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) AddPermissionWithContext(arg1 aws.Context, arg2 *sqs.AddPermissionInput, arg3 ...request.Option) (*sqs.AddPermissionOutput, error) {
-	fake.addPermissionWithContextMutex.Lock()
-	ret, specificReturn := fake.addPermissionWithContextReturnsOnCall[len(fake.addPermissionWithContextArgsForCall)]
-	fake.addPermissionWithContextArgsForCall = append(fake.addPermissionWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.AddPermissionInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("AddPermissionWithContext", []interface{}{arg1, arg2, arg3})
-	fake.addPermissionWithContextMutex.Unlock()
-	if fake.AddPermissionWithContextStub != nil {
-		return fake.AddPermissionWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.addPermissionWithContextReturns.result1, fake.addPermissionWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) AddPermissionWithContextCallCount() int {
-	fake.addPermissionWithContextMutex.RLock()
-	defer fake.addPermissionWithContextMutex.RUnlock()
-	return len(fake.addPermissionWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) AddPermissionWithContextArgsForCall(i int) (aws.Context, *sqs.AddPermissionInput, []request.Option) {
-	fake.addPermissionWithContextMutex.RLock()
-	defer fake.addPermissionWithContextMutex.RUnlock()
-	return fake.addPermissionWithContextArgsForCall[i].arg1, fake.addPermissionWithContextArgsForCall[i].arg2, fake.addPermissionWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) AddPermissionWithContextReturns(result1 *sqs.AddPermissionOutput, result2 error) {
-	fake.AddPermissionWithContextStub = nil
-	fake.addPermissionWithContextReturns = struct {
-		result1 *sqs.AddPermissionOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) AddPermissionWithContextReturnsOnCall(i int, result1 *sqs.AddPermissionOutput, result2 error) {
-	fake.AddPermissionWithContextStub = nil
-	if fake.addPermissionWithContextReturnsOnCall == nil {
-		fake.addPermissionWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.AddPermissionOutput
-			result2 error
-		})
-	}
-	fake.addPermissionWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.AddPermissionOutput
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) AddPermissionRequest(arg1 *sqs.AddPermissionInput) (*request.Request, *sqs.AddPermissionOutput) {
 	fake.addPermissionRequestMutex.Lock()
 	ret, specificReturn := fake.addPermissionRequestReturnsOnCall[len(fake.addPermissionRequestArgsForCall)]
 	fake.addPermissionRequestArgsForCall = append(fake.addPermissionRequestArgsForCall, struct {
 		arg1 *sqs.AddPermissionInput
 	}{arg1})
+	stub := fake.AddPermissionRequestStub
+	fakeReturns := fake.addPermissionRequestReturns
 	fake.recordInvocation("AddPermissionRequest", []interface{}{arg1})
 	fake.addPermissionRequestMutex.Unlock()
-	if fake.AddPermissionRequestStub != nil {
-		return fake.AddPermissionRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.addPermissionRequestReturns.result1, fake.addPermissionRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) AddPermissionRequestCallCount() int {
@@ -962,13 +976,22 @@ func (fake *FakeSQSAPI) AddPermissionRequestCallCount() int {
 	return len(fake.addPermissionRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) AddPermissionRequestCalls(stub func(*sqs.AddPermissionInput) (*request.Request, *sqs.AddPermissionOutput)) {
+	fake.addPermissionRequestMutex.Lock()
+	defer fake.addPermissionRequestMutex.Unlock()
+	fake.AddPermissionRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) AddPermissionRequestArgsForCall(i int) *sqs.AddPermissionInput {
 	fake.addPermissionRequestMutex.RLock()
 	defer fake.addPermissionRequestMutex.RUnlock()
-	return fake.addPermissionRequestArgsForCall[i].arg1
+	argsForCall := fake.addPermissionRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) AddPermissionRequestReturns(result1 *request.Request, result2 *sqs.AddPermissionOutput) {
+	fake.addPermissionRequestMutex.Lock()
+	defer fake.addPermissionRequestMutex.Unlock()
 	fake.AddPermissionRequestStub = nil
 	fake.addPermissionRequestReturns = struct {
 		result1 *request.Request
@@ -977,6 +1000,8 @@ func (fake *FakeSQSAPI) AddPermissionRequestReturns(result1 *request.Request, re
 }
 
 func (fake *FakeSQSAPI) AddPermissionRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.AddPermissionOutput) {
+	fake.addPermissionRequestMutex.Lock()
+	defer fake.addPermissionRequestMutex.Unlock()
 	fake.AddPermissionRequestStub = nil
 	if fake.addPermissionRequestReturnsOnCall == nil {
 		fake.addPermissionRequestReturnsOnCall = make(map[int]struct {
@@ -990,21 +1015,89 @@ func (fake *FakeSQSAPI) AddPermissionRequestReturnsOnCall(i int, result1 *reques
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) AddPermissionWithContext(arg1 context.Context, arg2 *sqs.AddPermissionInput, arg3 ...request.Option) (*sqs.AddPermissionOutput, error) {
+	fake.addPermissionWithContextMutex.Lock()
+	ret, specificReturn := fake.addPermissionWithContextReturnsOnCall[len(fake.addPermissionWithContextArgsForCall)]
+	fake.addPermissionWithContextArgsForCall = append(fake.addPermissionWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.AddPermissionInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.AddPermissionWithContextStub
+	fakeReturns := fake.addPermissionWithContextReturns
+	fake.recordInvocation("AddPermissionWithContext", []interface{}{arg1, arg2, arg3})
+	fake.addPermissionWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) AddPermissionWithContextCallCount() int {
+	fake.addPermissionWithContextMutex.RLock()
+	defer fake.addPermissionWithContextMutex.RUnlock()
+	return len(fake.addPermissionWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) AddPermissionWithContextCalls(stub func(context.Context, *sqs.AddPermissionInput, ...request.Option) (*sqs.AddPermissionOutput, error)) {
+	fake.addPermissionWithContextMutex.Lock()
+	defer fake.addPermissionWithContextMutex.Unlock()
+	fake.AddPermissionWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) AddPermissionWithContextArgsForCall(i int) (context.Context, *sqs.AddPermissionInput, []request.Option) {
+	fake.addPermissionWithContextMutex.RLock()
+	defer fake.addPermissionWithContextMutex.RUnlock()
+	argsForCall := fake.addPermissionWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) AddPermissionWithContextReturns(result1 *sqs.AddPermissionOutput, result2 error) {
+	fake.addPermissionWithContextMutex.Lock()
+	defer fake.addPermissionWithContextMutex.Unlock()
+	fake.AddPermissionWithContextStub = nil
+	fake.addPermissionWithContextReturns = struct {
+		result1 *sqs.AddPermissionOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) AddPermissionWithContextReturnsOnCall(i int, result1 *sqs.AddPermissionOutput, result2 error) {
+	fake.addPermissionWithContextMutex.Lock()
+	defer fake.addPermissionWithContextMutex.Unlock()
+	fake.AddPermissionWithContextStub = nil
+	if fake.addPermissionWithContextReturnsOnCall == nil {
+		fake.addPermissionWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.AddPermissionOutput
+			result2 error
+		})
+	}
+	fake.addPermissionWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.AddPermissionOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) ChangeMessageVisibility(arg1 *sqs.ChangeMessageVisibilityInput) (*sqs.ChangeMessageVisibilityOutput, error) {
 	fake.changeMessageVisibilityMutex.Lock()
 	ret, specificReturn := fake.changeMessageVisibilityReturnsOnCall[len(fake.changeMessageVisibilityArgsForCall)]
 	fake.changeMessageVisibilityArgsForCall = append(fake.changeMessageVisibilityArgsForCall, struct {
 		arg1 *sqs.ChangeMessageVisibilityInput
 	}{arg1})
+	stub := fake.ChangeMessageVisibilityStub
+	fakeReturns := fake.changeMessageVisibilityReturns
 	fake.recordInvocation("ChangeMessageVisibility", []interface{}{arg1})
 	fake.changeMessageVisibilityMutex.Unlock()
-	if fake.ChangeMessageVisibilityStub != nil {
-		return fake.ChangeMessageVisibilityStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.changeMessageVisibilityReturns.result1, fake.changeMessageVisibilityReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) ChangeMessageVisibilityCallCount() int {
@@ -1013,13 +1106,22 @@ func (fake *FakeSQSAPI) ChangeMessageVisibilityCallCount() int {
 	return len(fake.changeMessageVisibilityArgsForCall)
 }
 
+func (fake *FakeSQSAPI) ChangeMessageVisibilityCalls(stub func(*sqs.ChangeMessageVisibilityInput) (*sqs.ChangeMessageVisibilityOutput, error)) {
+	fake.changeMessageVisibilityMutex.Lock()
+	defer fake.changeMessageVisibilityMutex.Unlock()
+	fake.ChangeMessageVisibilityStub = stub
+}
+
 func (fake *FakeSQSAPI) ChangeMessageVisibilityArgsForCall(i int) *sqs.ChangeMessageVisibilityInput {
 	fake.changeMessageVisibilityMutex.RLock()
 	defer fake.changeMessageVisibilityMutex.RUnlock()
-	return fake.changeMessageVisibilityArgsForCall[i].arg1
+	argsForCall := fake.changeMessageVisibilityArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) ChangeMessageVisibilityReturns(result1 *sqs.ChangeMessageVisibilityOutput, result2 error) {
+	fake.changeMessageVisibilityMutex.Lock()
+	defer fake.changeMessageVisibilityMutex.Unlock()
 	fake.ChangeMessageVisibilityStub = nil
 	fake.changeMessageVisibilityReturns = struct {
 		result1 *sqs.ChangeMessageVisibilityOutput
@@ -1028,6 +1130,8 @@ func (fake *FakeSQSAPI) ChangeMessageVisibilityReturns(result1 *sqs.ChangeMessag
 }
 
 func (fake *FakeSQSAPI) ChangeMessageVisibilityReturnsOnCall(i int, result1 *sqs.ChangeMessageVisibilityOutput, result2 error) {
+	fake.changeMessageVisibilityMutex.Lock()
+	defer fake.changeMessageVisibilityMutex.Unlock()
 	fake.ChangeMessageVisibilityStub = nil
 	if fake.changeMessageVisibilityReturnsOnCall == nil {
 		fake.changeMessageVisibilityReturnsOnCall = make(map[int]struct {
@@ -1041,125 +1145,23 @@ func (fake *FakeSQSAPI) ChangeMessageVisibilityReturnsOnCall(i int, result1 *sqs
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) ChangeMessageVisibilityWithContext(arg1 aws.Context, arg2 *sqs.ChangeMessageVisibilityInput, arg3 ...request.Option) (*sqs.ChangeMessageVisibilityOutput, error) {
-	fake.changeMessageVisibilityWithContextMutex.Lock()
-	ret, specificReturn := fake.changeMessageVisibilityWithContextReturnsOnCall[len(fake.changeMessageVisibilityWithContextArgsForCall)]
-	fake.changeMessageVisibilityWithContextArgsForCall = append(fake.changeMessageVisibilityWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.ChangeMessageVisibilityInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("ChangeMessageVisibilityWithContext", []interface{}{arg1, arg2, arg3})
-	fake.changeMessageVisibilityWithContextMutex.Unlock()
-	if fake.ChangeMessageVisibilityWithContextStub != nil {
-		return fake.ChangeMessageVisibilityWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.changeMessageVisibilityWithContextReturns.result1, fake.changeMessageVisibilityWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) ChangeMessageVisibilityWithContextCallCount() int {
-	fake.changeMessageVisibilityWithContextMutex.RLock()
-	defer fake.changeMessageVisibilityWithContextMutex.RUnlock()
-	return len(fake.changeMessageVisibilityWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) ChangeMessageVisibilityWithContextArgsForCall(i int) (aws.Context, *sqs.ChangeMessageVisibilityInput, []request.Option) {
-	fake.changeMessageVisibilityWithContextMutex.RLock()
-	defer fake.changeMessageVisibilityWithContextMutex.RUnlock()
-	return fake.changeMessageVisibilityWithContextArgsForCall[i].arg1, fake.changeMessageVisibilityWithContextArgsForCall[i].arg2, fake.changeMessageVisibilityWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) ChangeMessageVisibilityWithContextReturns(result1 *sqs.ChangeMessageVisibilityOutput, result2 error) {
-	fake.ChangeMessageVisibilityWithContextStub = nil
-	fake.changeMessageVisibilityWithContextReturns = struct {
-		result1 *sqs.ChangeMessageVisibilityOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) ChangeMessageVisibilityWithContextReturnsOnCall(i int, result1 *sqs.ChangeMessageVisibilityOutput, result2 error) {
-	fake.ChangeMessageVisibilityWithContextStub = nil
-	if fake.changeMessageVisibilityWithContextReturnsOnCall == nil {
-		fake.changeMessageVisibilityWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.ChangeMessageVisibilityOutput
-			result2 error
-		})
-	}
-	fake.changeMessageVisibilityWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.ChangeMessageVisibilityOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) ChangeMessageVisibilityRequest(arg1 *sqs.ChangeMessageVisibilityInput) (*request.Request, *sqs.ChangeMessageVisibilityOutput) {
-	fake.changeMessageVisibilityRequestMutex.Lock()
-	ret, specificReturn := fake.changeMessageVisibilityRequestReturnsOnCall[len(fake.changeMessageVisibilityRequestArgsForCall)]
-	fake.changeMessageVisibilityRequestArgsForCall = append(fake.changeMessageVisibilityRequestArgsForCall, struct {
-		arg1 *sqs.ChangeMessageVisibilityInput
-	}{arg1})
-	fake.recordInvocation("ChangeMessageVisibilityRequest", []interface{}{arg1})
-	fake.changeMessageVisibilityRequestMutex.Unlock()
-	if fake.ChangeMessageVisibilityRequestStub != nil {
-		return fake.ChangeMessageVisibilityRequestStub(arg1)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.changeMessageVisibilityRequestReturns.result1, fake.changeMessageVisibilityRequestReturns.result2
-}
-
-func (fake *FakeSQSAPI) ChangeMessageVisibilityRequestCallCount() int {
-	fake.changeMessageVisibilityRequestMutex.RLock()
-	defer fake.changeMessageVisibilityRequestMutex.RUnlock()
-	return len(fake.changeMessageVisibilityRequestArgsForCall)
-}
-
-func (fake *FakeSQSAPI) ChangeMessageVisibilityRequestArgsForCall(i int) *sqs.ChangeMessageVisibilityInput {
-	fake.changeMessageVisibilityRequestMutex.RLock()
-	defer fake.changeMessageVisibilityRequestMutex.RUnlock()
-	return fake.changeMessageVisibilityRequestArgsForCall[i].arg1
-}
-
-func (fake *FakeSQSAPI) ChangeMessageVisibilityRequestReturns(result1 *request.Request, result2 *sqs.ChangeMessageVisibilityOutput) {
-	fake.ChangeMessageVisibilityRequestStub = nil
-	fake.changeMessageVisibilityRequestReturns = struct {
-		result1 *request.Request
-		result2 *sqs.ChangeMessageVisibilityOutput
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) ChangeMessageVisibilityRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.ChangeMessageVisibilityOutput) {
-	fake.ChangeMessageVisibilityRequestStub = nil
-	if fake.changeMessageVisibilityRequestReturnsOnCall == nil {
-		fake.changeMessageVisibilityRequestReturnsOnCall = make(map[int]struct {
-			result1 *request.Request
-			result2 *sqs.ChangeMessageVisibilityOutput
-		})
-	}
-	fake.changeMessageVisibilityRequestReturnsOnCall[i] = struct {
-		result1 *request.Request
-		result2 *sqs.ChangeMessageVisibilityOutput
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) ChangeMessageVisibilityBatch(arg1 *sqs.ChangeMessageVisibilityBatchInput) (*sqs.ChangeMessageVisibilityBatchOutput, error) {
 	fake.changeMessageVisibilityBatchMutex.Lock()
 	ret, specificReturn := fake.changeMessageVisibilityBatchReturnsOnCall[len(fake.changeMessageVisibilityBatchArgsForCall)]
 	fake.changeMessageVisibilityBatchArgsForCall = append(fake.changeMessageVisibilityBatchArgsForCall, struct {
 		arg1 *sqs.ChangeMessageVisibilityBatchInput
 	}{arg1})
+	stub := fake.ChangeMessageVisibilityBatchStub
+	fakeReturns := fake.changeMessageVisibilityBatchReturns
 	fake.recordInvocation("ChangeMessageVisibilityBatch", []interface{}{arg1})
 	fake.changeMessageVisibilityBatchMutex.Unlock()
-	if fake.ChangeMessageVisibilityBatchStub != nil {
-		return fake.ChangeMessageVisibilityBatchStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.changeMessageVisibilityBatchReturns.result1, fake.changeMessageVisibilityBatchReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchCallCount() int {
@@ -1168,13 +1170,22 @@ func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchCallCount() int {
 	return len(fake.changeMessageVisibilityBatchArgsForCall)
 }
 
+func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchCalls(stub func(*sqs.ChangeMessageVisibilityBatchInput) (*sqs.ChangeMessageVisibilityBatchOutput, error)) {
+	fake.changeMessageVisibilityBatchMutex.Lock()
+	defer fake.changeMessageVisibilityBatchMutex.Unlock()
+	fake.ChangeMessageVisibilityBatchStub = stub
+}
+
 func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchArgsForCall(i int) *sqs.ChangeMessageVisibilityBatchInput {
 	fake.changeMessageVisibilityBatchMutex.RLock()
 	defer fake.changeMessageVisibilityBatchMutex.RUnlock()
-	return fake.changeMessageVisibilityBatchArgsForCall[i].arg1
+	argsForCall := fake.changeMessageVisibilityBatchArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchReturns(result1 *sqs.ChangeMessageVisibilityBatchOutput, result2 error) {
+	fake.changeMessageVisibilityBatchMutex.Lock()
+	defer fake.changeMessageVisibilityBatchMutex.Unlock()
 	fake.ChangeMessageVisibilityBatchStub = nil
 	fake.changeMessageVisibilityBatchReturns = struct {
 		result1 *sqs.ChangeMessageVisibilityBatchOutput
@@ -1183,6 +1194,8 @@ func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchReturns(result1 *sqs.ChangeM
 }
 
 func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchReturnsOnCall(i int, result1 *sqs.ChangeMessageVisibilityBatchOutput, result2 error) {
+	fake.changeMessageVisibilityBatchMutex.Lock()
+	defer fake.changeMessageVisibilityBatchMutex.Unlock()
 	fake.ChangeMessageVisibilityBatchStub = nil
 	if fake.changeMessageVisibilityBatchReturnsOnCall == nil {
 		fake.changeMessageVisibilityBatchReturnsOnCall = make(map[int]struct {
@@ -1196,74 +1209,23 @@ func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchReturnsOnCall(i int, result1
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchWithContext(arg1 aws.Context, arg2 *sqs.ChangeMessageVisibilityBatchInput, arg3 ...request.Option) (*sqs.ChangeMessageVisibilityBatchOutput, error) {
-	fake.changeMessageVisibilityBatchWithContextMutex.Lock()
-	ret, specificReturn := fake.changeMessageVisibilityBatchWithContextReturnsOnCall[len(fake.changeMessageVisibilityBatchWithContextArgsForCall)]
-	fake.changeMessageVisibilityBatchWithContextArgsForCall = append(fake.changeMessageVisibilityBatchWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.ChangeMessageVisibilityBatchInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("ChangeMessageVisibilityBatchWithContext", []interface{}{arg1, arg2, arg3})
-	fake.changeMessageVisibilityBatchWithContextMutex.Unlock()
-	if fake.ChangeMessageVisibilityBatchWithContextStub != nil {
-		return fake.ChangeMessageVisibilityBatchWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.changeMessageVisibilityBatchWithContextReturns.result1, fake.changeMessageVisibilityBatchWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchWithContextCallCount() int {
-	fake.changeMessageVisibilityBatchWithContextMutex.RLock()
-	defer fake.changeMessageVisibilityBatchWithContextMutex.RUnlock()
-	return len(fake.changeMessageVisibilityBatchWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchWithContextArgsForCall(i int) (aws.Context, *sqs.ChangeMessageVisibilityBatchInput, []request.Option) {
-	fake.changeMessageVisibilityBatchWithContextMutex.RLock()
-	defer fake.changeMessageVisibilityBatchWithContextMutex.RUnlock()
-	return fake.changeMessageVisibilityBatchWithContextArgsForCall[i].arg1, fake.changeMessageVisibilityBatchWithContextArgsForCall[i].arg2, fake.changeMessageVisibilityBatchWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchWithContextReturns(result1 *sqs.ChangeMessageVisibilityBatchOutput, result2 error) {
-	fake.ChangeMessageVisibilityBatchWithContextStub = nil
-	fake.changeMessageVisibilityBatchWithContextReturns = struct {
-		result1 *sqs.ChangeMessageVisibilityBatchOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchWithContextReturnsOnCall(i int, result1 *sqs.ChangeMessageVisibilityBatchOutput, result2 error) {
-	fake.ChangeMessageVisibilityBatchWithContextStub = nil
-	if fake.changeMessageVisibilityBatchWithContextReturnsOnCall == nil {
-		fake.changeMessageVisibilityBatchWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.ChangeMessageVisibilityBatchOutput
-			result2 error
-		})
-	}
-	fake.changeMessageVisibilityBatchWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.ChangeMessageVisibilityBatchOutput
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchRequest(arg1 *sqs.ChangeMessageVisibilityBatchInput) (*request.Request, *sqs.ChangeMessageVisibilityBatchOutput) {
 	fake.changeMessageVisibilityBatchRequestMutex.Lock()
 	ret, specificReturn := fake.changeMessageVisibilityBatchRequestReturnsOnCall[len(fake.changeMessageVisibilityBatchRequestArgsForCall)]
 	fake.changeMessageVisibilityBatchRequestArgsForCall = append(fake.changeMessageVisibilityBatchRequestArgsForCall, struct {
 		arg1 *sqs.ChangeMessageVisibilityBatchInput
 	}{arg1})
+	stub := fake.ChangeMessageVisibilityBatchRequestStub
+	fakeReturns := fake.changeMessageVisibilityBatchRequestReturns
 	fake.recordInvocation("ChangeMessageVisibilityBatchRequest", []interface{}{arg1})
 	fake.changeMessageVisibilityBatchRequestMutex.Unlock()
-	if fake.ChangeMessageVisibilityBatchRequestStub != nil {
-		return fake.ChangeMessageVisibilityBatchRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.changeMessageVisibilityBatchRequestReturns.result1, fake.changeMessageVisibilityBatchRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchRequestCallCount() int {
@@ -1272,13 +1234,22 @@ func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchRequestCallCount() int {
 	return len(fake.changeMessageVisibilityBatchRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchRequestCalls(stub func(*sqs.ChangeMessageVisibilityBatchInput) (*request.Request, *sqs.ChangeMessageVisibilityBatchOutput)) {
+	fake.changeMessageVisibilityBatchRequestMutex.Lock()
+	defer fake.changeMessageVisibilityBatchRequestMutex.Unlock()
+	fake.ChangeMessageVisibilityBatchRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchRequestArgsForCall(i int) *sqs.ChangeMessageVisibilityBatchInput {
 	fake.changeMessageVisibilityBatchRequestMutex.RLock()
 	defer fake.changeMessageVisibilityBatchRequestMutex.RUnlock()
-	return fake.changeMessageVisibilityBatchRequestArgsForCall[i].arg1
+	argsForCall := fake.changeMessageVisibilityBatchRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchRequestReturns(result1 *request.Request, result2 *sqs.ChangeMessageVisibilityBatchOutput) {
+	fake.changeMessageVisibilityBatchRequestMutex.Lock()
+	defer fake.changeMessageVisibilityBatchRequestMutex.Unlock()
 	fake.ChangeMessageVisibilityBatchRequestStub = nil
 	fake.changeMessageVisibilityBatchRequestReturns = struct {
 		result1 *request.Request
@@ -1287,6 +1258,8 @@ func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchRequestReturns(result1 *requ
 }
 
 func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.ChangeMessageVisibilityBatchOutput) {
+	fake.changeMessageVisibilityBatchRequestMutex.Lock()
+	defer fake.changeMessageVisibilityBatchRequestMutex.Unlock()
 	fake.ChangeMessageVisibilityBatchRequestStub = nil
 	if fake.changeMessageVisibilityBatchRequestReturnsOnCall == nil {
 		fake.changeMessageVisibilityBatchRequestReturnsOnCall = make(map[int]struct {
@@ -1300,21 +1273,219 @@ func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchRequestReturnsOnCall(i int, 
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchWithContext(arg1 context.Context, arg2 *sqs.ChangeMessageVisibilityBatchInput, arg3 ...request.Option) (*sqs.ChangeMessageVisibilityBatchOutput, error) {
+	fake.changeMessageVisibilityBatchWithContextMutex.Lock()
+	ret, specificReturn := fake.changeMessageVisibilityBatchWithContextReturnsOnCall[len(fake.changeMessageVisibilityBatchWithContextArgsForCall)]
+	fake.changeMessageVisibilityBatchWithContextArgsForCall = append(fake.changeMessageVisibilityBatchWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.ChangeMessageVisibilityBatchInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.ChangeMessageVisibilityBatchWithContextStub
+	fakeReturns := fake.changeMessageVisibilityBatchWithContextReturns
+	fake.recordInvocation("ChangeMessageVisibilityBatchWithContext", []interface{}{arg1, arg2, arg3})
+	fake.changeMessageVisibilityBatchWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchWithContextCallCount() int {
+	fake.changeMessageVisibilityBatchWithContextMutex.RLock()
+	defer fake.changeMessageVisibilityBatchWithContextMutex.RUnlock()
+	return len(fake.changeMessageVisibilityBatchWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchWithContextCalls(stub func(context.Context, *sqs.ChangeMessageVisibilityBatchInput, ...request.Option) (*sqs.ChangeMessageVisibilityBatchOutput, error)) {
+	fake.changeMessageVisibilityBatchWithContextMutex.Lock()
+	defer fake.changeMessageVisibilityBatchWithContextMutex.Unlock()
+	fake.ChangeMessageVisibilityBatchWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchWithContextArgsForCall(i int) (context.Context, *sqs.ChangeMessageVisibilityBatchInput, []request.Option) {
+	fake.changeMessageVisibilityBatchWithContextMutex.RLock()
+	defer fake.changeMessageVisibilityBatchWithContextMutex.RUnlock()
+	argsForCall := fake.changeMessageVisibilityBatchWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchWithContextReturns(result1 *sqs.ChangeMessageVisibilityBatchOutput, result2 error) {
+	fake.changeMessageVisibilityBatchWithContextMutex.Lock()
+	defer fake.changeMessageVisibilityBatchWithContextMutex.Unlock()
+	fake.ChangeMessageVisibilityBatchWithContextStub = nil
+	fake.changeMessageVisibilityBatchWithContextReturns = struct {
+		result1 *sqs.ChangeMessageVisibilityBatchOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityBatchWithContextReturnsOnCall(i int, result1 *sqs.ChangeMessageVisibilityBatchOutput, result2 error) {
+	fake.changeMessageVisibilityBatchWithContextMutex.Lock()
+	defer fake.changeMessageVisibilityBatchWithContextMutex.Unlock()
+	fake.ChangeMessageVisibilityBatchWithContextStub = nil
+	if fake.changeMessageVisibilityBatchWithContextReturnsOnCall == nil {
+		fake.changeMessageVisibilityBatchWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.ChangeMessageVisibilityBatchOutput
+			result2 error
+		})
+	}
+	fake.changeMessageVisibilityBatchWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.ChangeMessageVisibilityBatchOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityRequest(arg1 *sqs.ChangeMessageVisibilityInput) (*request.Request, *sqs.ChangeMessageVisibilityOutput) {
+	fake.changeMessageVisibilityRequestMutex.Lock()
+	ret, specificReturn := fake.changeMessageVisibilityRequestReturnsOnCall[len(fake.changeMessageVisibilityRequestArgsForCall)]
+	fake.changeMessageVisibilityRequestArgsForCall = append(fake.changeMessageVisibilityRequestArgsForCall, struct {
+		arg1 *sqs.ChangeMessageVisibilityInput
+	}{arg1})
+	stub := fake.ChangeMessageVisibilityRequestStub
+	fakeReturns := fake.changeMessageVisibilityRequestReturns
+	fake.recordInvocation("ChangeMessageVisibilityRequest", []interface{}{arg1})
+	fake.changeMessageVisibilityRequestMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityRequestCallCount() int {
+	fake.changeMessageVisibilityRequestMutex.RLock()
+	defer fake.changeMessageVisibilityRequestMutex.RUnlock()
+	return len(fake.changeMessageVisibilityRequestArgsForCall)
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityRequestCalls(stub func(*sqs.ChangeMessageVisibilityInput) (*request.Request, *sqs.ChangeMessageVisibilityOutput)) {
+	fake.changeMessageVisibilityRequestMutex.Lock()
+	defer fake.changeMessageVisibilityRequestMutex.Unlock()
+	fake.ChangeMessageVisibilityRequestStub = stub
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityRequestArgsForCall(i int) *sqs.ChangeMessageVisibilityInput {
+	fake.changeMessageVisibilityRequestMutex.RLock()
+	defer fake.changeMessageVisibilityRequestMutex.RUnlock()
+	argsForCall := fake.changeMessageVisibilityRequestArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityRequestReturns(result1 *request.Request, result2 *sqs.ChangeMessageVisibilityOutput) {
+	fake.changeMessageVisibilityRequestMutex.Lock()
+	defer fake.changeMessageVisibilityRequestMutex.Unlock()
+	fake.ChangeMessageVisibilityRequestStub = nil
+	fake.changeMessageVisibilityRequestReturns = struct {
+		result1 *request.Request
+		result2 *sqs.ChangeMessageVisibilityOutput
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.ChangeMessageVisibilityOutput) {
+	fake.changeMessageVisibilityRequestMutex.Lock()
+	defer fake.changeMessageVisibilityRequestMutex.Unlock()
+	fake.ChangeMessageVisibilityRequestStub = nil
+	if fake.changeMessageVisibilityRequestReturnsOnCall == nil {
+		fake.changeMessageVisibilityRequestReturnsOnCall = make(map[int]struct {
+			result1 *request.Request
+			result2 *sqs.ChangeMessageVisibilityOutput
+		})
+	}
+	fake.changeMessageVisibilityRequestReturnsOnCall[i] = struct {
+		result1 *request.Request
+		result2 *sqs.ChangeMessageVisibilityOutput
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityWithContext(arg1 context.Context, arg2 *sqs.ChangeMessageVisibilityInput, arg3 ...request.Option) (*sqs.ChangeMessageVisibilityOutput, error) {
+	fake.changeMessageVisibilityWithContextMutex.Lock()
+	ret, specificReturn := fake.changeMessageVisibilityWithContextReturnsOnCall[len(fake.changeMessageVisibilityWithContextArgsForCall)]
+	fake.changeMessageVisibilityWithContextArgsForCall = append(fake.changeMessageVisibilityWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.ChangeMessageVisibilityInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.ChangeMessageVisibilityWithContextStub
+	fakeReturns := fake.changeMessageVisibilityWithContextReturns
+	fake.recordInvocation("ChangeMessageVisibilityWithContext", []interface{}{arg1, arg2, arg3})
+	fake.changeMessageVisibilityWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityWithContextCallCount() int {
+	fake.changeMessageVisibilityWithContextMutex.RLock()
+	defer fake.changeMessageVisibilityWithContextMutex.RUnlock()
+	return len(fake.changeMessageVisibilityWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityWithContextCalls(stub func(context.Context, *sqs.ChangeMessageVisibilityInput, ...request.Option) (*sqs.ChangeMessageVisibilityOutput, error)) {
+	fake.changeMessageVisibilityWithContextMutex.Lock()
+	defer fake.changeMessageVisibilityWithContextMutex.Unlock()
+	fake.ChangeMessageVisibilityWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityWithContextArgsForCall(i int) (context.Context, *sqs.ChangeMessageVisibilityInput, []request.Option) {
+	fake.changeMessageVisibilityWithContextMutex.RLock()
+	defer fake.changeMessageVisibilityWithContextMutex.RUnlock()
+	argsForCall := fake.changeMessageVisibilityWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityWithContextReturns(result1 *sqs.ChangeMessageVisibilityOutput, result2 error) {
+	fake.changeMessageVisibilityWithContextMutex.Lock()
+	defer fake.changeMessageVisibilityWithContextMutex.Unlock()
+	fake.ChangeMessageVisibilityWithContextStub = nil
+	fake.changeMessageVisibilityWithContextReturns = struct {
+		result1 *sqs.ChangeMessageVisibilityOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) ChangeMessageVisibilityWithContextReturnsOnCall(i int, result1 *sqs.ChangeMessageVisibilityOutput, result2 error) {
+	fake.changeMessageVisibilityWithContextMutex.Lock()
+	defer fake.changeMessageVisibilityWithContextMutex.Unlock()
+	fake.ChangeMessageVisibilityWithContextStub = nil
+	if fake.changeMessageVisibilityWithContextReturnsOnCall == nil {
+		fake.changeMessageVisibilityWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.ChangeMessageVisibilityOutput
+			result2 error
+		})
+	}
+	fake.changeMessageVisibilityWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.ChangeMessageVisibilityOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) CreateQueue(arg1 *sqs.CreateQueueInput) (*sqs.CreateQueueOutput, error) {
 	fake.createQueueMutex.Lock()
 	ret, specificReturn := fake.createQueueReturnsOnCall[len(fake.createQueueArgsForCall)]
 	fake.createQueueArgsForCall = append(fake.createQueueArgsForCall, struct {
 		arg1 *sqs.CreateQueueInput
 	}{arg1})
+	stub := fake.CreateQueueStub
+	fakeReturns := fake.createQueueReturns
 	fake.recordInvocation("CreateQueue", []interface{}{arg1})
 	fake.createQueueMutex.Unlock()
-	if fake.CreateQueueStub != nil {
-		return fake.CreateQueueStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.createQueueReturns.result1, fake.createQueueReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) CreateQueueCallCount() int {
@@ -1323,13 +1494,22 @@ func (fake *FakeSQSAPI) CreateQueueCallCount() int {
 	return len(fake.createQueueArgsForCall)
 }
 
+func (fake *FakeSQSAPI) CreateQueueCalls(stub func(*sqs.CreateQueueInput) (*sqs.CreateQueueOutput, error)) {
+	fake.createQueueMutex.Lock()
+	defer fake.createQueueMutex.Unlock()
+	fake.CreateQueueStub = stub
+}
+
 func (fake *FakeSQSAPI) CreateQueueArgsForCall(i int) *sqs.CreateQueueInput {
 	fake.createQueueMutex.RLock()
 	defer fake.createQueueMutex.RUnlock()
-	return fake.createQueueArgsForCall[i].arg1
+	argsForCall := fake.createQueueArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) CreateQueueReturns(result1 *sqs.CreateQueueOutput, result2 error) {
+	fake.createQueueMutex.Lock()
+	defer fake.createQueueMutex.Unlock()
 	fake.CreateQueueStub = nil
 	fake.createQueueReturns = struct {
 		result1 *sqs.CreateQueueOutput
@@ -1338,6 +1518,8 @@ func (fake *FakeSQSAPI) CreateQueueReturns(result1 *sqs.CreateQueueOutput, resul
 }
 
 func (fake *FakeSQSAPI) CreateQueueReturnsOnCall(i int, result1 *sqs.CreateQueueOutput, result2 error) {
+	fake.createQueueMutex.Lock()
+	defer fake.createQueueMutex.Unlock()
 	fake.CreateQueueStub = nil
 	if fake.createQueueReturnsOnCall == nil {
 		fake.createQueueReturnsOnCall = make(map[int]struct {
@@ -1351,74 +1533,23 @@ func (fake *FakeSQSAPI) CreateQueueReturnsOnCall(i int, result1 *sqs.CreateQueue
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) CreateQueueWithContext(arg1 aws.Context, arg2 *sqs.CreateQueueInput, arg3 ...request.Option) (*sqs.CreateQueueOutput, error) {
-	fake.createQueueWithContextMutex.Lock()
-	ret, specificReturn := fake.createQueueWithContextReturnsOnCall[len(fake.createQueueWithContextArgsForCall)]
-	fake.createQueueWithContextArgsForCall = append(fake.createQueueWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.CreateQueueInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("CreateQueueWithContext", []interface{}{arg1, arg2, arg3})
-	fake.createQueueWithContextMutex.Unlock()
-	if fake.CreateQueueWithContextStub != nil {
-		return fake.CreateQueueWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.createQueueWithContextReturns.result1, fake.createQueueWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) CreateQueueWithContextCallCount() int {
-	fake.createQueueWithContextMutex.RLock()
-	defer fake.createQueueWithContextMutex.RUnlock()
-	return len(fake.createQueueWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) CreateQueueWithContextArgsForCall(i int) (aws.Context, *sqs.CreateQueueInput, []request.Option) {
-	fake.createQueueWithContextMutex.RLock()
-	defer fake.createQueueWithContextMutex.RUnlock()
-	return fake.createQueueWithContextArgsForCall[i].arg1, fake.createQueueWithContextArgsForCall[i].arg2, fake.createQueueWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) CreateQueueWithContextReturns(result1 *sqs.CreateQueueOutput, result2 error) {
-	fake.CreateQueueWithContextStub = nil
-	fake.createQueueWithContextReturns = struct {
-		result1 *sqs.CreateQueueOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) CreateQueueWithContextReturnsOnCall(i int, result1 *sqs.CreateQueueOutput, result2 error) {
-	fake.CreateQueueWithContextStub = nil
-	if fake.createQueueWithContextReturnsOnCall == nil {
-		fake.createQueueWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.CreateQueueOutput
-			result2 error
-		})
-	}
-	fake.createQueueWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.CreateQueueOutput
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) CreateQueueRequest(arg1 *sqs.CreateQueueInput) (*request.Request, *sqs.CreateQueueOutput) {
 	fake.createQueueRequestMutex.Lock()
 	ret, specificReturn := fake.createQueueRequestReturnsOnCall[len(fake.createQueueRequestArgsForCall)]
 	fake.createQueueRequestArgsForCall = append(fake.createQueueRequestArgsForCall, struct {
 		arg1 *sqs.CreateQueueInput
 	}{arg1})
+	stub := fake.CreateQueueRequestStub
+	fakeReturns := fake.createQueueRequestReturns
 	fake.recordInvocation("CreateQueueRequest", []interface{}{arg1})
 	fake.createQueueRequestMutex.Unlock()
-	if fake.CreateQueueRequestStub != nil {
-		return fake.CreateQueueRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.createQueueRequestReturns.result1, fake.createQueueRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) CreateQueueRequestCallCount() int {
@@ -1427,13 +1558,22 @@ func (fake *FakeSQSAPI) CreateQueueRequestCallCount() int {
 	return len(fake.createQueueRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) CreateQueueRequestCalls(stub func(*sqs.CreateQueueInput) (*request.Request, *sqs.CreateQueueOutput)) {
+	fake.createQueueRequestMutex.Lock()
+	defer fake.createQueueRequestMutex.Unlock()
+	fake.CreateQueueRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) CreateQueueRequestArgsForCall(i int) *sqs.CreateQueueInput {
 	fake.createQueueRequestMutex.RLock()
 	defer fake.createQueueRequestMutex.RUnlock()
-	return fake.createQueueRequestArgsForCall[i].arg1
+	argsForCall := fake.createQueueRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) CreateQueueRequestReturns(result1 *request.Request, result2 *sqs.CreateQueueOutput) {
+	fake.createQueueRequestMutex.Lock()
+	defer fake.createQueueRequestMutex.Unlock()
 	fake.CreateQueueRequestStub = nil
 	fake.createQueueRequestReturns = struct {
 		result1 *request.Request
@@ -1442,6 +1582,8 @@ func (fake *FakeSQSAPI) CreateQueueRequestReturns(result1 *request.Request, resu
 }
 
 func (fake *FakeSQSAPI) CreateQueueRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.CreateQueueOutput) {
+	fake.createQueueRequestMutex.Lock()
+	defer fake.createQueueRequestMutex.Unlock()
 	fake.CreateQueueRequestStub = nil
 	if fake.createQueueRequestReturnsOnCall == nil {
 		fake.createQueueRequestReturnsOnCall = make(map[int]struct {
@@ -1455,21 +1597,89 @@ func (fake *FakeSQSAPI) CreateQueueRequestReturnsOnCall(i int, result1 *request.
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) CreateQueueWithContext(arg1 context.Context, arg2 *sqs.CreateQueueInput, arg3 ...request.Option) (*sqs.CreateQueueOutput, error) {
+	fake.createQueueWithContextMutex.Lock()
+	ret, specificReturn := fake.createQueueWithContextReturnsOnCall[len(fake.createQueueWithContextArgsForCall)]
+	fake.createQueueWithContextArgsForCall = append(fake.createQueueWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.CreateQueueInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.CreateQueueWithContextStub
+	fakeReturns := fake.createQueueWithContextReturns
+	fake.recordInvocation("CreateQueueWithContext", []interface{}{arg1, arg2, arg3})
+	fake.createQueueWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) CreateQueueWithContextCallCount() int {
+	fake.createQueueWithContextMutex.RLock()
+	defer fake.createQueueWithContextMutex.RUnlock()
+	return len(fake.createQueueWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) CreateQueueWithContextCalls(stub func(context.Context, *sqs.CreateQueueInput, ...request.Option) (*sqs.CreateQueueOutput, error)) {
+	fake.createQueueWithContextMutex.Lock()
+	defer fake.createQueueWithContextMutex.Unlock()
+	fake.CreateQueueWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) CreateQueueWithContextArgsForCall(i int) (context.Context, *sqs.CreateQueueInput, []request.Option) {
+	fake.createQueueWithContextMutex.RLock()
+	defer fake.createQueueWithContextMutex.RUnlock()
+	argsForCall := fake.createQueueWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) CreateQueueWithContextReturns(result1 *sqs.CreateQueueOutput, result2 error) {
+	fake.createQueueWithContextMutex.Lock()
+	defer fake.createQueueWithContextMutex.Unlock()
+	fake.CreateQueueWithContextStub = nil
+	fake.createQueueWithContextReturns = struct {
+		result1 *sqs.CreateQueueOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) CreateQueueWithContextReturnsOnCall(i int, result1 *sqs.CreateQueueOutput, result2 error) {
+	fake.createQueueWithContextMutex.Lock()
+	defer fake.createQueueWithContextMutex.Unlock()
+	fake.CreateQueueWithContextStub = nil
+	if fake.createQueueWithContextReturnsOnCall == nil {
+		fake.createQueueWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.CreateQueueOutput
+			result2 error
+		})
+	}
+	fake.createQueueWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.CreateQueueOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) DeleteMessage(arg1 *sqs.DeleteMessageInput) (*sqs.DeleteMessageOutput, error) {
 	fake.deleteMessageMutex.Lock()
 	ret, specificReturn := fake.deleteMessageReturnsOnCall[len(fake.deleteMessageArgsForCall)]
 	fake.deleteMessageArgsForCall = append(fake.deleteMessageArgsForCall, struct {
 		arg1 *sqs.DeleteMessageInput
 	}{arg1})
+	stub := fake.DeleteMessageStub
+	fakeReturns := fake.deleteMessageReturns
 	fake.recordInvocation("DeleteMessage", []interface{}{arg1})
 	fake.deleteMessageMutex.Unlock()
-	if fake.DeleteMessageStub != nil {
-		return fake.DeleteMessageStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.deleteMessageReturns.result1, fake.deleteMessageReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) DeleteMessageCallCount() int {
@@ -1478,13 +1688,22 @@ func (fake *FakeSQSAPI) DeleteMessageCallCount() int {
 	return len(fake.deleteMessageArgsForCall)
 }
 
+func (fake *FakeSQSAPI) DeleteMessageCalls(stub func(*sqs.DeleteMessageInput) (*sqs.DeleteMessageOutput, error)) {
+	fake.deleteMessageMutex.Lock()
+	defer fake.deleteMessageMutex.Unlock()
+	fake.DeleteMessageStub = stub
+}
+
 func (fake *FakeSQSAPI) DeleteMessageArgsForCall(i int) *sqs.DeleteMessageInput {
 	fake.deleteMessageMutex.RLock()
 	defer fake.deleteMessageMutex.RUnlock()
-	return fake.deleteMessageArgsForCall[i].arg1
+	argsForCall := fake.deleteMessageArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) DeleteMessageReturns(result1 *sqs.DeleteMessageOutput, result2 error) {
+	fake.deleteMessageMutex.Lock()
+	defer fake.deleteMessageMutex.Unlock()
 	fake.DeleteMessageStub = nil
 	fake.deleteMessageReturns = struct {
 		result1 *sqs.DeleteMessageOutput
@@ -1493,6 +1712,8 @@ func (fake *FakeSQSAPI) DeleteMessageReturns(result1 *sqs.DeleteMessageOutput, r
 }
 
 func (fake *FakeSQSAPI) DeleteMessageReturnsOnCall(i int, result1 *sqs.DeleteMessageOutput, result2 error) {
+	fake.deleteMessageMutex.Lock()
+	defer fake.deleteMessageMutex.Unlock()
 	fake.DeleteMessageStub = nil
 	if fake.deleteMessageReturnsOnCall == nil {
 		fake.deleteMessageReturnsOnCall = make(map[int]struct {
@@ -1506,125 +1727,23 @@ func (fake *FakeSQSAPI) DeleteMessageReturnsOnCall(i int, result1 *sqs.DeleteMes
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) DeleteMessageWithContext(arg1 aws.Context, arg2 *sqs.DeleteMessageInput, arg3 ...request.Option) (*sqs.DeleteMessageOutput, error) {
-	fake.deleteMessageWithContextMutex.Lock()
-	ret, specificReturn := fake.deleteMessageWithContextReturnsOnCall[len(fake.deleteMessageWithContextArgsForCall)]
-	fake.deleteMessageWithContextArgsForCall = append(fake.deleteMessageWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.DeleteMessageInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("DeleteMessageWithContext", []interface{}{arg1, arg2, arg3})
-	fake.deleteMessageWithContextMutex.Unlock()
-	if fake.DeleteMessageWithContextStub != nil {
-		return fake.DeleteMessageWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.deleteMessageWithContextReturns.result1, fake.deleteMessageWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) DeleteMessageWithContextCallCount() int {
-	fake.deleteMessageWithContextMutex.RLock()
-	defer fake.deleteMessageWithContextMutex.RUnlock()
-	return len(fake.deleteMessageWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) DeleteMessageWithContextArgsForCall(i int) (aws.Context, *sqs.DeleteMessageInput, []request.Option) {
-	fake.deleteMessageWithContextMutex.RLock()
-	defer fake.deleteMessageWithContextMutex.RUnlock()
-	return fake.deleteMessageWithContextArgsForCall[i].arg1, fake.deleteMessageWithContextArgsForCall[i].arg2, fake.deleteMessageWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) DeleteMessageWithContextReturns(result1 *sqs.DeleteMessageOutput, result2 error) {
-	fake.DeleteMessageWithContextStub = nil
-	fake.deleteMessageWithContextReturns = struct {
-		result1 *sqs.DeleteMessageOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) DeleteMessageWithContextReturnsOnCall(i int, result1 *sqs.DeleteMessageOutput, result2 error) {
-	fake.DeleteMessageWithContextStub = nil
-	if fake.deleteMessageWithContextReturnsOnCall == nil {
-		fake.deleteMessageWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.DeleteMessageOutput
-			result2 error
-		})
-	}
-	fake.deleteMessageWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.DeleteMessageOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) DeleteMessageRequest(arg1 *sqs.DeleteMessageInput) (*request.Request, *sqs.DeleteMessageOutput) {
-	fake.deleteMessageRequestMutex.Lock()
-	ret, specificReturn := fake.deleteMessageRequestReturnsOnCall[len(fake.deleteMessageRequestArgsForCall)]
-	fake.deleteMessageRequestArgsForCall = append(fake.deleteMessageRequestArgsForCall, struct {
-		arg1 *sqs.DeleteMessageInput
-	}{arg1})
-	fake.recordInvocation("DeleteMessageRequest", []interface{}{arg1})
-	fake.deleteMessageRequestMutex.Unlock()
-	if fake.DeleteMessageRequestStub != nil {
-		return fake.DeleteMessageRequestStub(arg1)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.deleteMessageRequestReturns.result1, fake.deleteMessageRequestReturns.result2
-}
-
-func (fake *FakeSQSAPI) DeleteMessageRequestCallCount() int {
-	fake.deleteMessageRequestMutex.RLock()
-	defer fake.deleteMessageRequestMutex.RUnlock()
-	return len(fake.deleteMessageRequestArgsForCall)
-}
-
-func (fake *FakeSQSAPI) DeleteMessageRequestArgsForCall(i int) *sqs.DeleteMessageInput {
-	fake.deleteMessageRequestMutex.RLock()
-	defer fake.deleteMessageRequestMutex.RUnlock()
-	return fake.deleteMessageRequestArgsForCall[i].arg1
-}
-
-func (fake *FakeSQSAPI) DeleteMessageRequestReturns(result1 *request.Request, result2 *sqs.DeleteMessageOutput) {
-	fake.DeleteMessageRequestStub = nil
-	fake.deleteMessageRequestReturns = struct {
-		result1 *request.Request
-		result2 *sqs.DeleteMessageOutput
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) DeleteMessageRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.DeleteMessageOutput) {
-	fake.DeleteMessageRequestStub = nil
-	if fake.deleteMessageRequestReturnsOnCall == nil {
-		fake.deleteMessageRequestReturnsOnCall = make(map[int]struct {
-			result1 *request.Request
-			result2 *sqs.DeleteMessageOutput
-		})
-	}
-	fake.deleteMessageRequestReturnsOnCall[i] = struct {
-		result1 *request.Request
-		result2 *sqs.DeleteMessageOutput
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) DeleteMessageBatch(arg1 *sqs.DeleteMessageBatchInput) (*sqs.DeleteMessageBatchOutput, error) {
 	fake.deleteMessageBatchMutex.Lock()
 	ret, specificReturn := fake.deleteMessageBatchReturnsOnCall[len(fake.deleteMessageBatchArgsForCall)]
 	fake.deleteMessageBatchArgsForCall = append(fake.deleteMessageBatchArgsForCall, struct {
 		arg1 *sqs.DeleteMessageBatchInput
 	}{arg1})
+	stub := fake.DeleteMessageBatchStub
+	fakeReturns := fake.deleteMessageBatchReturns
 	fake.recordInvocation("DeleteMessageBatch", []interface{}{arg1})
 	fake.deleteMessageBatchMutex.Unlock()
-	if fake.DeleteMessageBatchStub != nil {
-		return fake.DeleteMessageBatchStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.deleteMessageBatchReturns.result1, fake.deleteMessageBatchReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) DeleteMessageBatchCallCount() int {
@@ -1633,13 +1752,22 @@ func (fake *FakeSQSAPI) DeleteMessageBatchCallCount() int {
 	return len(fake.deleteMessageBatchArgsForCall)
 }
 
+func (fake *FakeSQSAPI) DeleteMessageBatchCalls(stub func(*sqs.DeleteMessageBatchInput) (*sqs.DeleteMessageBatchOutput, error)) {
+	fake.deleteMessageBatchMutex.Lock()
+	defer fake.deleteMessageBatchMutex.Unlock()
+	fake.DeleteMessageBatchStub = stub
+}
+
 func (fake *FakeSQSAPI) DeleteMessageBatchArgsForCall(i int) *sqs.DeleteMessageBatchInput {
 	fake.deleteMessageBatchMutex.RLock()
 	defer fake.deleteMessageBatchMutex.RUnlock()
-	return fake.deleteMessageBatchArgsForCall[i].arg1
+	argsForCall := fake.deleteMessageBatchArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) DeleteMessageBatchReturns(result1 *sqs.DeleteMessageBatchOutput, result2 error) {
+	fake.deleteMessageBatchMutex.Lock()
+	defer fake.deleteMessageBatchMutex.Unlock()
 	fake.DeleteMessageBatchStub = nil
 	fake.deleteMessageBatchReturns = struct {
 		result1 *sqs.DeleteMessageBatchOutput
@@ -1648,6 +1776,8 @@ func (fake *FakeSQSAPI) DeleteMessageBatchReturns(result1 *sqs.DeleteMessageBatc
 }
 
 func (fake *FakeSQSAPI) DeleteMessageBatchReturnsOnCall(i int, result1 *sqs.DeleteMessageBatchOutput, result2 error) {
+	fake.deleteMessageBatchMutex.Lock()
+	defer fake.deleteMessageBatchMutex.Unlock()
 	fake.DeleteMessageBatchStub = nil
 	if fake.deleteMessageBatchReturnsOnCall == nil {
 		fake.deleteMessageBatchReturnsOnCall = make(map[int]struct {
@@ -1661,74 +1791,23 @@ func (fake *FakeSQSAPI) DeleteMessageBatchReturnsOnCall(i int, result1 *sqs.Dele
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) DeleteMessageBatchWithContext(arg1 aws.Context, arg2 *sqs.DeleteMessageBatchInput, arg3 ...request.Option) (*sqs.DeleteMessageBatchOutput, error) {
-	fake.deleteMessageBatchWithContextMutex.Lock()
-	ret, specificReturn := fake.deleteMessageBatchWithContextReturnsOnCall[len(fake.deleteMessageBatchWithContextArgsForCall)]
-	fake.deleteMessageBatchWithContextArgsForCall = append(fake.deleteMessageBatchWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.DeleteMessageBatchInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("DeleteMessageBatchWithContext", []interface{}{arg1, arg2, arg3})
-	fake.deleteMessageBatchWithContextMutex.Unlock()
-	if fake.DeleteMessageBatchWithContextStub != nil {
-		return fake.DeleteMessageBatchWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.deleteMessageBatchWithContextReturns.result1, fake.deleteMessageBatchWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) DeleteMessageBatchWithContextCallCount() int {
-	fake.deleteMessageBatchWithContextMutex.RLock()
-	defer fake.deleteMessageBatchWithContextMutex.RUnlock()
-	return len(fake.deleteMessageBatchWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) DeleteMessageBatchWithContextArgsForCall(i int) (aws.Context, *sqs.DeleteMessageBatchInput, []request.Option) {
-	fake.deleteMessageBatchWithContextMutex.RLock()
-	defer fake.deleteMessageBatchWithContextMutex.RUnlock()
-	return fake.deleteMessageBatchWithContextArgsForCall[i].arg1, fake.deleteMessageBatchWithContextArgsForCall[i].arg2, fake.deleteMessageBatchWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) DeleteMessageBatchWithContextReturns(result1 *sqs.DeleteMessageBatchOutput, result2 error) {
-	fake.DeleteMessageBatchWithContextStub = nil
-	fake.deleteMessageBatchWithContextReturns = struct {
-		result1 *sqs.DeleteMessageBatchOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) DeleteMessageBatchWithContextReturnsOnCall(i int, result1 *sqs.DeleteMessageBatchOutput, result2 error) {
-	fake.DeleteMessageBatchWithContextStub = nil
-	if fake.deleteMessageBatchWithContextReturnsOnCall == nil {
-		fake.deleteMessageBatchWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.DeleteMessageBatchOutput
-			result2 error
-		})
-	}
-	fake.deleteMessageBatchWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.DeleteMessageBatchOutput
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) DeleteMessageBatchRequest(arg1 *sqs.DeleteMessageBatchInput) (*request.Request, *sqs.DeleteMessageBatchOutput) {
 	fake.deleteMessageBatchRequestMutex.Lock()
 	ret, specificReturn := fake.deleteMessageBatchRequestReturnsOnCall[len(fake.deleteMessageBatchRequestArgsForCall)]
 	fake.deleteMessageBatchRequestArgsForCall = append(fake.deleteMessageBatchRequestArgsForCall, struct {
 		arg1 *sqs.DeleteMessageBatchInput
 	}{arg1})
+	stub := fake.DeleteMessageBatchRequestStub
+	fakeReturns := fake.deleteMessageBatchRequestReturns
 	fake.recordInvocation("DeleteMessageBatchRequest", []interface{}{arg1})
 	fake.deleteMessageBatchRequestMutex.Unlock()
-	if fake.DeleteMessageBatchRequestStub != nil {
-		return fake.DeleteMessageBatchRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.deleteMessageBatchRequestReturns.result1, fake.deleteMessageBatchRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) DeleteMessageBatchRequestCallCount() int {
@@ -1737,13 +1816,22 @@ func (fake *FakeSQSAPI) DeleteMessageBatchRequestCallCount() int {
 	return len(fake.deleteMessageBatchRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) DeleteMessageBatchRequestCalls(stub func(*sqs.DeleteMessageBatchInput) (*request.Request, *sqs.DeleteMessageBatchOutput)) {
+	fake.deleteMessageBatchRequestMutex.Lock()
+	defer fake.deleteMessageBatchRequestMutex.Unlock()
+	fake.DeleteMessageBatchRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) DeleteMessageBatchRequestArgsForCall(i int) *sqs.DeleteMessageBatchInput {
 	fake.deleteMessageBatchRequestMutex.RLock()
 	defer fake.deleteMessageBatchRequestMutex.RUnlock()
-	return fake.deleteMessageBatchRequestArgsForCall[i].arg1
+	argsForCall := fake.deleteMessageBatchRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) DeleteMessageBatchRequestReturns(result1 *request.Request, result2 *sqs.DeleteMessageBatchOutput) {
+	fake.deleteMessageBatchRequestMutex.Lock()
+	defer fake.deleteMessageBatchRequestMutex.Unlock()
 	fake.DeleteMessageBatchRequestStub = nil
 	fake.deleteMessageBatchRequestReturns = struct {
 		result1 *request.Request
@@ -1752,6 +1840,8 @@ func (fake *FakeSQSAPI) DeleteMessageBatchRequestReturns(result1 *request.Reques
 }
 
 func (fake *FakeSQSAPI) DeleteMessageBatchRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.DeleteMessageBatchOutput) {
+	fake.deleteMessageBatchRequestMutex.Lock()
+	defer fake.deleteMessageBatchRequestMutex.Unlock()
 	fake.DeleteMessageBatchRequestStub = nil
 	if fake.deleteMessageBatchRequestReturnsOnCall == nil {
 		fake.deleteMessageBatchRequestReturnsOnCall = make(map[int]struct {
@@ -1765,21 +1855,219 @@ func (fake *FakeSQSAPI) DeleteMessageBatchRequestReturnsOnCall(i int, result1 *r
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) DeleteMessageBatchWithContext(arg1 context.Context, arg2 *sqs.DeleteMessageBatchInput, arg3 ...request.Option) (*sqs.DeleteMessageBatchOutput, error) {
+	fake.deleteMessageBatchWithContextMutex.Lock()
+	ret, specificReturn := fake.deleteMessageBatchWithContextReturnsOnCall[len(fake.deleteMessageBatchWithContextArgsForCall)]
+	fake.deleteMessageBatchWithContextArgsForCall = append(fake.deleteMessageBatchWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.DeleteMessageBatchInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.DeleteMessageBatchWithContextStub
+	fakeReturns := fake.deleteMessageBatchWithContextReturns
+	fake.recordInvocation("DeleteMessageBatchWithContext", []interface{}{arg1, arg2, arg3})
+	fake.deleteMessageBatchWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) DeleteMessageBatchWithContextCallCount() int {
+	fake.deleteMessageBatchWithContextMutex.RLock()
+	defer fake.deleteMessageBatchWithContextMutex.RUnlock()
+	return len(fake.deleteMessageBatchWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) DeleteMessageBatchWithContextCalls(stub func(context.Context, *sqs.DeleteMessageBatchInput, ...request.Option) (*sqs.DeleteMessageBatchOutput, error)) {
+	fake.deleteMessageBatchWithContextMutex.Lock()
+	defer fake.deleteMessageBatchWithContextMutex.Unlock()
+	fake.DeleteMessageBatchWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) DeleteMessageBatchWithContextArgsForCall(i int) (context.Context, *sqs.DeleteMessageBatchInput, []request.Option) {
+	fake.deleteMessageBatchWithContextMutex.RLock()
+	defer fake.deleteMessageBatchWithContextMutex.RUnlock()
+	argsForCall := fake.deleteMessageBatchWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) DeleteMessageBatchWithContextReturns(result1 *sqs.DeleteMessageBatchOutput, result2 error) {
+	fake.deleteMessageBatchWithContextMutex.Lock()
+	defer fake.deleteMessageBatchWithContextMutex.Unlock()
+	fake.DeleteMessageBatchWithContextStub = nil
+	fake.deleteMessageBatchWithContextReturns = struct {
+		result1 *sqs.DeleteMessageBatchOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) DeleteMessageBatchWithContextReturnsOnCall(i int, result1 *sqs.DeleteMessageBatchOutput, result2 error) {
+	fake.deleteMessageBatchWithContextMutex.Lock()
+	defer fake.deleteMessageBatchWithContextMutex.Unlock()
+	fake.DeleteMessageBatchWithContextStub = nil
+	if fake.deleteMessageBatchWithContextReturnsOnCall == nil {
+		fake.deleteMessageBatchWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.DeleteMessageBatchOutput
+			result2 error
+		})
+	}
+	fake.deleteMessageBatchWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.DeleteMessageBatchOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) DeleteMessageRequest(arg1 *sqs.DeleteMessageInput) (*request.Request, *sqs.DeleteMessageOutput) {
+	fake.deleteMessageRequestMutex.Lock()
+	ret, specificReturn := fake.deleteMessageRequestReturnsOnCall[len(fake.deleteMessageRequestArgsForCall)]
+	fake.deleteMessageRequestArgsForCall = append(fake.deleteMessageRequestArgsForCall, struct {
+		arg1 *sqs.DeleteMessageInput
+	}{arg1})
+	stub := fake.DeleteMessageRequestStub
+	fakeReturns := fake.deleteMessageRequestReturns
+	fake.recordInvocation("DeleteMessageRequest", []interface{}{arg1})
+	fake.deleteMessageRequestMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) DeleteMessageRequestCallCount() int {
+	fake.deleteMessageRequestMutex.RLock()
+	defer fake.deleteMessageRequestMutex.RUnlock()
+	return len(fake.deleteMessageRequestArgsForCall)
+}
+
+func (fake *FakeSQSAPI) DeleteMessageRequestCalls(stub func(*sqs.DeleteMessageInput) (*request.Request, *sqs.DeleteMessageOutput)) {
+	fake.deleteMessageRequestMutex.Lock()
+	defer fake.deleteMessageRequestMutex.Unlock()
+	fake.DeleteMessageRequestStub = stub
+}
+
+func (fake *FakeSQSAPI) DeleteMessageRequestArgsForCall(i int) *sqs.DeleteMessageInput {
+	fake.deleteMessageRequestMutex.RLock()
+	defer fake.deleteMessageRequestMutex.RUnlock()
+	argsForCall := fake.deleteMessageRequestArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeSQSAPI) DeleteMessageRequestReturns(result1 *request.Request, result2 *sqs.DeleteMessageOutput) {
+	fake.deleteMessageRequestMutex.Lock()
+	defer fake.deleteMessageRequestMutex.Unlock()
+	fake.DeleteMessageRequestStub = nil
+	fake.deleteMessageRequestReturns = struct {
+		result1 *request.Request
+		result2 *sqs.DeleteMessageOutput
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) DeleteMessageRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.DeleteMessageOutput) {
+	fake.deleteMessageRequestMutex.Lock()
+	defer fake.deleteMessageRequestMutex.Unlock()
+	fake.DeleteMessageRequestStub = nil
+	if fake.deleteMessageRequestReturnsOnCall == nil {
+		fake.deleteMessageRequestReturnsOnCall = make(map[int]struct {
+			result1 *request.Request
+			result2 *sqs.DeleteMessageOutput
+		})
+	}
+	fake.deleteMessageRequestReturnsOnCall[i] = struct {
+		result1 *request.Request
+		result2 *sqs.DeleteMessageOutput
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) DeleteMessageWithContext(arg1 context.Context, arg2 *sqs.DeleteMessageInput, arg3 ...request.Option) (*sqs.DeleteMessageOutput, error) {
+	fake.deleteMessageWithContextMutex.Lock()
+	ret, specificReturn := fake.deleteMessageWithContextReturnsOnCall[len(fake.deleteMessageWithContextArgsForCall)]
+	fake.deleteMessageWithContextArgsForCall = append(fake.deleteMessageWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.DeleteMessageInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.DeleteMessageWithContextStub
+	fakeReturns := fake.deleteMessageWithContextReturns
+	fake.recordInvocation("DeleteMessageWithContext", []interface{}{arg1, arg2, arg3})
+	fake.deleteMessageWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) DeleteMessageWithContextCallCount() int {
+	fake.deleteMessageWithContextMutex.RLock()
+	defer fake.deleteMessageWithContextMutex.RUnlock()
+	return len(fake.deleteMessageWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) DeleteMessageWithContextCalls(stub func(context.Context, *sqs.DeleteMessageInput, ...request.Option) (*sqs.DeleteMessageOutput, error)) {
+	fake.deleteMessageWithContextMutex.Lock()
+	defer fake.deleteMessageWithContextMutex.Unlock()
+	fake.DeleteMessageWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) DeleteMessageWithContextArgsForCall(i int) (context.Context, *sqs.DeleteMessageInput, []request.Option) {
+	fake.deleteMessageWithContextMutex.RLock()
+	defer fake.deleteMessageWithContextMutex.RUnlock()
+	argsForCall := fake.deleteMessageWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) DeleteMessageWithContextReturns(result1 *sqs.DeleteMessageOutput, result2 error) {
+	fake.deleteMessageWithContextMutex.Lock()
+	defer fake.deleteMessageWithContextMutex.Unlock()
+	fake.DeleteMessageWithContextStub = nil
+	fake.deleteMessageWithContextReturns = struct {
+		result1 *sqs.DeleteMessageOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) DeleteMessageWithContextReturnsOnCall(i int, result1 *sqs.DeleteMessageOutput, result2 error) {
+	fake.deleteMessageWithContextMutex.Lock()
+	defer fake.deleteMessageWithContextMutex.Unlock()
+	fake.DeleteMessageWithContextStub = nil
+	if fake.deleteMessageWithContextReturnsOnCall == nil {
+		fake.deleteMessageWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.DeleteMessageOutput
+			result2 error
+		})
+	}
+	fake.deleteMessageWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.DeleteMessageOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) DeleteQueue(arg1 *sqs.DeleteQueueInput) (*sqs.DeleteQueueOutput, error) {
 	fake.deleteQueueMutex.Lock()
 	ret, specificReturn := fake.deleteQueueReturnsOnCall[len(fake.deleteQueueArgsForCall)]
 	fake.deleteQueueArgsForCall = append(fake.deleteQueueArgsForCall, struct {
 		arg1 *sqs.DeleteQueueInput
 	}{arg1})
+	stub := fake.DeleteQueueStub
+	fakeReturns := fake.deleteQueueReturns
 	fake.recordInvocation("DeleteQueue", []interface{}{arg1})
 	fake.deleteQueueMutex.Unlock()
-	if fake.DeleteQueueStub != nil {
-		return fake.DeleteQueueStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.deleteQueueReturns.result1, fake.deleteQueueReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) DeleteQueueCallCount() int {
@@ -1788,13 +2076,22 @@ func (fake *FakeSQSAPI) DeleteQueueCallCount() int {
 	return len(fake.deleteQueueArgsForCall)
 }
 
+func (fake *FakeSQSAPI) DeleteQueueCalls(stub func(*sqs.DeleteQueueInput) (*sqs.DeleteQueueOutput, error)) {
+	fake.deleteQueueMutex.Lock()
+	defer fake.deleteQueueMutex.Unlock()
+	fake.DeleteQueueStub = stub
+}
+
 func (fake *FakeSQSAPI) DeleteQueueArgsForCall(i int) *sqs.DeleteQueueInput {
 	fake.deleteQueueMutex.RLock()
 	defer fake.deleteQueueMutex.RUnlock()
-	return fake.deleteQueueArgsForCall[i].arg1
+	argsForCall := fake.deleteQueueArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) DeleteQueueReturns(result1 *sqs.DeleteQueueOutput, result2 error) {
+	fake.deleteQueueMutex.Lock()
+	defer fake.deleteQueueMutex.Unlock()
 	fake.DeleteQueueStub = nil
 	fake.deleteQueueReturns = struct {
 		result1 *sqs.DeleteQueueOutput
@@ -1803,6 +2100,8 @@ func (fake *FakeSQSAPI) DeleteQueueReturns(result1 *sqs.DeleteQueueOutput, resul
 }
 
 func (fake *FakeSQSAPI) DeleteQueueReturnsOnCall(i int, result1 *sqs.DeleteQueueOutput, result2 error) {
+	fake.deleteQueueMutex.Lock()
+	defer fake.deleteQueueMutex.Unlock()
 	fake.DeleteQueueStub = nil
 	if fake.deleteQueueReturnsOnCall == nil {
 		fake.deleteQueueReturnsOnCall = make(map[int]struct {
@@ -1816,74 +2115,23 @@ func (fake *FakeSQSAPI) DeleteQueueReturnsOnCall(i int, result1 *sqs.DeleteQueue
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) DeleteQueueWithContext(arg1 aws.Context, arg2 *sqs.DeleteQueueInput, arg3 ...request.Option) (*sqs.DeleteQueueOutput, error) {
-	fake.deleteQueueWithContextMutex.Lock()
-	ret, specificReturn := fake.deleteQueueWithContextReturnsOnCall[len(fake.deleteQueueWithContextArgsForCall)]
-	fake.deleteQueueWithContextArgsForCall = append(fake.deleteQueueWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.DeleteQueueInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("DeleteQueueWithContext", []interface{}{arg1, arg2, arg3})
-	fake.deleteQueueWithContextMutex.Unlock()
-	if fake.DeleteQueueWithContextStub != nil {
-		return fake.DeleteQueueWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.deleteQueueWithContextReturns.result1, fake.deleteQueueWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) DeleteQueueWithContextCallCount() int {
-	fake.deleteQueueWithContextMutex.RLock()
-	defer fake.deleteQueueWithContextMutex.RUnlock()
-	return len(fake.deleteQueueWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) DeleteQueueWithContextArgsForCall(i int) (aws.Context, *sqs.DeleteQueueInput, []request.Option) {
-	fake.deleteQueueWithContextMutex.RLock()
-	defer fake.deleteQueueWithContextMutex.RUnlock()
-	return fake.deleteQueueWithContextArgsForCall[i].arg1, fake.deleteQueueWithContextArgsForCall[i].arg2, fake.deleteQueueWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) DeleteQueueWithContextReturns(result1 *sqs.DeleteQueueOutput, result2 error) {
-	fake.DeleteQueueWithContextStub = nil
-	fake.deleteQueueWithContextReturns = struct {
-		result1 *sqs.DeleteQueueOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) DeleteQueueWithContextReturnsOnCall(i int, result1 *sqs.DeleteQueueOutput, result2 error) {
-	fake.DeleteQueueWithContextStub = nil
-	if fake.deleteQueueWithContextReturnsOnCall == nil {
-		fake.deleteQueueWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.DeleteQueueOutput
-			result2 error
-		})
-	}
-	fake.deleteQueueWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.DeleteQueueOutput
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) DeleteQueueRequest(arg1 *sqs.DeleteQueueInput) (*request.Request, *sqs.DeleteQueueOutput) {
 	fake.deleteQueueRequestMutex.Lock()
 	ret, specificReturn := fake.deleteQueueRequestReturnsOnCall[len(fake.deleteQueueRequestArgsForCall)]
 	fake.deleteQueueRequestArgsForCall = append(fake.deleteQueueRequestArgsForCall, struct {
 		arg1 *sqs.DeleteQueueInput
 	}{arg1})
+	stub := fake.DeleteQueueRequestStub
+	fakeReturns := fake.deleteQueueRequestReturns
 	fake.recordInvocation("DeleteQueueRequest", []interface{}{arg1})
 	fake.deleteQueueRequestMutex.Unlock()
-	if fake.DeleteQueueRequestStub != nil {
-		return fake.DeleteQueueRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.deleteQueueRequestReturns.result1, fake.deleteQueueRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) DeleteQueueRequestCallCount() int {
@@ -1892,13 +2140,22 @@ func (fake *FakeSQSAPI) DeleteQueueRequestCallCount() int {
 	return len(fake.deleteQueueRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) DeleteQueueRequestCalls(stub func(*sqs.DeleteQueueInput) (*request.Request, *sqs.DeleteQueueOutput)) {
+	fake.deleteQueueRequestMutex.Lock()
+	defer fake.deleteQueueRequestMutex.Unlock()
+	fake.DeleteQueueRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) DeleteQueueRequestArgsForCall(i int) *sqs.DeleteQueueInput {
 	fake.deleteQueueRequestMutex.RLock()
 	defer fake.deleteQueueRequestMutex.RUnlock()
-	return fake.deleteQueueRequestArgsForCall[i].arg1
+	argsForCall := fake.deleteQueueRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) DeleteQueueRequestReturns(result1 *request.Request, result2 *sqs.DeleteQueueOutput) {
+	fake.deleteQueueRequestMutex.Lock()
+	defer fake.deleteQueueRequestMutex.Unlock()
 	fake.DeleteQueueRequestStub = nil
 	fake.deleteQueueRequestReturns = struct {
 		result1 *request.Request
@@ -1907,6 +2164,8 @@ func (fake *FakeSQSAPI) DeleteQueueRequestReturns(result1 *request.Request, resu
 }
 
 func (fake *FakeSQSAPI) DeleteQueueRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.DeleteQueueOutput) {
+	fake.deleteQueueRequestMutex.Lock()
+	defer fake.deleteQueueRequestMutex.Unlock()
 	fake.DeleteQueueRequestStub = nil
 	if fake.deleteQueueRequestReturnsOnCall == nil {
 		fake.deleteQueueRequestReturnsOnCall = make(map[int]struct {
@@ -1920,21 +2179,89 @@ func (fake *FakeSQSAPI) DeleteQueueRequestReturnsOnCall(i int, result1 *request.
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) DeleteQueueWithContext(arg1 context.Context, arg2 *sqs.DeleteQueueInput, arg3 ...request.Option) (*sqs.DeleteQueueOutput, error) {
+	fake.deleteQueueWithContextMutex.Lock()
+	ret, specificReturn := fake.deleteQueueWithContextReturnsOnCall[len(fake.deleteQueueWithContextArgsForCall)]
+	fake.deleteQueueWithContextArgsForCall = append(fake.deleteQueueWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.DeleteQueueInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.DeleteQueueWithContextStub
+	fakeReturns := fake.deleteQueueWithContextReturns
+	fake.recordInvocation("DeleteQueueWithContext", []interface{}{arg1, arg2, arg3})
+	fake.deleteQueueWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) DeleteQueueWithContextCallCount() int {
+	fake.deleteQueueWithContextMutex.RLock()
+	defer fake.deleteQueueWithContextMutex.RUnlock()
+	return len(fake.deleteQueueWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) DeleteQueueWithContextCalls(stub func(context.Context, *sqs.DeleteQueueInput, ...request.Option) (*sqs.DeleteQueueOutput, error)) {
+	fake.deleteQueueWithContextMutex.Lock()
+	defer fake.deleteQueueWithContextMutex.Unlock()
+	fake.DeleteQueueWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) DeleteQueueWithContextArgsForCall(i int) (context.Context, *sqs.DeleteQueueInput, []request.Option) {
+	fake.deleteQueueWithContextMutex.RLock()
+	defer fake.deleteQueueWithContextMutex.RUnlock()
+	argsForCall := fake.deleteQueueWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) DeleteQueueWithContextReturns(result1 *sqs.DeleteQueueOutput, result2 error) {
+	fake.deleteQueueWithContextMutex.Lock()
+	defer fake.deleteQueueWithContextMutex.Unlock()
+	fake.DeleteQueueWithContextStub = nil
+	fake.deleteQueueWithContextReturns = struct {
+		result1 *sqs.DeleteQueueOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) DeleteQueueWithContextReturnsOnCall(i int, result1 *sqs.DeleteQueueOutput, result2 error) {
+	fake.deleteQueueWithContextMutex.Lock()
+	defer fake.deleteQueueWithContextMutex.Unlock()
+	fake.DeleteQueueWithContextStub = nil
+	if fake.deleteQueueWithContextReturnsOnCall == nil {
+		fake.deleteQueueWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.DeleteQueueOutput
+			result2 error
+		})
+	}
+	fake.deleteQueueWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.DeleteQueueOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) GetQueueAttributes(arg1 *sqs.GetQueueAttributesInput) (*sqs.GetQueueAttributesOutput, error) {
 	fake.getQueueAttributesMutex.Lock()
 	ret, specificReturn := fake.getQueueAttributesReturnsOnCall[len(fake.getQueueAttributesArgsForCall)]
 	fake.getQueueAttributesArgsForCall = append(fake.getQueueAttributesArgsForCall, struct {
 		arg1 *sqs.GetQueueAttributesInput
 	}{arg1})
+	stub := fake.GetQueueAttributesStub
+	fakeReturns := fake.getQueueAttributesReturns
 	fake.recordInvocation("GetQueueAttributes", []interface{}{arg1})
 	fake.getQueueAttributesMutex.Unlock()
-	if fake.GetQueueAttributesStub != nil {
-		return fake.GetQueueAttributesStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.getQueueAttributesReturns.result1, fake.getQueueAttributesReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) GetQueueAttributesCallCount() int {
@@ -1943,13 +2270,22 @@ func (fake *FakeSQSAPI) GetQueueAttributesCallCount() int {
 	return len(fake.getQueueAttributesArgsForCall)
 }
 
+func (fake *FakeSQSAPI) GetQueueAttributesCalls(stub func(*sqs.GetQueueAttributesInput) (*sqs.GetQueueAttributesOutput, error)) {
+	fake.getQueueAttributesMutex.Lock()
+	defer fake.getQueueAttributesMutex.Unlock()
+	fake.GetQueueAttributesStub = stub
+}
+
 func (fake *FakeSQSAPI) GetQueueAttributesArgsForCall(i int) *sqs.GetQueueAttributesInput {
 	fake.getQueueAttributesMutex.RLock()
 	defer fake.getQueueAttributesMutex.RUnlock()
-	return fake.getQueueAttributesArgsForCall[i].arg1
+	argsForCall := fake.getQueueAttributesArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) GetQueueAttributesReturns(result1 *sqs.GetQueueAttributesOutput, result2 error) {
+	fake.getQueueAttributesMutex.Lock()
+	defer fake.getQueueAttributesMutex.Unlock()
 	fake.GetQueueAttributesStub = nil
 	fake.getQueueAttributesReturns = struct {
 		result1 *sqs.GetQueueAttributesOutput
@@ -1958,6 +2294,8 @@ func (fake *FakeSQSAPI) GetQueueAttributesReturns(result1 *sqs.GetQueueAttribute
 }
 
 func (fake *FakeSQSAPI) GetQueueAttributesReturnsOnCall(i int, result1 *sqs.GetQueueAttributesOutput, result2 error) {
+	fake.getQueueAttributesMutex.Lock()
+	defer fake.getQueueAttributesMutex.Unlock()
 	fake.GetQueueAttributesStub = nil
 	if fake.getQueueAttributesReturnsOnCall == nil {
 		fake.getQueueAttributesReturnsOnCall = make(map[int]struct {
@@ -1971,74 +2309,23 @@ func (fake *FakeSQSAPI) GetQueueAttributesReturnsOnCall(i int, result1 *sqs.GetQ
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) GetQueueAttributesWithContext(arg1 aws.Context, arg2 *sqs.GetQueueAttributesInput, arg3 ...request.Option) (*sqs.GetQueueAttributesOutput, error) {
-	fake.getQueueAttributesWithContextMutex.Lock()
-	ret, specificReturn := fake.getQueueAttributesWithContextReturnsOnCall[len(fake.getQueueAttributesWithContextArgsForCall)]
-	fake.getQueueAttributesWithContextArgsForCall = append(fake.getQueueAttributesWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.GetQueueAttributesInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("GetQueueAttributesWithContext", []interface{}{arg1, arg2, arg3})
-	fake.getQueueAttributesWithContextMutex.Unlock()
-	if fake.GetQueueAttributesWithContextStub != nil {
-		return fake.GetQueueAttributesWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getQueueAttributesWithContextReturns.result1, fake.getQueueAttributesWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) GetQueueAttributesWithContextCallCount() int {
-	fake.getQueueAttributesWithContextMutex.RLock()
-	defer fake.getQueueAttributesWithContextMutex.RUnlock()
-	return len(fake.getQueueAttributesWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) GetQueueAttributesWithContextArgsForCall(i int) (aws.Context, *sqs.GetQueueAttributesInput, []request.Option) {
-	fake.getQueueAttributesWithContextMutex.RLock()
-	defer fake.getQueueAttributesWithContextMutex.RUnlock()
-	return fake.getQueueAttributesWithContextArgsForCall[i].arg1, fake.getQueueAttributesWithContextArgsForCall[i].arg2, fake.getQueueAttributesWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) GetQueueAttributesWithContextReturns(result1 *sqs.GetQueueAttributesOutput, result2 error) {
-	fake.GetQueueAttributesWithContextStub = nil
-	fake.getQueueAttributesWithContextReturns = struct {
-		result1 *sqs.GetQueueAttributesOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) GetQueueAttributesWithContextReturnsOnCall(i int, result1 *sqs.GetQueueAttributesOutput, result2 error) {
-	fake.GetQueueAttributesWithContextStub = nil
-	if fake.getQueueAttributesWithContextReturnsOnCall == nil {
-		fake.getQueueAttributesWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.GetQueueAttributesOutput
-			result2 error
-		})
-	}
-	fake.getQueueAttributesWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.GetQueueAttributesOutput
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) GetQueueAttributesRequest(arg1 *sqs.GetQueueAttributesInput) (*request.Request, *sqs.GetQueueAttributesOutput) {
 	fake.getQueueAttributesRequestMutex.Lock()
 	ret, specificReturn := fake.getQueueAttributesRequestReturnsOnCall[len(fake.getQueueAttributesRequestArgsForCall)]
 	fake.getQueueAttributesRequestArgsForCall = append(fake.getQueueAttributesRequestArgsForCall, struct {
 		arg1 *sqs.GetQueueAttributesInput
 	}{arg1})
+	stub := fake.GetQueueAttributesRequestStub
+	fakeReturns := fake.getQueueAttributesRequestReturns
 	fake.recordInvocation("GetQueueAttributesRequest", []interface{}{arg1})
 	fake.getQueueAttributesRequestMutex.Unlock()
-	if fake.GetQueueAttributesRequestStub != nil {
-		return fake.GetQueueAttributesRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.getQueueAttributesRequestReturns.result1, fake.getQueueAttributesRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) GetQueueAttributesRequestCallCount() int {
@@ -2047,13 +2334,22 @@ func (fake *FakeSQSAPI) GetQueueAttributesRequestCallCount() int {
 	return len(fake.getQueueAttributesRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) GetQueueAttributesRequestCalls(stub func(*sqs.GetQueueAttributesInput) (*request.Request, *sqs.GetQueueAttributesOutput)) {
+	fake.getQueueAttributesRequestMutex.Lock()
+	defer fake.getQueueAttributesRequestMutex.Unlock()
+	fake.GetQueueAttributesRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) GetQueueAttributesRequestArgsForCall(i int) *sqs.GetQueueAttributesInput {
 	fake.getQueueAttributesRequestMutex.RLock()
 	defer fake.getQueueAttributesRequestMutex.RUnlock()
-	return fake.getQueueAttributesRequestArgsForCall[i].arg1
+	argsForCall := fake.getQueueAttributesRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) GetQueueAttributesRequestReturns(result1 *request.Request, result2 *sqs.GetQueueAttributesOutput) {
+	fake.getQueueAttributesRequestMutex.Lock()
+	defer fake.getQueueAttributesRequestMutex.Unlock()
 	fake.GetQueueAttributesRequestStub = nil
 	fake.getQueueAttributesRequestReturns = struct {
 		result1 *request.Request
@@ -2062,6 +2358,8 @@ func (fake *FakeSQSAPI) GetQueueAttributesRequestReturns(result1 *request.Reques
 }
 
 func (fake *FakeSQSAPI) GetQueueAttributesRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.GetQueueAttributesOutput) {
+	fake.getQueueAttributesRequestMutex.Lock()
+	defer fake.getQueueAttributesRequestMutex.Unlock()
 	fake.GetQueueAttributesRequestStub = nil
 	if fake.getQueueAttributesRequestReturnsOnCall == nil {
 		fake.getQueueAttributesRequestReturnsOnCall = make(map[int]struct {
@@ -2075,21 +2373,89 @@ func (fake *FakeSQSAPI) GetQueueAttributesRequestReturnsOnCall(i int, result1 *r
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) GetQueueAttributesWithContext(arg1 context.Context, arg2 *sqs.GetQueueAttributesInput, arg3 ...request.Option) (*sqs.GetQueueAttributesOutput, error) {
+	fake.getQueueAttributesWithContextMutex.Lock()
+	ret, specificReturn := fake.getQueueAttributesWithContextReturnsOnCall[len(fake.getQueueAttributesWithContextArgsForCall)]
+	fake.getQueueAttributesWithContextArgsForCall = append(fake.getQueueAttributesWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.GetQueueAttributesInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.GetQueueAttributesWithContextStub
+	fakeReturns := fake.getQueueAttributesWithContextReturns
+	fake.recordInvocation("GetQueueAttributesWithContext", []interface{}{arg1, arg2, arg3})
+	fake.getQueueAttributesWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) GetQueueAttributesWithContextCallCount() int {
+	fake.getQueueAttributesWithContextMutex.RLock()
+	defer fake.getQueueAttributesWithContextMutex.RUnlock()
+	return len(fake.getQueueAttributesWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) GetQueueAttributesWithContextCalls(stub func(context.Context, *sqs.GetQueueAttributesInput, ...request.Option) (*sqs.GetQueueAttributesOutput, error)) {
+	fake.getQueueAttributesWithContextMutex.Lock()
+	defer fake.getQueueAttributesWithContextMutex.Unlock()
+	fake.GetQueueAttributesWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) GetQueueAttributesWithContextArgsForCall(i int) (context.Context, *sqs.GetQueueAttributesInput, []request.Option) {
+	fake.getQueueAttributesWithContextMutex.RLock()
+	defer fake.getQueueAttributesWithContextMutex.RUnlock()
+	argsForCall := fake.getQueueAttributesWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) GetQueueAttributesWithContextReturns(result1 *sqs.GetQueueAttributesOutput, result2 error) {
+	fake.getQueueAttributesWithContextMutex.Lock()
+	defer fake.getQueueAttributesWithContextMutex.Unlock()
+	fake.GetQueueAttributesWithContextStub = nil
+	fake.getQueueAttributesWithContextReturns = struct {
+		result1 *sqs.GetQueueAttributesOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) GetQueueAttributesWithContextReturnsOnCall(i int, result1 *sqs.GetQueueAttributesOutput, result2 error) {
+	fake.getQueueAttributesWithContextMutex.Lock()
+	defer fake.getQueueAttributesWithContextMutex.Unlock()
+	fake.GetQueueAttributesWithContextStub = nil
+	if fake.getQueueAttributesWithContextReturnsOnCall == nil {
+		fake.getQueueAttributesWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.GetQueueAttributesOutput
+			result2 error
+		})
+	}
+	fake.getQueueAttributesWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.GetQueueAttributesOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) GetQueueUrl(arg1 *sqs.GetQueueUrlInput) (*sqs.GetQueueUrlOutput, error) {
 	fake.getQueueUrlMutex.Lock()
 	ret, specificReturn := fake.getQueueUrlReturnsOnCall[len(fake.getQueueUrlArgsForCall)]
 	fake.getQueueUrlArgsForCall = append(fake.getQueueUrlArgsForCall, struct {
 		arg1 *sqs.GetQueueUrlInput
 	}{arg1})
+	stub := fake.GetQueueUrlStub
+	fakeReturns := fake.getQueueUrlReturns
 	fake.recordInvocation("GetQueueUrl", []interface{}{arg1})
 	fake.getQueueUrlMutex.Unlock()
-	if fake.GetQueueUrlStub != nil {
-		return fake.GetQueueUrlStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.getQueueUrlReturns.result1, fake.getQueueUrlReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) GetQueueUrlCallCount() int {
@@ -2098,13 +2464,22 @@ func (fake *FakeSQSAPI) GetQueueUrlCallCount() int {
 	return len(fake.getQueueUrlArgsForCall)
 }
 
+func (fake *FakeSQSAPI) GetQueueUrlCalls(stub func(*sqs.GetQueueUrlInput) (*sqs.GetQueueUrlOutput, error)) {
+	fake.getQueueUrlMutex.Lock()
+	defer fake.getQueueUrlMutex.Unlock()
+	fake.GetQueueUrlStub = stub
+}
+
 func (fake *FakeSQSAPI) GetQueueUrlArgsForCall(i int) *sqs.GetQueueUrlInput {
 	fake.getQueueUrlMutex.RLock()
 	defer fake.getQueueUrlMutex.RUnlock()
-	return fake.getQueueUrlArgsForCall[i].arg1
+	argsForCall := fake.getQueueUrlArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) GetQueueUrlReturns(result1 *sqs.GetQueueUrlOutput, result2 error) {
+	fake.getQueueUrlMutex.Lock()
+	defer fake.getQueueUrlMutex.Unlock()
 	fake.GetQueueUrlStub = nil
 	fake.getQueueUrlReturns = struct {
 		result1 *sqs.GetQueueUrlOutput
@@ -2113,6 +2488,8 @@ func (fake *FakeSQSAPI) GetQueueUrlReturns(result1 *sqs.GetQueueUrlOutput, resul
 }
 
 func (fake *FakeSQSAPI) GetQueueUrlReturnsOnCall(i int, result1 *sqs.GetQueueUrlOutput, result2 error) {
+	fake.getQueueUrlMutex.Lock()
+	defer fake.getQueueUrlMutex.Unlock()
 	fake.GetQueueUrlStub = nil
 	if fake.getQueueUrlReturnsOnCall == nil {
 		fake.getQueueUrlReturnsOnCall = make(map[int]struct {
@@ -2126,74 +2503,23 @@ func (fake *FakeSQSAPI) GetQueueUrlReturnsOnCall(i int, result1 *sqs.GetQueueUrl
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) GetQueueUrlWithContext(arg1 aws.Context, arg2 *sqs.GetQueueUrlInput, arg3 ...request.Option) (*sqs.GetQueueUrlOutput, error) {
-	fake.getQueueUrlWithContextMutex.Lock()
-	ret, specificReturn := fake.getQueueUrlWithContextReturnsOnCall[len(fake.getQueueUrlWithContextArgsForCall)]
-	fake.getQueueUrlWithContextArgsForCall = append(fake.getQueueUrlWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.GetQueueUrlInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("GetQueueUrlWithContext", []interface{}{arg1, arg2, arg3})
-	fake.getQueueUrlWithContextMutex.Unlock()
-	if fake.GetQueueUrlWithContextStub != nil {
-		return fake.GetQueueUrlWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.getQueueUrlWithContextReturns.result1, fake.getQueueUrlWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) GetQueueUrlWithContextCallCount() int {
-	fake.getQueueUrlWithContextMutex.RLock()
-	defer fake.getQueueUrlWithContextMutex.RUnlock()
-	return len(fake.getQueueUrlWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) GetQueueUrlWithContextArgsForCall(i int) (aws.Context, *sqs.GetQueueUrlInput, []request.Option) {
-	fake.getQueueUrlWithContextMutex.RLock()
-	defer fake.getQueueUrlWithContextMutex.RUnlock()
-	return fake.getQueueUrlWithContextArgsForCall[i].arg1, fake.getQueueUrlWithContextArgsForCall[i].arg2, fake.getQueueUrlWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) GetQueueUrlWithContextReturns(result1 *sqs.GetQueueUrlOutput, result2 error) {
-	fake.GetQueueUrlWithContextStub = nil
-	fake.getQueueUrlWithContextReturns = struct {
-		result1 *sqs.GetQueueUrlOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) GetQueueUrlWithContextReturnsOnCall(i int, result1 *sqs.GetQueueUrlOutput, result2 error) {
-	fake.GetQueueUrlWithContextStub = nil
-	if fake.getQueueUrlWithContextReturnsOnCall == nil {
-		fake.getQueueUrlWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.GetQueueUrlOutput
-			result2 error
-		})
-	}
-	fake.getQueueUrlWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.GetQueueUrlOutput
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) GetQueueUrlRequest(arg1 *sqs.GetQueueUrlInput) (*request.Request, *sqs.GetQueueUrlOutput) {
 	fake.getQueueUrlRequestMutex.Lock()
 	ret, specificReturn := fake.getQueueUrlRequestReturnsOnCall[len(fake.getQueueUrlRequestArgsForCall)]
 	fake.getQueueUrlRequestArgsForCall = append(fake.getQueueUrlRequestArgsForCall, struct {
 		arg1 *sqs.GetQueueUrlInput
 	}{arg1})
+	stub := fake.GetQueueUrlRequestStub
+	fakeReturns := fake.getQueueUrlRequestReturns
 	fake.recordInvocation("GetQueueUrlRequest", []interface{}{arg1})
 	fake.getQueueUrlRequestMutex.Unlock()
-	if fake.GetQueueUrlRequestStub != nil {
-		return fake.GetQueueUrlRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.getQueueUrlRequestReturns.result1, fake.getQueueUrlRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) GetQueueUrlRequestCallCount() int {
@@ -2202,13 +2528,22 @@ func (fake *FakeSQSAPI) GetQueueUrlRequestCallCount() int {
 	return len(fake.getQueueUrlRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) GetQueueUrlRequestCalls(stub func(*sqs.GetQueueUrlInput) (*request.Request, *sqs.GetQueueUrlOutput)) {
+	fake.getQueueUrlRequestMutex.Lock()
+	defer fake.getQueueUrlRequestMutex.Unlock()
+	fake.GetQueueUrlRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) GetQueueUrlRequestArgsForCall(i int) *sqs.GetQueueUrlInput {
 	fake.getQueueUrlRequestMutex.RLock()
 	defer fake.getQueueUrlRequestMutex.RUnlock()
-	return fake.getQueueUrlRequestArgsForCall[i].arg1
+	argsForCall := fake.getQueueUrlRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) GetQueueUrlRequestReturns(result1 *request.Request, result2 *sqs.GetQueueUrlOutput) {
+	fake.getQueueUrlRequestMutex.Lock()
+	defer fake.getQueueUrlRequestMutex.Unlock()
 	fake.GetQueueUrlRequestStub = nil
 	fake.getQueueUrlRequestReturns = struct {
 		result1 *request.Request
@@ -2217,6 +2552,8 @@ func (fake *FakeSQSAPI) GetQueueUrlRequestReturns(result1 *request.Request, resu
 }
 
 func (fake *FakeSQSAPI) GetQueueUrlRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.GetQueueUrlOutput) {
+	fake.getQueueUrlRequestMutex.Lock()
+	defer fake.getQueueUrlRequestMutex.Unlock()
 	fake.GetQueueUrlRequestStub = nil
 	if fake.getQueueUrlRequestReturnsOnCall == nil {
 		fake.getQueueUrlRequestReturnsOnCall = make(map[int]struct {
@@ -2230,21 +2567,89 @@ func (fake *FakeSQSAPI) GetQueueUrlRequestReturnsOnCall(i int, result1 *request.
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) GetQueueUrlWithContext(arg1 context.Context, arg2 *sqs.GetQueueUrlInput, arg3 ...request.Option) (*sqs.GetQueueUrlOutput, error) {
+	fake.getQueueUrlWithContextMutex.Lock()
+	ret, specificReturn := fake.getQueueUrlWithContextReturnsOnCall[len(fake.getQueueUrlWithContextArgsForCall)]
+	fake.getQueueUrlWithContextArgsForCall = append(fake.getQueueUrlWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.GetQueueUrlInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.GetQueueUrlWithContextStub
+	fakeReturns := fake.getQueueUrlWithContextReturns
+	fake.recordInvocation("GetQueueUrlWithContext", []interface{}{arg1, arg2, arg3})
+	fake.getQueueUrlWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) GetQueueUrlWithContextCallCount() int {
+	fake.getQueueUrlWithContextMutex.RLock()
+	defer fake.getQueueUrlWithContextMutex.RUnlock()
+	return len(fake.getQueueUrlWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) GetQueueUrlWithContextCalls(stub func(context.Context, *sqs.GetQueueUrlInput, ...request.Option) (*sqs.GetQueueUrlOutput, error)) {
+	fake.getQueueUrlWithContextMutex.Lock()
+	defer fake.getQueueUrlWithContextMutex.Unlock()
+	fake.GetQueueUrlWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) GetQueueUrlWithContextArgsForCall(i int) (context.Context, *sqs.GetQueueUrlInput, []request.Option) {
+	fake.getQueueUrlWithContextMutex.RLock()
+	defer fake.getQueueUrlWithContextMutex.RUnlock()
+	argsForCall := fake.getQueueUrlWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) GetQueueUrlWithContextReturns(result1 *sqs.GetQueueUrlOutput, result2 error) {
+	fake.getQueueUrlWithContextMutex.Lock()
+	defer fake.getQueueUrlWithContextMutex.Unlock()
+	fake.GetQueueUrlWithContextStub = nil
+	fake.getQueueUrlWithContextReturns = struct {
+		result1 *sqs.GetQueueUrlOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) GetQueueUrlWithContextReturnsOnCall(i int, result1 *sqs.GetQueueUrlOutput, result2 error) {
+	fake.getQueueUrlWithContextMutex.Lock()
+	defer fake.getQueueUrlWithContextMutex.Unlock()
+	fake.GetQueueUrlWithContextStub = nil
+	if fake.getQueueUrlWithContextReturnsOnCall == nil {
+		fake.getQueueUrlWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.GetQueueUrlOutput
+			result2 error
+		})
+	}
+	fake.getQueueUrlWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.GetQueueUrlOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) ListDeadLetterSourceQueues(arg1 *sqs.ListDeadLetterSourceQueuesInput) (*sqs.ListDeadLetterSourceQueuesOutput, error) {
 	fake.listDeadLetterSourceQueuesMutex.Lock()
 	ret, specificReturn := fake.listDeadLetterSourceQueuesReturnsOnCall[len(fake.listDeadLetterSourceQueuesArgsForCall)]
 	fake.listDeadLetterSourceQueuesArgsForCall = append(fake.listDeadLetterSourceQueuesArgsForCall, struct {
 		arg1 *sqs.ListDeadLetterSourceQueuesInput
 	}{arg1})
+	stub := fake.ListDeadLetterSourceQueuesStub
+	fakeReturns := fake.listDeadLetterSourceQueuesReturns
 	fake.recordInvocation("ListDeadLetterSourceQueues", []interface{}{arg1})
 	fake.listDeadLetterSourceQueuesMutex.Unlock()
-	if fake.ListDeadLetterSourceQueuesStub != nil {
-		return fake.ListDeadLetterSourceQueuesStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.listDeadLetterSourceQueuesReturns.result1, fake.listDeadLetterSourceQueuesReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesCallCount() int {
@@ -2253,13 +2658,22 @@ func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesCallCount() int {
 	return len(fake.listDeadLetterSourceQueuesArgsForCall)
 }
 
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesCalls(stub func(*sqs.ListDeadLetterSourceQueuesInput) (*sqs.ListDeadLetterSourceQueuesOutput, error)) {
+	fake.listDeadLetterSourceQueuesMutex.Lock()
+	defer fake.listDeadLetterSourceQueuesMutex.Unlock()
+	fake.ListDeadLetterSourceQueuesStub = stub
+}
+
 func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesArgsForCall(i int) *sqs.ListDeadLetterSourceQueuesInput {
 	fake.listDeadLetterSourceQueuesMutex.RLock()
 	defer fake.listDeadLetterSourceQueuesMutex.RUnlock()
-	return fake.listDeadLetterSourceQueuesArgsForCall[i].arg1
+	argsForCall := fake.listDeadLetterSourceQueuesArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesReturns(result1 *sqs.ListDeadLetterSourceQueuesOutput, result2 error) {
+	fake.listDeadLetterSourceQueuesMutex.Lock()
+	defer fake.listDeadLetterSourceQueuesMutex.Unlock()
 	fake.ListDeadLetterSourceQueuesStub = nil
 	fake.listDeadLetterSourceQueuesReturns = struct {
 		result1 *sqs.ListDeadLetterSourceQueuesOutput
@@ -2268,6 +2682,8 @@ func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesReturns(result1 *sqs.ListDeadL
 }
 
 func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesReturnsOnCall(i int, result1 *sqs.ListDeadLetterSourceQueuesOutput, result2 error) {
+	fake.listDeadLetterSourceQueuesMutex.Lock()
+	defer fake.listDeadLetterSourceQueuesMutex.Unlock()
 	fake.ListDeadLetterSourceQueuesStub = nil
 	if fake.listDeadLetterSourceQueuesReturnsOnCall == nil {
 		fake.listDeadLetterSourceQueuesReturnsOnCall = make(map[int]struct {
@@ -2281,57 +2697,130 @@ func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesReturnsOnCall(i int, result1 *
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesWithContext(arg1 aws.Context, arg2 *sqs.ListDeadLetterSourceQueuesInput, arg3 ...request.Option) (*sqs.ListDeadLetterSourceQueuesOutput, error) {
-	fake.listDeadLetterSourceQueuesWithContextMutex.Lock()
-	ret, specificReturn := fake.listDeadLetterSourceQueuesWithContextReturnsOnCall[len(fake.listDeadLetterSourceQueuesWithContextArgsForCall)]
-	fake.listDeadLetterSourceQueuesWithContextArgsForCall = append(fake.listDeadLetterSourceQueuesWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.ListDeadLetterSourceQueuesInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("ListDeadLetterSourceQueuesWithContext", []interface{}{arg1, arg2, arg3})
-	fake.listDeadLetterSourceQueuesWithContextMutex.Unlock()
-	if fake.ListDeadLetterSourceQueuesWithContextStub != nil {
-		return fake.ListDeadLetterSourceQueuesWithContextStub(arg1, arg2, arg3...)
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesPages(arg1 *sqs.ListDeadLetterSourceQueuesInput, arg2 func(*sqs.ListDeadLetterSourceQueuesOutput, bool) bool) error {
+	fake.listDeadLetterSourceQueuesPagesMutex.Lock()
+	ret, specificReturn := fake.listDeadLetterSourceQueuesPagesReturnsOnCall[len(fake.listDeadLetterSourceQueuesPagesArgsForCall)]
+	fake.listDeadLetterSourceQueuesPagesArgsForCall = append(fake.listDeadLetterSourceQueuesPagesArgsForCall, struct {
+		arg1 *sqs.ListDeadLetterSourceQueuesInput
+		arg2 func(*sqs.ListDeadLetterSourceQueuesOutput, bool) bool
+	}{arg1, arg2})
+	stub := fake.ListDeadLetterSourceQueuesPagesStub
+	fakeReturns := fake.listDeadLetterSourceQueuesPagesReturns
+	fake.recordInvocation("ListDeadLetterSourceQueuesPages", []interface{}{arg1, arg2})
+	fake.listDeadLetterSourceQueuesPagesMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
-		return ret.result1, ret.result2
+		return ret.result1
 	}
-	return fake.listDeadLetterSourceQueuesWithContextReturns.result1, fake.listDeadLetterSourceQueuesWithContextReturns.result2
+	return fakeReturns.result1
 }
 
-func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesWithContextCallCount() int {
-	fake.listDeadLetterSourceQueuesWithContextMutex.RLock()
-	defer fake.listDeadLetterSourceQueuesWithContextMutex.RUnlock()
-	return len(fake.listDeadLetterSourceQueuesWithContextArgsForCall)
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesPagesCallCount() int {
+	fake.listDeadLetterSourceQueuesPagesMutex.RLock()
+	defer fake.listDeadLetterSourceQueuesPagesMutex.RUnlock()
+	return len(fake.listDeadLetterSourceQueuesPagesArgsForCall)
 }
 
-func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesWithContextArgsForCall(i int) (aws.Context, *sqs.ListDeadLetterSourceQueuesInput, []request.Option) {
-	fake.listDeadLetterSourceQueuesWithContextMutex.RLock()
-	defer fake.listDeadLetterSourceQueuesWithContextMutex.RUnlock()
-	return fake.listDeadLetterSourceQueuesWithContextArgsForCall[i].arg1, fake.listDeadLetterSourceQueuesWithContextArgsForCall[i].arg2, fake.listDeadLetterSourceQueuesWithContextArgsForCall[i].arg3
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesPagesCalls(stub func(*sqs.ListDeadLetterSourceQueuesInput, func(*sqs.ListDeadLetterSourceQueuesOutput, bool) bool) error) {
+	fake.listDeadLetterSourceQueuesPagesMutex.Lock()
+	defer fake.listDeadLetterSourceQueuesPagesMutex.Unlock()
+	fake.ListDeadLetterSourceQueuesPagesStub = stub
 }
 
-func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesWithContextReturns(result1 *sqs.ListDeadLetterSourceQueuesOutput, result2 error) {
-	fake.ListDeadLetterSourceQueuesWithContextStub = nil
-	fake.listDeadLetterSourceQueuesWithContextReturns = struct {
-		result1 *sqs.ListDeadLetterSourceQueuesOutput
-		result2 error
-	}{result1, result2}
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesPagesArgsForCall(i int) (*sqs.ListDeadLetterSourceQueuesInput, func(*sqs.ListDeadLetterSourceQueuesOutput, bool) bool) {
+	fake.listDeadLetterSourceQueuesPagesMutex.RLock()
+	defer fake.listDeadLetterSourceQueuesPagesMutex.RUnlock()
+	argsForCall := fake.listDeadLetterSourceQueuesPagesArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
 }
 
-func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesWithContextReturnsOnCall(i int, result1 *sqs.ListDeadLetterSourceQueuesOutput, result2 error) {
-	fake.ListDeadLetterSourceQueuesWithContextStub = nil
-	if fake.listDeadLetterSourceQueuesWithContextReturnsOnCall == nil {
-		fake.listDeadLetterSourceQueuesWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.ListDeadLetterSourceQueuesOutput
-			result2 error
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesPagesReturns(result1 error) {
+	fake.listDeadLetterSourceQueuesPagesMutex.Lock()
+	defer fake.listDeadLetterSourceQueuesPagesMutex.Unlock()
+	fake.ListDeadLetterSourceQueuesPagesStub = nil
+	fake.listDeadLetterSourceQueuesPagesReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesPagesReturnsOnCall(i int, result1 error) {
+	fake.listDeadLetterSourceQueuesPagesMutex.Lock()
+	defer fake.listDeadLetterSourceQueuesPagesMutex.Unlock()
+	fake.ListDeadLetterSourceQueuesPagesStub = nil
+	if fake.listDeadLetterSourceQueuesPagesReturnsOnCall == nil {
+		fake.listDeadLetterSourceQueuesPagesReturnsOnCall = make(map[int]struct {
+			result1 error
 		})
 	}
-	fake.listDeadLetterSourceQueuesWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.ListDeadLetterSourceQueuesOutput
-		result2 error
-	}{result1, result2}
+	fake.listDeadLetterSourceQueuesPagesReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesPagesWithContext(arg1 context.Context, arg2 *sqs.ListDeadLetterSourceQueuesInput, arg3 func(*sqs.ListDeadLetterSourceQueuesOutput, bool) bool, arg4 ...request.Option) error {
+	fake.listDeadLetterSourceQueuesPagesWithContextMutex.Lock()
+	ret, specificReturn := fake.listDeadLetterSourceQueuesPagesWithContextReturnsOnCall[len(fake.listDeadLetterSourceQueuesPagesWithContextArgsForCall)]
+	fake.listDeadLetterSourceQueuesPagesWithContextArgsForCall = append(fake.listDeadLetterSourceQueuesPagesWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.ListDeadLetterSourceQueuesInput
+		arg3 func(*sqs.ListDeadLetterSourceQueuesOutput, bool) bool
+		arg4 []request.Option
+	}{arg1, arg2, arg3, arg4})
+	stub := fake.ListDeadLetterSourceQueuesPagesWithContextStub
+	fakeReturns := fake.listDeadLetterSourceQueuesPagesWithContextReturns
+	fake.recordInvocation("ListDeadLetterSourceQueuesPagesWithContext", []interface{}{arg1, arg2, arg3, arg4})
+	fake.listDeadLetterSourceQueuesPagesWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4...)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fakeReturns.result1
+}
+
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesPagesWithContextCallCount() int {
+	fake.listDeadLetterSourceQueuesPagesWithContextMutex.RLock()
+	defer fake.listDeadLetterSourceQueuesPagesWithContextMutex.RUnlock()
+	return len(fake.listDeadLetterSourceQueuesPagesWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesPagesWithContextCalls(stub func(context.Context, *sqs.ListDeadLetterSourceQueuesInput, func(*sqs.ListDeadLetterSourceQueuesOutput, bool) bool, ...request.Option) error) {
+	fake.listDeadLetterSourceQueuesPagesWithContextMutex.Lock()
+	defer fake.listDeadLetterSourceQueuesPagesWithContextMutex.Unlock()
+	fake.ListDeadLetterSourceQueuesPagesWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesPagesWithContextArgsForCall(i int) (context.Context, *sqs.ListDeadLetterSourceQueuesInput, func(*sqs.ListDeadLetterSourceQueuesOutput, bool) bool, []request.Option) {
+	fake.listDeadLetterSourceQueuesPagesWithContextMutex.RLock()
+	defer fake.listDeadLetterSourceQueuesPagesWithContextMutex.RUnlock()
+	argsForCall := fake.listDeadLetterSourceQueuesPagesWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4
+}
+
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesPagesWithContextReturns(result1 error) {
+	fake.listDeadLetterSourceQueuesPagesWithContextMutex.Lock()
+	defer fake.listDeadLetterSourceQueuesPagesWithContextMutex.Unlock()
+	fake.ListDeadLetterSourceQueuesPagesWithContextStub = nil
+	fake.listDeadLetterSourceQueuesPagesWithContextReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesPagesWithContextReturnsOnCall(i int, result1 error) {
+	fake.listDeadLetterSourceQueuesPagesWithContextMutex.Lock()
+	defer fake.listDeadLetterSourceQueuesPagesWithContextMutex.Unlock()
+	fake.ListDeadLetterSourceQueuesPagesWithContextStub = nil
+	if fake.listDeadLetterSourceQueuesPagesWithContextReturnsOnCall == nil {
+		fake.listDeadLetterSourceQueuesPagesWithContextReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.listDeadLetterSourceQueuesPagesWithContextReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
 }
 
 func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesRequest(arg1 *sqs.ListDeadLetterSourceQueuesInput) (*request.Request, *sqs.ListDeadLetterSourceQueuesOutput) {
@@ -2340,15 +2829,17 @@ func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesRequest(arg1 *sqs.ListDeadLett
 	fake.listDeadLetterSourceQueuesRequestArgsForCall = append(fake.listDeadLetterSourceQueuesRequestArgsForCall, struct {
 		arg1 *sqs.ListDeadLetterSourceQueuesInput
 	}{arg1})
+	stub := fake.ListDeadLetterSourceQueuesRequestStub
+	fakeReturns := fake.listDeadLetterSourceQueuesRequestReturns
 	fake.recordInvocation("ListDeadLetterSourceQueuesRequest", []interface{}{arg1})
 	fake.listDeadLetterSourceQueuesRequestMutex.Unlock()
-	if fake.ListDeadLetterSourceQueuesRequestStub != nil {
-		return fake.ListDeadLetterSourceQueuesRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.listDeadLetterSourceQueuesRequestReturns.result1, fake.listDeadLetterSourceQueuesRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesRequestCallCount() int {
@@ -2357,13 +2848,22 @@ func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesRequestCallCount() int {
 	return len(fake.listDeadLetterSourceQueuesRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesRequestCalls(stub func(*sqs.ListDeadLetterSourceQueuesInput) (*request.Request, *sqs.ListDeadLetterSourceQueuesOutput)) {
+	fake.listDeadLetterSourceQueuesRequestMutex.Lock()
+	defer fake.listDeadLetterSourceQueuesRequestMutex.Unlock()
+	fake.ListDeadLetterSourceQueuesRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesRequestArgsForCall(i int) *sqs.ListDeadLetterSourceQueuesInput {
 	fake.listDeadLetterSourceQueuesRequestMutex.RLock()
 	defer fake.listDeadLetterSourceQueuesRequestMutex.RUnlock()
-	return fake.listDeadLetterSourceQueuesRequestArgsForCall[i].arg1
+	argsForCall := fake.listDeadLetterSourceQueuesRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesRequestReturns(result1 *request.Request, result2 *sqs.ListDeadLetterSourceQueuesOutput) {
+	fake.listDeadLetterSourceQueuesRequestMutex.Lock()
+	defer fake.listDeadLetterSourceQueuesRequestMutex.Unlock()
 	fake.ListDeadLetterSourceQueuesRequestStub = nil
 	fake.listDeadLetterSourceQueuesRequestReturns = struct {
 		result1 *request.Request
@@ -2372,6 +2872,8 @@ func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesRequestReturns(result1 *reques
 }
 
 func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.ListDeadLetterSourceQueuesOutput) {
+	fake.listDeadLetterSourceQueuesRequestMutex.Lock()
+	defer fake.listDeadLetterSourceQueuesRequestMutex.Unlock()
 	fake.ListDeadLetterSourceQueuesRequestStub = nil
 	if fake.listDeadLetterSourceQueuesRequestReturnsOnCall == nil {
 		fake.listDeadLetterSourceQueuesRequestReturnsOnCall = make(map[int]struct {
@@ -2385,21 +2887,89 @@ func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesRequestReturnsOnCall(i int, re
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesWithContext(arg1 context.Context, arg2 *sqs.ListDeadLetterSourceQueuesInput, arg3 ...request.Option) (*sqs.ListDeadLetterSourceQueuesOutput, error) {
+	fake.listDeadLetterSourceQueuesWithContextMutex.Lock()
+	ret, specificReturn := fake.listDeadLetterSourceQueuesWithContextReturnsOnCall[len(fake.listDeadLetterSourceQueuesWithContextArgsForCall)]
+	fake.listDeadLetterSourceQueuesWithContextArgsForCall = append(fake.listDeadLetterSourceQueuesWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.ListDeadLetterSourceQueuesInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.ListDeadLetterSourceQueuesWithContextStub
+	fakeReturns := fake.listDeadLetterSourceQueuesWithContextReturns
+	fake.recordInvocation("ListDeadLetterSourceQueuesWithContext", []interface{}{arg1, arg2, arg3})
+	fake.listDeadLetterSourceQueuesWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesWithContextCallCount() int {
+	fake.listDeadLetterSourceQueuesWithContextMutex.RLock()
+	defer fake.listDeadLetterSourceQueuesWithContextMutex.RUnlock()
+	return len(fake.listDeadLetterSourceQueuesWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesWithContextCalls(stub func(context.Context, *sqs.ListDeadLetterSourceQueuesInput, ...request.Option) (*sqs.ListDeadLetterSourceQueuesOutput, error)) {
+	fake.listDeadLetterSourceQueuesWithContextMutex.Lock()
+	defer fake.listDeadLetterSourceQueuesWithContextMutex.Unlock()
+	fake.ListDeadLetterSourceQueuesWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesWithContextArgsForCall(i int) (context.Context, *sqs.ListDeadLetterSourceQueuesInput, []request.Option) {
+	fake.listDeadLetterSourceQueuesWithContextMutex.RLock()
+	defer fake.listDeadLetterSourceQueuesWithContextMutex.RUnlock()
+	argsForCall := fake.listDeadLetterSourceQueuesWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesWithContextReturns(result1 *sqs.ListDeadLetterSourceQueuesOutput, result2 error) {
+	fake.listDeadLetterSourceQueuesWithContextMutex.Lock()
+	defer fake.listDeadLetterSourceQueuesWithContextMutex.Unlock()
+	fake.ListDeadLetterSourceQueuesWithContextStub = nil
+	fake.listDeadLetterSourceQueuesWithContextReturns = struct {
+		result1 *sqs.ListDeadLetterSourceQueuesOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) ListDeadLetterSourceQueuesWithContextReturnsOnCall(i int, result1 *sqs.ListDeadLetterSourceQueuesOutput, result2 error) {
+	fake.listDeadLetterSourceQueuesWithContextMutex.Lock()
+	defer fake.listDeadLetterSourceQueuesWithContextMutex.Unlock()
+	fake.ListDeadLetterSourceQueuesWithContextStub = nil
+	if fake.listDeadLetterSourceQueuesWithContextReturnsOnCall == nil {
+		fake.listDeadLetterSourceQueuesWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.ListDeadLetterSourceQueuesOutput
+			result2 error
+		})
+	}
+	fake.listDeadLetterSourceQueuesWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.ListDeadLetterSourceQueuesOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) ListQueueTags(arg1 *sqs.ListQueueTagsInput) (*sqs.ListQueueTagsOutput, error) {
 	fake.listQueueTagsMutex.Lock()
 	ret, specificReturn := fake.listQueueTagsReturnsOnCall[len(fake.listQueueTagsArgsForCall)]
 	fake.listQueueTagsArgsForCall = append(fake.listQueueTagsArgsForCall, struct {
 		arg1 *sqs.ListQueueTagsInput
 	}{arg1})
+	stub := fake.ListQueueTagsStub
+	fakeReturns := fake.listQueueTagsReturns
 	fake.recordInvocation("ListQueueTags", []interface{}{arg1})
 	fake.listQueueTagsMutex.Unlock()
-	if fake.ListQueueTagsStub != nil {
-		return fake.ListQueueTagsStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.listQueueTagsReturns.result1, fake.listQueueTagsReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) ListQueueTagsCallCount() int {
@@ -2408,13 +2978,22 @@ func (fake *FakeSQSAPI) ListQueueTagsCallCount() int {
 	return len(fake.listQueueTagsArgsForCall)
 }
 
+func (fake *FakeSQSAPI) ListQueueTagsCalls(stub func(*sqs.ListQueueTagsInput) (*sqs.ListQueueTagsOutput, error)) {
+	fake.listQueueTagsMutex.Lock()
+	defer fake.listQueueTagsMutex.Unlock()
+	fake.ListQueueTagsStub = stub
+}
+
 func (fake *FakeSQSAPI) ListQueueTagsArgsForCall(i int) *sqs.ListQueueTagsInput {
 	fake.listQueueTagsMutex.RLock()
 	defer fake.listQueueTagsMutex.RUnlock()
-	return fake.listQueueTagsArgsForCall[i].arg1
+	argsForCall := fake.listQueueTagsArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) ListQueueTagsReturns(result1 *sqs.ListQueueTagsOutput, result2 error) {
+	fake.listQueueTagsMutex.Lock()
+	defer fake.listQueueTagsMutex.Unlock()
 	fake.ListQueueTagsStub = nil
 	fake.listQueueTagsReturns = struct {
 		result1 *sqs.ListQueueTagsOutput
@@ -2423,6 +3002,8 @@ func (fake *FakeSQSAPI) ListQueueTagsReturns(result1 *sqs.ListQueueTagsOutput, r
 }
 
 func (fake *FakeSQSAPI) ListQueueTagsReturnsOnCall(i int, result1 *sqs.ListQueueTagsOutput, result2 error) {
+	fake.listQueueTagsMutex.Lock()
+	defer fake.listQueueTagsMutex.Unlock()
 	fake.ListQueueTagsStub = nil
 	if fake.listQueueTagsReturnsOnCall == nil {
 		fake.listQueueTagsReturnsOnCall = make(map[int]struct {
@@ -2436,74 +3017,23 @@ func (fake *FakeSQSAPI) ListQueueTagsReturnsOnCall(i int, result1 *sqs.ListQueue
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) ListQueueTagsWithContext(arg1 aws.Context, arg2 *sqs.ListQueueTagsInput, arg3 ...request.Option) (*sqs.ListQueueTagsOutput, error) {
-	fake.listQueueTagsWithContextMutex.Lock()
-	ret, specificReturn := fake.listQueueTagsWithContextReturnsOnCall[len(fake.listQueueTagsWithContextArgsForCall)]
-	fake.listQueueTagsWithContextArgsForCall = append(fake.listQueueTagsWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.ListQueueTagsInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("ListQueueTagsWithContext", []interface{}{arg1, arg2, arg3})
-	fake.listQueueTagsWithContextMutex.Unlock()
-	if fake.ListQueueTagsWithContextStub != nil {
-		return fake.ListQueueTagsWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.listQueueTagsWithContextReturns.result1, fake.listQueueTagsWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) ListQueueTagsWithContextCallCount() int {
-	fake.listQueueTagsWithContextMutex.RLock()
-	defer fake.listQueueTagsWithContextMutex.RUnlock()
-	return len(fake.listQueueTagsWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) ListQueueTagsWithContextArgsForCall(i int) (aws.Context, *sqs.ListQueueTagsInput, []request.Option) {
-	fake.listQueueTagsWithContextMutex.RLock()
-	defer fake.listQueueTagsWithContextMutex.RUnlock()
-	return fake.listQueueTagsWithContextArgsForCall[i].arg1, fake.listQueueTagsWithContextArgsForCall[i].arg2, fake.listQueueTagsWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) ListQueueTagsWithContextReturns(result1 *sqs.ListQueueTagsOutput, result2 error) {
-	fake.ListQueueTagsWithContextStub = nil
-	fake.listQueueTagsWithContextReturns = struct {
-		result1 *sqs.ListQueueTagsOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) ListQueueTagsWithContextReturnsOnCall(i int, result1 *sqs.ListQueueTagsOutput, result2 error) {
-	fake.ListQueueTagsWithContextStub = nil
-	if fake.listQueueTagsWithContextReturnsOnCall == nil {
-		fake.listQueueTagsWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.ListQueueTagsOutput
-			result2 error
-		})
-	}
-	fake.listQueueTagsWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.ListQueueTagsOutput
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) ListQueueTagsRequest(arg1 *sqs.ListQueueTagsInput) (*request.Request, *sqs.ListQueueTagsOutput) {
 	fake.listQueueTagsRequestMutex.Lock()
 	ret, specificReturn := fake.listQueueTagsRequestReturnsOnCall[len(fake.listQueueTagsRequestArgsForCall)]
 	fake.listQueueTagsRequestArgsForCall = append(fake.listQueueTagsRequestArgsForCall, struct {
 		arg1 *sqs.ListQueueTagsInput
 	}{arg1})
+	stub := fake.ListQueueTagsRequestStub
+	fakeReturns := fake.listQueueTagsRequestReturns
 	fake.recordInvocation("ListQueueTagsRequest", []interface{}{arg1})
 	fake.listQueueTagsRequestMutex.Unlock()
-	if fake.ListQueueTagsRequestStub != nil {
-		return fake.ListQueueTagsRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.listQueueTagsRequestReturns.result1, fake.listQueueTagsRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) ListQueueTagsRequestCallCount() int {
@@ -2512,13 +3042,22 @@ func (fake *FakeSQSAPI) ListQueueTagsRequestCallCount() int {
 	return len(fake.listQueueTagsRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) ListQueueTagsRequestCalls(stub func(*sqs.ListQueueTagsInput) (*request.Request, *sqs.ListQueueTagsOutput)) {
+	fake.listQueueTagsRequestMutex.Lock()
+	defer fake.listQueueTagsRequestMutex.Unlock()
+	fake.ListQueueTagsRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) ListQueueTagsRequestArgsForCall(i int) *sqs.ListQueueTagsInput {
 	fake.listQueueTagsRequestMutex.RLock()
 	defer fake.listQueueTagsRequestMutex.RUnlock()
-	return fake.listQueueTagsRequestArgsForCall[i].arg1
+	argsForCall := fake.listQueueTagsRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) ListQueueTagsRequestReturns(result1 *request.Request, result2 *sqs.ListQueueTagsOutput) {
+	fake.listQueueTagsRequestMutex.Lock()
+	defer fake.listQueueTagsRequestMutex.Unlock()
 	fake.ListQueueTagsRequestStub = nil
 	fake.listQueueTagsRequestReturns = struct {
 		result1 *request.Request
@@ -2527,6 +3066,8 @@ func (fake *FakeSQSAPI) ListQueueTagsRequestReturns(result1 *request.Request, re
 }
 
 func (fake *FakeSQSAPI) ListQueueTagsRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.ListQueueTagsOutput) {
+	fake.listQueueTagsRequestMutex.Lock()
+	defer fake.listQueueTagsRequestMutex.Unlock()
 	fake.ListQueueTagsRequestStub = nil
 	if fake.listQueueTagsRequestReturnsOnCall == nil {
 		fake.listQueueTagsRequestReturnsOnCall = make(map[int]struct {
@@ -2540,21 +3081,89 @@ func (fake *FakeSQSAPI) ListQueueTagsRequestReturnsOnCall(i int, result1 *reques
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) ListQueueTagsWithContext(arg1 context.Context, arg2 *sqs.ListQueueTagsInput, arg3 ...request.Option) (*sqs.ListQueueTagsOutput, error) {
+	fake.listQueueTagsWithContextMutex.Lock()
+	ret, specificReturn := fake.listQueueTagsWithContextReturnsOnCall[len(fake.listQueueTagsWithContextArgsForCall)]
+	fake.listQueueTagsWithContextArgsForCall = append(fake.listQueueTagsWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.ListQueueTagsInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.ListQueueTagsWithContextStub
+	fakeReturns := fake.listQueueTagsWithContextReturns
+	fake.recordInvocation("ListQueueTagsWithContext", []interface{}{arg1, arg2, arg3})
+	fake.listQueueTagsWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) ListQueueTagsWithContextCallCount() int {
+	fake.listQueueTagsWithContextMutex.RLock()
+	defer fake.listQueueTagsWithContextMutex.RUnlock()
+	return len(fake.listQueueTagsWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) ListQueueTagsWithContextCalls(stub func(context.Context, *sqs.ListQueueTagsInput, ...request.Option) (*sqs.ListQueueTagsOutput, error)) {
+	fake.listQueueTagsWithContextMutex.Lock()
+	defer fake.listQueueTagsWithContextMutex.Unlock()
+	fake.ListQueueTagsWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) ListQueueTagsWithContextArgsForCall(i int) (context.Context, *sqs.ListQueueTagsInput, []request.Option) {
+	fake.listQueueTagsWithContextMutex.RLock()
+	defer fake.listQueueTagsWithContextMutex.RUnlock()
+	argsForCall := fake.listQueueTagsWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) ListQueueTagsWithContextReturns(result1 *sqs.ListQueueTagsOutput, result2 error) {
+	fake.listQueueTagsWithContextMutex.Lock()
+	defer fake.listQueueTagsWithContextMutex.Unlock()
+	fake.ListQueueTagsWithContextStub = nil
+	fake.listQueueTagsWithContextReturns = struct {
+		result1 *sqs.ListQueueTagsOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) ListQueueTagsWithContextReturnsOnCall(i int, result1 *sqs.ListQueueTagsOutput, result2 error) {
+	fake.listQueueTagsWithContextMutex.Lock()
+	defer fake.listQueueTagsWithContextMutex.Unlock()
+	fake.ListQueueTagsWithContextStub = nil
+	if fake.listQueueTagsWithContextReturnsOnCall == nil {
+		fake.listQueueTagsWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.ListQueueTagsOutput
+			result2 error
+		})
+	}
+	fake.listQueueTagsWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.ListQueueTagsOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) ListQueues(arg1 *sqs.ListQueuesInput) (*sqs.ListQueuesOutput, error) {
 	fake.listQueuesMutex.Lock()
 	ret, specificReturn := fake.listQueuesReturnsOnCall[len(fake.listQueuesArgsForCall)]
 	fake.listQueuesArgsForCall = append(fake.listQueuesArgsForCall, struct {
 		arg1 *sqs.ListQueuesInput
 	}{arg1})
+	stub := fake.ListQueuesStub
+	fakeReturns := fake.listQueuesReturns
 	fake.recordInvocation("ListQueues", []interface{}{arg1})
 	fake.listQueuesMutex.Unlock()
-	if fake.ListQueuesStub != nil {
-		return fake.ListQueuesStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.listQueuesReturns.result1, fake.listQueuesReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) ListQueuesCallCount() int {
@@ -2563,13 +3172,22 @@ func (fake *FakeSQSAPI) ListQueuesCallCount() int {
 	return len(fake.listQueuesArgsForCall)
 }
 
+func (fake *FakeSQSAPI) ListQueuesCalls(stub func(*sqs.ListQueuesInput) (*sqs.ListQueuesOutput, error)) {
+	fake.listQueuesMutex.Lock()
+	defer fake.listQueuesMutex.Unlock()
+	fake.ListQueuesStub = stub
+}
+
 func (fake *FakeSQSAPI) ListQueuesArgsForCall(i int) *sqs.ListQueuesInput {
 	fake.listQueuesMutex.RLock()
 	defer fake.listQueuesMutex.RUnlock()
-	return fake.listQueuesArgsForCall[i].arg1
+	argsForCall := fake.listQueuesArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) ListQueuesReturns(result1 *sqs.ListQueuesOutput, result2 error) {
+	fake.listQueuesMutex.Lock()
+	defer fake.listQueuesMutex.Unlock()
 	fake.ListQueuesStub = nil
 	fake.listQueuesReturns = struct {
 		result1 *sqs.ListQueuesOutput
@@ -2578,6 +3196,8 @@ func (fake *FakeSQSAPI) ListQueuesReturns(result1 *sqs.ListQueuesOutput, result2
 }
 
 func (fake *FakeSQSAPI) ListQueuesReturnsOnCall(i int, result1 *sqs.ListQueuesOutput, result2 error) {
+	fake.listQueuesMutex.Lock()
+	defer fake.listQueuesMutex.Unlock()
 	fake.ListQueuesStub = nil
 	if fake.listQueuesReturnsOnCall == nil {
 		fake.listQueuesReturnsOnCall = make(map[int]struct {
@@ -2591,57 +3211,130 @@ func (fake *FakeSQSAPI) ListQueuesReturnsOnCall(i int, result1 *sqs.ListQueuesOu
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) ListQueuesWithContext(arg1 aws.Context, arg2 *sqs.ListQueuesInput, arg3 ...request.Option) (*sqs.ListQueuesOutput, error) {
-	fake.listQueuesWithContextMutex.Lock()
-	ret, specificReturn := fake.listQueuesWithContextReturnsOnCall[len(fake.listQueuesWithContextArgsForCall)]
-	fake.listQueuesWithContextArgsForCall = append(fake.listQueuesWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.ListQueuesInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("ListQueuesWithContext", []interface{}{arg1, arg2, arg3})
-	fake.listQueuesWithContextMutex.Unlock()
-	if fake.ListQueuesWithContextStub != nil {
-		return fake.ListQueuesWithContextStub(arg1, arg2, arg3...)
+func (fake *FakeSQSAPI) ListQueuesPages(arg1 *sqs.ListQueuesInput, arg2 func(*sqs.ListQueuesOutput, bool) bool) error {
+	fake.listQueuesPagesMutex.Lock()
+	ret, specificReturn := fake.listQueuesPagesReturnsOnCall[len(fake.listQueuesPagesArgsForCall)]
+	fake.listQueuesPagesArgsForCall = append(fake.listQueuesPagesArgsForCall, struct {
+		arg1 *sqs.ListQueuesInput
+		arg2 func(*sqs.ListQueuesOutput, bool) bool
+	}{arg1, arg2})
+	stub := fake.ListQueuesPagesStub
+	fakeReturns := fake.listQueuesPagesReturns
+	fake.recordInvocation("ListQueuesPages", []interface{}{arg1, arg2})
+	fake.listQueuesPagesMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2)
 	}
 	if specificReturn {
-		return ret.result1, ret.result2
+		return ret.result1
 	}
-	return fake.listQueuesWithContextReturns.result1, fake.listQueuesWithContextReturns.result2
+	return fakeReturns.result1
 }
 
-func (fake *FakeSQSAPI) ListQueuesWithContextCallCount() int {
-	fake.listQueuesWithContextMutex.RLock()
-	defer fake.listQueuesWithContextMutex.RUnlock()
-	return len(fake.listQueuesWithContextArgsForCall)
+func (fake *FakeSQSAPI) ListQueuesPagesCallCount() int {
+	fake.listQueuesPagesMutex.RLock()
+	defer fake.listQueuesPagesMutex.RUnlock()
+	return len(fake.listQueuesPagesArgsForCall)
 }
 
-func (fake *FakeSQSAPI) ListQueuesWithContextArgsForCall(i int) (aws.Context, *sqs.ListQueuesInput, []request.Option) {
-	fake.listQueuesWithContextMutex.RLock()
-	defer fake.listQueuesWithContextMutex.RUnlock()
-	return fake.listQueuesWithContextArgsForCall[i].arg1, fake.listQueuesWithContextArgsForCall[i].arg2, fake.listQueuesWithContextArgsForCall[i].arg3
+func (fake *FakeSQSAPI) ListQueuesPagesCalls(stub func(*sqs.ListQueuesInput, func(*sqs.ListQueuesOutput, bool) bool) error) {
+	fake.listQueuesPagesMutex.Lock()
+	defer fake.listQueuesPagesMutex.Unlock()
+	fake.ListQueuesPagesStub = stub
 }
 
-func (fake *FakeSQSAPI) ListQueuesWithContextReturns(result1 *sqs.ListQueuesOutput, result2 error) {
-	fake.ListQueuesWithContextStub = nil
-	fake.listQueuesWithContextReturns = struct {
-		result1 *sqs.ListQueuesOutput
-		result2 error
-	}{result1, result2}
+func (fake *FakeSQSAPI) ListQueuesPagesArgsForCall(i int) (*sqs.ListQueuesInput, func(*sqs.ListQueuesOutput, bool) bool) {
+	fake.listQueuesPagesMutex.RLock()
+	defer fake.listQueuesPagesMutex.RUnlock()
+	argsForCall := fake.listQueuesPagesArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2
 }
 
-func (fake *FakeSQSAPI) ListQueuesWithContextReturnsOnCall(i int, result1 *sqs.ListQueuesOutput, result2 error) {
-	fake.ListQueuesWithContextStub = nil
-	if fake.listQueuesWithContextReturnsOnCall == nil {
-		fake.listQueuesWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.ListQueuesOutput
-			result2 error
+func (fake *FakeSQSAPI) ListQueuesPagesReturns(result1 error) {
+	fake.listQueuesPagesMutex.Lock()
+	defer fake.listQueuesPagesMutex.Unlock()
+	fake.ListQueuesPagesStub = nil
+	fake.listQueuesPagesReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeSQSAPI) ListQueuesPagesReturnsOnCall(i int, result1 error) {
+	fake.listQueuesPagesMutex.Lock()
+	defer fake.listQueuesPagesMutex.Unlock()
+	fake.ListQueuesPagesStub = nil
+	if fake.listQueuesPagesReturnsOnCall == nil {
+		fake.listQueuesPagesReturnsOnCall = make(map[int]struct {
+			result1 error
 		})
 	}
-	fake.listQueuesWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.ListQueuesOutput
-		result2 error
-	}{result1, result2}
+	fake.listQueuesPagesReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeSQSAPI) ListQueuesPagesWithContext(arg1 context.Context, arg2 *sqs.ListQueuesInput, arg3 func(*sqs.ListQueuesOutput, bool) bool, arg4 ...request.Option) error {
+	fake.listQueuesPagesWithContextMutex.Lock()
+	ret, specificReturn := fake.listQueuesPagesWithContextReturnsOnCall[len(fake.listQueuesPagesWithContextArgsForCall)]
+	fake.listQueuesPagesWithContextArgsForCall = append(fake.listQueuesPagesWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.ListQueuesInput
+		arg3 func(*sqs.ListQueuesOutput, bool) bool
+		arg4 []request.Option
+	}{arg1, arg2, arg3, arg4})
+	stub := fake.ListQueuesPagesWithContextStub
+	fakeReturns := fake.listQueuesPagesWithContextReturns
+	fake.recordInvocation("ListQueuesPagesWithContext", []interface{}{arg1, arg2, arg3, arg4})
+	fake.listQueuesPagesWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3, arg4...)
+	}
+	if specificReturn {
+		return ret.result1
+	}
+	return fakeReturns.result1
+}
+
+func (fake *FakeSQSAPI) ListQueuesPagesWithContextCallCount() int {
+	fake.listQueuesPagesWithContextMutex.RLock()
+	defer fake.listQueuesPagesWithContextMutex.RUnlock()
+	return len(fake.listQueuesPagesWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) ListQueuesPagesWithContextCalls(stub func(context.Context, *sqs.ListQueuesInput, func(*sqs.ListQueuesOutput, bool) bool, ...request.Option) error) {
+	fake.listQueuesPagesWithContextMutex.Lock()
+	defer fake.listQueuesPagesWithContextMutex.Unlock()
+	fake.ListQueuesPagesWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) ListQueuesPagesWithContextArgsForCall(i int) (context.Context, *sqs.ListQueuesInput, func(*sqs.ListQueuesOutput, bool) bool, []request.Option) {
+	fake.listQueuesPagesWithContextMutex.RLock()
+	defer fake.listQueuesPagesWithContextMutex.RUnlock()
+	argsForCall := fake.listQueuesPagesWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3, argsForCall.arg4
+}
+
+func (fake *FakeSQSAPI) ListQueuesPagesWithContextReturns(result1 error) {
+	fake.listQueuesPagesWithContextMutex.Lock()
+	defer fake.listQueuesPagesWithContextMutex.Unlock()
+	fake.ListQueuesPagesWithContextStub = nil
+	fake.listQueuesPagesWithContextReturns = struct {
+		result1 error
+	}{result1}
+}
+
+func (fake *FakeSQSAPI) ListQueuesPagesWithContextReturnsOnCall(i int, result1 error) {
+	fake.listQueuesPagesWithContextMutex.Lock()
+	defer fake.listQueuesPagesWithContextMutex.Unlock()
+	fake.ListQueuesPagesWithContextStub = nil
+	if fake.listQueuesPagesWithContextReturnsOnCall == nil {
+		fake.listQueuesPagesWithContextReturnsOnCall = make(map[int]struct {
+			result1 error
+		})
+	}
+	fake.listQueuesPagesWithContextReturnsOnCall[i] = struct {
+		result1 error
+	}{result1}
 }
 
 func (fake *FakeSQSAPI) ListQueuesRequest(arg1 *sqs.ListQueuesInput) (*request.Request, *sqs.ListQueuesOutput) {
@@ -2650,15 +3343,17 @@ func (fake *FakeSQSAPI) ListQueuesRequest(arg1 *sqs.ListQueuesInput) (*request.R
 	fake.listQueuesRequestArgsForCall = append(fake.listQueuesRequestArgsForCall, struct {
 		arg1 *sqs.ListQueuesInput
 	}{arg1})
+	stub := fake.ListQueuesRequestStub
+	fakeReturns := fake.listQueuesRequestReturns
 	fake.recordInvocation("ListQueuesRequest", []interface{}{arg1})
 	fake.listQueuesRequestMutex.Unlock()
-	if fake.ListQueuesRequestStub != nil {
-		return fake.ListQueuesRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.listQueuesRequestReturns.result1, fake.listQueuesRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) ListQueuesRequestCallCount() int {
@@ -2667,13 +3362,22 @@ func (fake *FakeSQSAPI) ListQueuesRequestCallCount() int {
 	return len(fake.listQueuesRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) ListQueuesRequestCalls(stub func(*sqs.ListQueuesInput) (*request.Request, *sqs.ListQueuesOutput)) {
+	fake.listQueuesRequestMutex.Lock()
+	defer fake.listQueuesRequestMutex.Unlock()
+	fake.ListQueuesRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) ListQueuesRequestArgsForCall(i int) *sqs.ListQueuesInput {
 	fake.listQueuesRequestMutex.RLock()
 	defer fake.listQueuesRequestMutex.RUnlock()
-	return fake.listQueuesRequestArgsForCall[i].arg1
+	argsForCall := fake.listQueuesRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) ListQueuesRequestReturns(result1 *request.Request, result2 *sqs.ListQueuesOutput) {
+	fake.listQueuesRequestMutex.Lock()
+	defer fake.listQueuesRequestMutex.Unlock()
 	fake.ListQueuesRequestStub = nil
 	fake.listQueuesRequestReturns = struct {
 		result1 *request.Request
@@ -2682,6 +3386,8 @@ func (fake *FakeSQSAPI) ListQueuesRequestReturns(result1 *request.Request, resul
 }
 
 func (fake *FakeSQSAPI) ListQueuesRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.ListQueuesOutput) {
+	fake.listQueuesRequestMutex.Lock()
+	defer fake.listQueuesRequestMutex.Unlock()
 	fake.ListQueuesRequestStub = nil
 	if fake.listQueuesRequestReturnsOnCall == nil {
 		fake.listQueuesRequestReturnsOnCall = make(map[int]struct {
@@ -2695,21 +3401,89 @@ func (fake *FakeSQSAPI) ListQueuesRequestReturnsOnCall(i int, result1 *request.R
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) ListQueuesWithContext(arg1 context.Context, arg2 *sqs.ListQueuesInput, arg3 ...request.Option) (*sqs.ListQueuesOutput, error) {
+	fake.listQueuesWithContextMutex.Lock()
+	ret, specificReturn := fake.listQueuesWithContextReturnsOnCall[len(fake.listQueuesWithContextArgsForCall)]
+	fake.listQueuesWithContextArgsForCall = append(fake.listQueuesWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.ListQueuesInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.ListQueuesWithContextStub
+	fakeReturns := fake.listQueuesWithContextReturns
+	fake.recordInvocation("ListQueuesWithContext", []interface{}{arg1, arg2, arg3})
+	fake.listQueuesWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) ListQueuesWithContextCallCount() int {
+	fake.listQueuesWithContextMutex.RLock()
+	defer fake.listQueuesWithContextMutex.RUnlock()
+	return len(fake.listQueuesWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) ListQueuesWithContextCalls(stub func(context.Context, *sqs.ListQueuesInput, ...request.Option) (*sqs.ListQueuesOutput, error)) {
+	fake.listQueuesWithContextMutex.Lock()
+	defer fake.listQueuesWithContextMutex.Unlock()
+	fake.ListQueuesWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) ListQueuesWithContextArgsForCall(i int) (context.Context, *sqs.ListQueuesInput, []request.Option) {
+	fake.listQueuesWithContextMutex.RLock()
+	defer fake.listQueuesWithContextMutex.RUnlock()
+	argsForCall := fake.listQueuesWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) ListQueuesWithContextReturns(result1 *sqs.ListQueuesOutput, result2 error) {
+	fake.listQueuesWithContextMutex.Lock()
+	defer fake.listQueuesWithContextMutex.Unlock()
+	fake.ListQueuesWithContextStub = nil
+	fake.listQueuesWithContextReturns = struct {
+		result1 *sqs.ListQueuesOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) ListQueuesWithContextReturnsOnCall(i int, result1 *sqs.ListQueuesOutput, result2 error) {
+	fake.listQueuesWithContextMutex.Lock()
+	defer fake.listQueuesWithContextMutex.Unlock()
+	fake.ListQueuesWithContextStub = nil
+	if fake.listQueuesWithContextReturnsOnCall == nil {
+		fake.listQueuesWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.ListQueuesOutput
+			result2 error
+		})
+	}
+	fake.listQueuesWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.ListQueuesOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) PurgeQueue(arg1 *sqs.PurgeQueueInput) (*sqs.PurgeQueueOutput, error) {
 	fake.purgeQueueMutex.Lock()
 	ret, specificReturn := fake.purgeQueueReturnsOnCall[len(fake.purgeQueueArgsForCall)]
 	fake.purgeQueueArgsForCall = append(fake.purgeQueueArgsForCall, struct {
 		arg1 *sqs.PurgeQueueInput
 	}{arg1})
+	stub := fake.PurgeQueueStub
+	fakeReturns := fake.purgeQueueReturns
 	fake.recordInvocation("PurgeQueue", []interface{}{arg1})
 	fake.purgeQueueMutex.Unlock()
-	if fake.PurgeQueueStub != nil {
-		return fake.PurgeQueueStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.purgeQueueReturns.result1, fake.purgeQueueReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) PurgeQueueCallCount() int {
@@ -2718,13 +3492,22 @@ func (fake *FakeSQSAPI) PurgeQueueCallCount() int {
 	return len(fake.purgeQueueArgsForCall)
 }
 
+func (fake *FakeSQSAPI) PurgeQueueCalls(stub func(*sqs.PurgeQueueInput) (*sqs.PurgeQueueOutput, error)) {
+	fake.purgeQueueMutex.Lock()
+	defer fake.purgeQueueMutex.Unlock()
+	fake.PurgeQueueStub = stub
+}
+
 func (fake *FakeSQSAPI) PurgeQueueArgsForCall(i int) *sqs.PurgeQueueInput {
 	fake.purgeQueueMutex.RLock()
 	defer fake.purgeQueueMutex.RUnlock()
-	return fake.purgeQueueArgsForCall[i].arg1
+	argsForCall := fake.purgeQueueArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) PurgeQueueReturns(result1 *sqs.PurgeQueueOutput, result2 error) {
+	fake.purgeQueueMutex.Lock()
+	defer fake.purgeQueueMutex.Unlock()
 	fake.PurgeQueueStub = nil
 	fake.purgeQueueReturns = struct {
 		result1 *sqs.PurgeQueueOutput
@@ -2733,6 +3516,8 @@ func (fake *FakeSQSAPI) PurgeQueueReturns(result1 *sqs.PurgeQueueOutput, result2
 }
 
 func (fake *FakeSQSAPI) PurgeQueueReturnsOnCall(i int, result1 *sqs.PurgeQueueOutput, result2 error) {
+	fake.purgeQueueMutex.Lock()
+	defer fake.purgeQueueMutex.Unlock()
 	fake.PurgeQueueStub = nil
 	if fake.purgeQueueReturnsOnCall == nil {
 		fake.purgeQueueReturnsOnCall = make(map[int]struct {
@@ -2746,74 +3531,23 @@ func (fake *FakeSQSAPI) PurgeQueueReturnsOnCall(i int, result1 *sqs.PurgeQueueOu
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) PurgeQueueWithContext(arg1 aws.Context, arg2 *sqs.PurgeQueueInput, arg3 ...request.Option) (*sqs.PurgeQueueOutput, error) {
-	fake.purgeQueueWithContextMutex.Lock()
-	ret, specificReturn := fake.purgeQueueWithContextReturnsOnCall[len(fake.purgeQueueWithContextArgsForCall)]
-	fake.purgeQueueWithContextArgsForCall = append(fake.purgeQueueWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.PurgeQueueInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("PurgeQueueWithContext", []interface{}{arg1, arg2, arg3})
-	fake.purgeQueueWithContextMutex.Unlock()
-	if fake.PurgeQueueWithContextStub != nil {
-		return fake.PurgeQueueWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.purgeQueueWithContextReturns.result1, fake.purgeQueueWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) PurgeQueueWithContextCallCount() int {
-	fake.purgeQueueWithContextMutex.RLock()
-	defer fake.purgeQueueWithContextMutex.RUnlock()
-	return len(fake.purgeQueueWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) PurgeQueueWithContextArgsForCall(i int) (aws.Context, *sqs.PurgeQueueInput, []request.Option) {
-	fake.purgeQueueWithContextMutex.RLock()
-	defer fake.purgeQueueWithContextMutex.RUnlock()
-	return fake.purgeQueueWithContextArgsForCall[i].arg1, fake.purgeQueueWithContextArgsForCall[i].arg2, fake.purgeQueueWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) PurgeQueueWithContextReturns(result1 *sqs.PurgeQueueOutput, result2 error) {
-	fake.PurgeQueueWithContextStub = nil
-	fake.purgeQueueWithContextReturns = struct {
-		result1 *sqs.PurgeQueueOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) PurgeQueueWithContextReturnsOnCall(i int, result1 *sqs.PurgeQueueOutput, result2 error) {
-	fake.PurgeQueueWithContextStub = nil
-	if fake.purgeQueueWithContextReturnsOnCall == nil {
-		fake.purgeQueueWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.PurgeQueueOutput
-			result2 error
-		})
-	}
-	fake.purgeQueueWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.PurgeQueueOutput
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) PurgeQueueRequest(arg1 *sqs.PurgeQueueInput) (*request.Request, *sqs.PurgeQueueOutput) {
 	fake.purgeQueueRequestMutex.Lock()
 	ret, specificReturn := fake.purgeQueueRequestReturnsOnCall[len(fake.purgeQueueRequestArgsForCall)]
 	fake.purgeQueueRequestArgsForCall = append(fake.purgeQueueRequestArgsForCall, struct {
 		arg1 *sqs.PurgeQueueInput
 	}{arg1})
+	stub := fake.PurgeQueueRequestStub
+	fakeReturns := fake.purgeQueueRequestReturns
 	fake.recordInvocation("PurgeQueueRequest", []interface{}{arg1})
 	fake.purgeQueueRequestMutex.Unlock()
-	if fake.PurgeQueueRequestStub != nil {
-		return fake.PurgeQueueRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.purgeQueueRequestReturns.result1, fake.purgeQueueRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) PurgeQueueRequestCallCount() int {
@@ -2822,13 +3556,22 @@ func (fake *FakeSQSAPI) PurgeQueueRequestCallCount() int {
 	return len(fake.purgeQueueRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) PurgeQueueRequestCalls(stub func(*sqs.PurgeQueueInput) (*request.Request, *sqs.PurgeQueueOutput)) {
+	fake.purgeQueueRequestMutex.Lock()
+	defer fake.purgeQueueRequestMutex.Unlock()
+	fake.PurgeQueueRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) PurgeQueueRequestArgsForCall(i int) *sqs.PurgeQueueInput {
 	fake.purgeQueueRequestMutex.RLock()
 	defer fake.purgeQueueRequestMutex.RUnlock()
-	return fake.purgeQueueRequestArgsForCall[i].arg1
+	argsForCall := fake.purgeQueueRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) PurgeQueueRequestReturns(result1 *request.Request, result2 *sqs.PurgeQueueOutput) {
+	fake.purgeQueueRequestMutex.Lock()
+	defer fake.purgeQueueRequestMutex.Unlock()
 	fake.PurgeQueueRequestStub = nil
 	fake.purgeQueueRequestReturns = struct {
 		result1 *request.Request
@@ -2837,6 +3580,8 @@ func (fake *FakeSQSAPI) PurgeQueueRequestReturns(result1 *request.Request, resul
 }
 
 func (fake *FakeSQSAPI) PurgeQueueRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.PurgeQueueOutput) {
+	fake.purgeQueueRequestMutex.Lock()
+	defer fake.purgeQueueRequestMutex.Unlock()
 	fake.PurgeQueueRequestStub = nil
 	if fake.purgeQueueRequestReturnsOnCall == nil {
 		fake.purgeQueueRequestReturnsOnCall = make(map[int]struct {
@@ -2850,21 +3595,89 @@ func (fake *FakeSQSAPI) PurgeQueueRequestReturnsOnCall(i int, result1 *request.R
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) PurgeQueueWithContext(arg1 context.Context, arg2 *sqs.PurgeQueueInput, arg3 ...request.Option) (*sqs.PurgeQueueOutput, error) {
+	fake.purgeQueueWithContextMutex.Lock()
+	ret, specificReturn := fake.purgeQueueWithContextReturnsOnCall[len(fake.purgeQueueWithContextArgsForCall)]
+	fake.purgeQueueWithContextArgsForCall = append(fake.purgeQueueWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.PurgeQueueInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.PurgeQueueWithContextStub
+	fakeReturns := fake.purgeQueueWithContextReturns
+	fake.recordInvocation("PurgeQueueWithContext", []interface{}{arg1, arg2, arg3})
+	fake.purgeQueueWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) PurgeQueueWithContextCallCount() int {
+	fake.purgeQueueWithContextMutex.RLock()
+	defer fake.purgeQueueWithContextMutex.RUnlock()
+	return len(fake.purgeQueueWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) PurgeQueueWithContextCalls(stub func(context.Context, *sqs.PurgeQueueInput, ...request.Option) (*sqs.PurgeQueueOutput, error)) {
+	fake.purgeQueueWithContextMutex.Lock()
+	defer fake.purgeQueueWithContextMutex.Unlock()
+	fake.PurgeQueueWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) PurgeQueueWithContextArgsForCall(i int) (context.Context, *sqs.PurgeQueueInput, []request.Option) {
+	fake.purgeQueueWithContextMutex.RLock()
+	defer fake.purgeQueueWithContextMutex.RUnlock()
+	argsForCall := fake.purgeQueueWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) PurgeQueueWithContextReturns(result1 *sqs.PurgeQueueOutput, result2 error) {
+	fake.purgeQueueWithContextMutex.Lock()
+	defer fake.purgeQueueWithContextMutex.Unlock()
+	fake.PurgeQueueWithContextStub = nil
+	fake.purgeQueueWithContextReturns = struct {
+		result1 *sqs.PurgeQueueOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) PurgeQueueWithContextReturnsOnCall(i int, result1 *sqs.PurgeQueueOutput, result2 error) {
+	fake.purgeQueueWithContextMutex.Lock()
+	defer fake.purgeQueueWithContextMutex.Unlock()
+	fake.PurgeQueueWithContextStub = nil
+	if fake.purgeQueueWithContextReturnsOnCall == nil {
+		fake.purgeQueueWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.PurgeQueueOutput
+			result2 error
+		})
+	}
+	fake.purgeQueueWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.PurgeQueueOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) ReceiveMessage(arg1 *sqs.ReceiveMessageInput) (*sqs.ReceiveMessageOutput, error) {
 	fake.receiveMessageMutex.Lock()
 	ret, specificReturn := fake.receiveMessageReturnsOnCall[len(fake.receiveMessageArgsForCall)]
 	fake.receiveMessageArgsForCall = append(fake.receiveMessageArgsForCall, struct {
 		arg1 *sqs.ReceiveMessageInput
 	}{arg1})
+	stub := fake.ReceiveMessageStub
+	fakeReturns := fake.receiveMessageReturns
 	fake.recordInvocation("ReceiveMessage", []interface{}{arg1})
 	fake.receiveMessageMutex.Unlock()
-	if fake.ReceiveMessageStub != nil {
-		return fake.ReceiveMessageStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.receiveMessageReturns.result1, fake.receiveMessageReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) ReceiveMessageCallCount() int {
@@ -2873,13 +3686,22 @@ func (fake *FakeSQSAPI) ReceiveMessageCallCount() int {
 	return len(fake.receiveMessageArgsForCall)
 }
 
+func (fake *FakeSQSAPI) ReceiveMessageCalls(stub func(*sqs.ReceiveMessageInput) (*sqs.ReceiveMessageOutput, error)) {
+	fake.receiveMessageMutex.Lock()
+	defer fake.receiveMessageMutex.Unlock()
+	fake.ReceiveMessageStub = stub
+}
+
 func (fake *FakeSQSAPI) ReceiveMessageArgsForCall(i int) *sqs.ReceiveMessageInput {
 	fake.receiveMessageMutex.RLock()
 	defer fake.receiveMessageMutex.RUnlock()
-	return fake.receiveMessageArgsForCall[i].arg1
+	argsForCall := fake.receiveMessageArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) ReceiveMessageReturns(result1 *sqs.ReceiveMessageOutput, result2 error) {
+	fake.receiveMessageMutex.Lock()
+	defer fake.receiveMessageMutex.Unlock()
 	fake.ReceiveMessageStub = nil
 	fake.receiveMessageReturns = struct {
 		result1 *sqs.ReceiveMessageOutput
@@ -2888,6 +3710,8 @@ func (fake *FakeSQSAPI) ReceiveMessageReturns(result1 *sqs.ReceiveMessageOutput,
 }
 
 func (fake *FakeSQSAPI) ReceiveMessageReturnsOnCall(i int, result1 *sqs.ReceiveMessageOutput, result2 error) {
+	fake.receiveMessageMutex.Lock()
+	defer fake.receiveMessageMutex.Unlock()
 	fake.ReceiveMessageStub = nil
 	if fake.receiveMessageReturnsOnCall == nil {
 		fake.receiveMessageReturnsOnCall = make(map[int]struct {
@@ -2901,74 +3725,23 @@ func (fake *FakeSQSAPI) ReceiveMessageReturnsOnCall(i int, result1 *sqs.ReceiveM
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) ReceiveMessageWithContext(arg1 aws.Context, arg2 *sqs.ReceiveMessageInput, arg3 ...request.Option) (*sqs.ReceiveMessageOutput, error) {
-	fake.receiveMessageWithContextMutex.Lock()
-	ret, specificReturn := fake.receiveMessageWithContextReturnsOnCall[len(fake.receiveMessageWithContextArgsForCall)]
-	fake.receiveMessageWithContextArgsForCall = append(fake.receiveMessageWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.ReceiveMessageInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("ReceiveMessageWithContext", []interface{}{arg1, arg2, arg3})
-	fake.receiveMessageWithContextMutex.Unlock()
-	if fake.ReceiveMessageWithContextStub != nil {
-		return fake.ReceiveMessageWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.receiveMessageWithContextReturns.result1, fake.receiveMessageWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) ReceiveMessageWithContextCallCount() int {
-	fake.receiveMessageWithContextMutex.RLock()
-	defer fake.receiveMessageWithContextMutex.RUnlock()
-	return len(fake.receiveMessageWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) ReceiveMessageWithContextArgsForCall(i int) (aws.Context, *sqs.ReceiveMessageInput, []request.Option) {
-	fake.receiveMessageWithContextMutex.RLock()
-	defer fake.receiveMessageWithContextMutex.RUnlock()
-	return fake.receiveMessageWithContextArgsForCall[i].arg1, fake.receiveMessageWithContextArgsForCall[i].arg2, fake.receiveMessageWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) ReceiveMessageWithContextReturns(result1 *sqs.ReceiveMessageOutput, result2 error) {
-	fake.ReceiveMessageWithContextStub = nil
-	fake.receiveMessageWithContextReturns = struct {
-		result1 *sqs.ReceiveMessageOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) ReceiveMessageWithContextReturnsOnCall(i int, result1 *sqs.ReceiveMessageOutput, result2 error) {
-	fake.ReceiveMessageWithContextStub = nil
-	if fake.receiveMessageWithContextReturnsOnCall == nil {
-		fake.receiveMessageWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.ReceiveMessageOutput
-			result2 error
-		})
-	}
-	fake.receiveMessageWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.ReceiveMessageOutput
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) ReceiveMessageRequest(arg1 *sqs.ReceiveMessageInput) (*request.Request, *sqs.ReceiveMessageOutput) {
 	fake.receiveMessageRequestMutex.Lock()
 	ret, specificReturn := fake.receiveMessageRequestReturnsOnCall[len(fake.receiveMessageRequestArgsForCall)]
 	fake.receiveMessageRequestArgsForCall = append(fake.receiveMessageRequestArgsForCall, struct {
 		arg1 *sqs.ReceiveMessageInput
 	}{arg1})
+	stub := fake.ReceiveMessageRequestStub
+	fakeReturns := fake.receiveMessageRequestReturns
 	fake.recordInvocation("ReceiveMessageRequest", []interface{}{arg1})
 	fake.receiveMessageRequestMutex.Unlock()
-	if fake.ReceiveMessageRequestStub != nil {
-		return fake.ReceiveMessageRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.receiveMessageRequestReturns.result1, fake.receiveMessageRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) ReceiveMessageRequestCallCount() int {
@@ -2977,13 +3750,22 @@ func (fake *FakeSQSAPI) ReceiveMessageRequestCallCount() int {
 	return len(fake.receiveMessageRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) ReceiveMessageRequestCalls(stub func(*sqs.ReceiveMessageInput) (*request.Request, *sqs.ReceiveMessageOutput)) {
+	fake.receiveMessageRequestMutex.Lock()
+	defer fake.receiveMessageRequestMutex.Unlock()
+	fake.ReceiveMessageRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) ReceiveMessageRequestArgsForCall(i int) *sqs.ReceiveMessageInput {
 	fake.receiveMessageRequestMutex.RLock()
 	defer fake.receiveMessageRequestMutex.RUnlock()
-	return fake.receiveMessageRequestArgsForCall[i].arg1
+	argsForCall := fake.receiveMessageRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) ReceiveMessageRequestReturns(result1 *request.Request, result2 *sqs.ReceiveMessageOutput) {
+	fake.receiveMessageRequestMutex.Lock()
+	defer fake.receiveMessageRequestMutex.Unlock()
 	fake.ReceiveMessageRequestStub = nil
 	fake.receiveMessageRequestReturns = struct {
 		result1 *request.Request
@@ -2992,6 +3774,8 @@ func (fake *FakeSQSAPI) ReceiveMessageRequestReturns(result1 *request.Request, r
 }
 
 func (fake *FakeSQSAPI) ReceiveMessageRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.ReceiveMessageOutput) {
+	fake.receiveMessageRequestMutex.Lock()
+	defer fake.receiveMessageRequestMutex.Unlock()
 	fake.ReceiveMessageRequestStub = nil
 	if fake.receiveMessageRequestReturnsOnCall == nil {
 		fake.receiveMessageRequestReturnsOnCall = make(map[int]struct {
@@ -3005,21 +3789,89 @@ func (fake *FakeSQSAPI) ReceiveMessageRequestReturnsOnCall(i int, result1 *reque
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) ReceiveMessageWithContext(arg1 context.Context, arg2 *sqs.ReceiveMessageInput, arg3 ...request.Option) (*sqs.ReceiveMessageOutput, error) {
+	fake.receiveMessageWithContextMutex.Lock()
+	ret, specificReturn := fake.receiveMessageWithContextReturnsOnCall[len(fake.receiveMessageWithContextArgsForCall)]
+	fake.receiveMessageWithContextArgsForCall = append(fake.receiveMessageWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.ReceiveMessageInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.ReceiveMessageWithContextStub
+	fakeReturns := fake.receiveMessageWithContextReturns
+	fake.recordInvocation("ReceiveMessageWithContext", []interface{}{arg1, arg2, arg3})
+	fake.receiveMessageWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) ReceiveMessageWithContextCallCount() int {
+	fake.receiveMessageWithContextMutex.RLock()
+	defer fake.receiveMessageWithContextMutex.RUnlock()
+	return len(fake.receiveMessageWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) ReceiveMessageWithContextCalls(stub func(context.Context, *sqs.ReceiveMessageInput, ...request.Option) (*sqs.ReceiveMessageOutput, error)) {
+	fake.receiveMessageWithContextMutex.Lock()
+	defer fake.receiveMessageWithContextMutex.Unlock()
+	fake.ReceiveMessageWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) ReceiveMessageWithContextArgsForCall(i int) (context.Context, *sqs.ReceiveMessageInput, []request.Option) {
+	fake.receiveMessageWithContextMutex.RLock()
+	defer fake.receiveMessageWithContextMutex.RUnlock()
+	argsForCall := fake.receiveMessageWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) ReceiveMessageWithContextReturns(result1 *sqs.ReceiveMessageOutput, result2 error) {
+	fake.receiveMessageWithContextMutex.Lock()
+	defer fake.receiveMessageWithContextMutex.Unlock()
+	fake.ReceiveMessageWithContextStub = nil
+	fake.receiveMessageWithContextReturns = struct {
+		result1 *sqs.ReceiveMessageOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) ReceiveMessageWithContextReturnsOnCall(i int, result1 *sqs.ReceiveMessageOutput, result2 error) {
+	fake.receiveMessageWithContextMutex.Lock()
+	defer fake.receiveMessageWithContextMutex.Unlock()
+	fake.ReceiveMessageWithContextStub = nil
+	if fake.receiveMessageWithContextReturnsOnCall == nil {
+		fake.receiveMessageWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.ReceiveMessageOutput
+			result2 error
+		})
+	}
+	fake.receiveMessageWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.ReceiveMessageOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) RemovePermission(arg1 *sqs.RemovePermissionInput) (*sqs.RemovePermissionOutput, error) {
 	fake.removePermissionMutex.Lock()
 	ret, specificReturn := fake.removePermissionReturnsOnCall[len(fake.removePermissionArgsForCall)]
 	fake.removePermissionArgsForCall = append(fake.removePermissionArgsForCall, struct {
 		arg1 *sqs.RemovePermissionInput
 	}{arg1})
+	stub := fake.RemovePermissionStub
+	fakeReturns := fake.removePermissionReturns
 	fake.recordInvocation("RemovePermission", []interface{}{arg1})
 	fake.removePermissionMutex.Unlock()
-	if fake.RemovePermissionStub != nil {
-		return fake.RemovePermissionStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.removePermissionReturns.result1, fake.removePermissionReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) RemovePermissionCallCount() int {
@@ -3028,13 +3880,22 @@ func (fake *FakeSQSAPI) RemovePermissionCallCount() int {
 	return len(fake.removePermissionArgsForCall)
 }
 
+func (fake *FakeSQSAPI) RemovePermissionCalls(stub func(*sqs.RemovePermissionInput) (*sqs.RemovePermissionOutput, error)) {
+	fake.removePermissionMutex.Lock()
+	defer fake.removePermissionMutex.Unlock()
+	fake.RemovePermissionStub = stub
+}
+
 func (fake *FakeSQSAPI) RemovePermissionArgsForCall(i int) *sqs.RemovePermissionInput {
 	fake.removePermissionMutex.RLock()
 	defer fake.removePermissionMutex.RUnlock()
-	return fake.removePermissionArgsForCall[i].arg1
+	argsForCall := fake.removePermissionArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) RemovePermissionReturns(result1 *sqs.RemovePermissionOutput, result2 error) {
+	fake.removePermissionMutex.Lock()
+	defer fake.removePermissionMutex.Unlock()
 	fake.RemovePermissionStub = nil
 	fake.removePermissionReturns = struct {
 		result1 *sqs.RemovePermissionOutput
@@ -3043,6 +3904,8 @@ func (fake *FakeSQSAPI) RemovePermissionReturns(result1 *sqs.RemovePermissionOut
 }
 
 func (fake *FakeSQSAPI) RemovePermissionReturnsOnCall(i int, result1 *sqs.RemovePermissionOutput, result2 error) {
+	fake.removePermissionMutex.Lock()
+	defer fake.removePermissionMutex.Unlock()
 	fake.RemovePermissionStub = nil
 	if fake.removePermissionReturnsOnCall == nil {
 		fake.removePermissionReturnsOnCall = make(map[int]struct {
@@ -3056,74 +3919,23 @@ func (fake *FakeSQSAPI) RemovePermissionReturnsOnCall(i int, result1 *sqs.Remove
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) RemovePermissionWithContext(arg1 aws.Context, arg2 *sqs.RemovePermissionInput, arg3 ...request.Option) (*sqs.RemovePermissionOutput, error) {
-	fake.removePermissionWithContextMutex.Lock()
-	ret, specificReturn := fake.removePermissionWithContextReturnsOnCall[len(fake.removePermissionWithContextArgsForCall)]
-	fake.removePermissionWithContextArgsForCall = append(fake.removePermissionWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.RemovePermissionInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("RemovePermissionWithContext", []interface{}{arg1, arg2, arg3})
-	fake.removePermissionWithContextMutex.Unlock()
-	if fake.RemovePermissionWithContextStub != nil {
-		return fake.RemovePermissionWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.removePermissionWithContextReturns.result1, fake.removePermissionWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) RemovePermissionWithContextCallCount() int {
-	fake.removePermissionWithContextMutex.RLock()
-	defer fake.removePermissionWithContextMutex.RUnlock()
-	return len(fake.removePermissionWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) RemovePermissionWithContextArgsForCall(i int) (aws.Context, *sqs.RemovePermissionInput, []request.Option) {
-	fake.removePermissionWithContextMutex.RLock()
-	defer fake.removePermissionWithContextMutex.RUnlock()
-	return fake.removePermissionWithContextArgsForCall[i].arg1, fake.removePermissionWithContextArgsForCall[i].arg2, fake.removePermissionWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) RemovePermissionWithContextReturns(result1 *sqs.RemovePermissionOutput, result2 error) {
-	fake.RemovePermissionWithContextStub = nil
-	fake.removePermissionWithContextReturns = struct {
-		result1 *sqs.RemovePermissionOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) RemovePermissionWithContextReturnsOnCall(i int, result1 *sqs.RemovePermissionOutput, result2 error) {
-	fake.RemovePermissionWithContextStub = nil
-	if fake.removePermissionWithContextReturnsOnCall == nil {
-		fake.removePermissionWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.RemovePermissionOutput
-			result2 error
-		})
-	}
-	fake.removePermissionWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.RemovePermissionOutput
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) RemovePermissionRequest(arg1 *sqs.RemovePermissionInput) (*request.Request, *sqs.RemovePermissionOutput) {
 	fake.removePermissionRequestMutex.Lock()
 	ret, specificReturn := fake.removePermissionRequestReturnsOnCall[len(fake.removePermissionRequestArgsForCall)]
 	fake.removePermissionRequestArgsForCall = append(fake.removePermissionRequestArgsForCall, struct {
 		arg1 *sqs.RemovePermissionInput
 	}{arg1})
+	stub := fake.RemovePermissionRequestStub
+	fakeReturns := fake.removePermissionRequestReturns
 	fake.recordInvocation("RemovePermissionRequest", []interface{}{arg1})
 	fake.removePermissionRequestMutex.Unlock()
-	if fake.RemovePermissionRequestStub != nil {
-		return fake.RemovePermissionRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.removePermissionRequestReturns.result1, fake.removePermissionRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) RemovePermissionRequestCallCount() int {
@@ -3132,13 +3944,22 @@ func (fake *FakeSQSAPI) RemovePermissionRequestCallCount() int {
 	return len(fake.removePermissionRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) RemovePermissionRequestCalls(stub func(*sqs.RemovePermissionInput) (*request.Request, *sqs.RemovePermissionOutput)) {
+	fake.removePermissionRequestMutex.Lock()
+	defer fake.removePermissionRequestMutex.Unlock()
+	fake.RemovePermissionRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) RemovePermissionRequestArgsForCall(i int) *sqs.RemovePermissionInput {
 	fake.removePermissionRequestMutex.RLock()
 	defer fake.removePermissionRequestMutex.RUnlock()
-	return fake.removePermissionRequestArgsForCall[i].arg1
+	argsForCall := fake.removePermissionRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) RemovePermissionRequestReturns(result1 *request.Request, result2 *sqs.RemovePermissionOutput) {
+	fake.removePermissionRequestMutex.Lock()
+	defer fake.removePermissionRequestMutex.Unlock()
 	fake.RemovePermissionRequestStub = nil
 	fake.removePermissionRequestReturns = struct {
 		result1 *request.Request
@@ -3147,6 +3968,8 @@ func (fake *FakeSQSAPI) RemovePermissionRequestReturns(result1 *request.Request,
 }
 
 func (fake *FakeSQSAPI) RemovePermissionRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.RemovePermissionOutput) {
+	fake.removePermissionRequestMutex.Lock()
+	defer fake.removePermissionRequestMutex.Unlock()
 	fake.RemovePermissionRequestStub = nil
 	if fake.removePermissionRequestReturnsOnCall == nil {
 		fake.removePermissionRequestReturnsOnCall = make(map[int]struct {
@@ -3160,21 +3983,89 @@ func (fake *FakeSQSAPI) RemovePermissionRequestReturnsOnCall(i int, result1 *req
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) RemovePermissionWithContext(arg1 context.Context, arg2 *sqs.RemovePermissionInput, arg3 ...request.Option) (*sqs.RemovePermissionOutput, error) {
+	fake.removePermissionWithContextMutex.Lock()
+	ret, specificReturn := fake.removePermissionWithContextReturnsOnCall[len(fake.removePermissionWithContextArgsForCall)]
+	fake.removePermissionWithContextArgsForCall = append(fake.removePermissionWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.RemovePermissionInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.RemovePermissionWithContextStub
+	fakeReturns := fake.removePermissionWithContextReturns
+	fake.recordInvocation("RemovePermissionWithContext", []interface{}{arg1, arg2, arg3})
+	fake.removePermissionWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) RemovePermissionWithContextCallCount() int {
+	fake.removePermissionWithContextMutex.RLock()
+	defer fake.removePermissionWithContextMutex.RUnlock()
+	return len(fake.removePermissionWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) RemovePermissionWithContextCalls(stub func(context.Context, *sqs.RemovePermissionInput, ...request.Option) (*sqs.RemovePermissionOutput, error)) {
+	fake.removePermissionWithContextMutex.Lock()
+	defer fake.removePermissionWithContextMutex.Unlock()
+	fake.RemovePermissionWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) RemovePermissionWithContextArgsForCall(i int) (context.Context, *sqs.RemovePermissionInput, []request.Option) {
+	fake.removePermissionWithContextMutex.RLock()
+	defer fake.removePermissionWithContextMutex.RUnlock()
+	argsForCall := fake.removePermissionWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) RemovePermissionWithContextReturns(result1 *sqs.RemovePermissionOutput, result2 error) {
+	fake.removePermissionWithContextMutex.Lock()
+	defer fake.removePermissionWithContextMutex.Unlock()
+	fake.RemovePermissionWithContextStub = nil
+	fake.removePermissionWithContextReturns = struct {
+		result1 *sqs.RemovePermissionOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) RemovePermissionWithContextReturnsOnCall(i int, result1 *sqs.RemovePermissionOutput, result2 error) {
+	fake.removePermissionWithContextMutex.Lock()
+	defer fake.removePermissionWithContextMutex.Unlock()
+	fake.RemovePermissionWithContextStub = nil
+	if fake.removePermissionWithContextReturnsOnCall == nil {
+		fake.removePermissionWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.RemovePermissionOutput
+			result2 error
+		})
+	}
+	fake.removePermissionWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.RemovePermissionOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) SendMessage(arg1 *sqs.SendMessageInput) (*sqs.SendMessageOutput, error) {
 	fake.sendMessageMutex.Lock()
 	ret, specificReturn := fake.sendMessageReturnsOnCall[len(fake.sendMessageArgsForCall)]
 	fake.sendMessageArgsForCall = append(fake.sendMessageArgsForCall, struct {
 		arg1 *sqs.SendMessageInput
 	}{arg1})
+	stub := fake.SendMessageStub
+	fakeReturns := fake.sendMessageReturns
 	fake.recordInvocation("SendMessage", []interface{}{arg1})
 	fake.sendMessageMutex.Unlock()
-	if fake.SendMessageStub != nil {
-		return fake.SendMessageStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.sendMessageReturns.result1, fake.sendMessageReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) SendMessageCallCount() int {
@@ -3183,13 +4074,22 @@ func (fake *FakeSQSAPI) SendMessageCallCount() int {
 	return len(fake.sendMessageArgsForCall)
 }
 
+func (fake *FakeSQSAPI) SendMessageCalls(stub func(*sqs.SendMessageInput) (*sqs.SendMessageOutput, error)) {
+	fake.sendMessageMutex.Lock()
+	defer fake.sendMessageMutex.Unlock()
+	fake.SendMessageStub = stub
+}
+
 func (fake *FakeSQSAPI) SendMessageArgsForCall(i int) *sqs.SendMessageInput {
 	fake.sendMessageMutex.RLock()
 	defer fake.sendMessageMutex.RUnlock()
-	return fake.sendMessageArgsForCall[i].arg1
+	argsForCall := fake.sendMessageArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) SendMessageReturns(result1 *sqs.SendMessageOutput, result2 error) {
+	fake.sendMessageMutex.Lock()
+	defer fake.sendMessageMutex.Unlock()
 	fake.SendMessageStub = nil
 	fake.sendMessageReturns = struct {
 		result1 *sqs.SendMessageOutput
@@ -3198,6 +4098,8 @@ func (fake *FakeSQSAPI) SendMessageReturns(result1 *sqs.SendMessageOutput, resul
 }
 
 func (fake *FakeSQSAPI) SendMessageReturnsOnCall(i int, result1 *sqs.SendMessageOutput, result2 error) {
+	fake.sendMessageMutex.Lock()
+	defer fake.sendMessageMutex.Unlock()
 	fake.SendMessageStub = nil
 	if fake.sendMessageReturnsOnCall == nil {
 		fake.sendMessageReturnsOnCall = make(map[int]struct {
@@ -3211,125 +4113,23 @@ func (fake *FakeSQSAPI) SendMessageReturnsOnCall(i int, result1 *sqs.SendMessage
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) SendMessageWithContext(arg1 aws.Context, arg2 *sqs.SendMessageInput, arg3 ...request.Option) (*sqs.SendMessageOutput, error) {
-	fake.sendMessageWithContextMutex.Lock()
-	ret, specificReturn := fake.sendMessageWithContextReturnsOnCall[len(fake.sendMessageWithContextArgsForCall)]
-	fake.sendMessageWithContextArgsForCall = append(fake.sendMessageWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.SendMessageInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("SendMessageWithContext", []interface{}{arg1, arg2, arg3})
-	fake.sendMessageWithContextMutex.Unlock()
-	if fake.SendMessageWithContextStub != nil {
-		return fake.SendMessageWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.sendMessageWithContextReturns.result1, fake.sendMessageWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) SendMessageWithContextCallCount() int {
-	fake.sendMessageWithContextMutex.RLock()
-	defer fake.sendMessageWithContextMutex.RUnlock()
-	return len(fake.sendMessageWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) SendMessageWithContextArgsForCall(i int) (aws.Context, *sqs.SendMessageInput, []request.Option) {
-	fake.sendMessageWithContextMutex.RLock()
-	defer fake.sendMessageWithContextMutex.RUnlock()
-	return fake.sendMessageWithContextArgsForCall[i].arg1, fake.sendMessageWithContextArgsForCall[i].arg2, fake.sendMessageWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) SendMessageWithContextReturns(result1 *sqs.SendMessageOutput, result2 error) {
-	fake.SendMessageWithContextStub = nil
-	fake.sendMessageWithContextReturns = struct {
-		result1 *sqs.SendMessageOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) SendMessageWithContextReturnsOnCall(i int, result1 *sqs.SendMessageOutput, result2 error) {
-	fake.SendMessageWithContextStub = nil
-	if fake.sendMessageWithContextReturnsOnCall == nil {
-		fake.sendMessageWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.SendMessageOutput
-			result2 error
-		})
-	}
-	fake.sendMessageWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.SendMessageOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) SendMessageRequest(arg1 *sqs.SendMessageInput) (*request.Request, *sqs.SendMessageOutput) {
-	fake.sendMessageRequestMutex.Lock()
-	ret, specificReturn := fake.sendMessageRequestReturnsOnCall[len(fake.sendMessageRequestArgsForCall)]
-	fake.sendMessageRequestArgsForCall = append(fake.sendMessageRequestArgsForCall, struct {
-		arg1 *sqs.SendMessageInput
-	}{arg1})
-	fake.recordInvocation("SendMessageRequest", []interface{}{arg1})
-	fake.sendMessageRequestMutex.Unlock()
-	if fake.SendMessageRequestStub != nil {
-		return fake.SendMessageRequestStub(arg1)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.sendMessageRequestReturns.result1, fake.sendMessageRequestReturns.result2
-}
-
-func (fake *FakeSQSAPI) SendMessageRequestCallCount() int {
-	fake.sendMessageRequestMutex.RLock()
-	defer fake.sendMessageRequestMutex.RUnlock()
-	return len(fake.sendMessageRequestArgsForCall)
-}
-
-func (fake *FakeSQSAPI) SendMessageRequestArgsForCall(i int) *sqs.SendMessageInput {
-	fake.sendMessageRequestMutex.RLock()
-	defer fake.sendMessageRequestMutex.RUnlock()
-	return fake.sendMessageRequestArgsForCall[i].arg1
-}
-
-func (fake *FakeSQSAPI) SendMessageRequestReturns(result1 *request.Request, result2 *sqs.SendMessageOutput) {
-	fake.SendMessageRequestStub = nil
-	fake.sendMessageRequestReturns = struct {
-		result1 *request.Request
-		result2 *sqs.SendMessageOutput
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) SendMessageRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.SendMessageOutput) {
-	fake.SendMessageRequestStub = nil
-	if fake.sendMessageRequestReturnsOnCall == nil {
-		fake.sendMessageRequestReturnsOnCall = make(map[int]struct {
-			result1 *request.Request
-			result2 *sqs.SendMessageOutput
-		})
-	}
-	fake.sendMessageRequestReturnsOnCall[i] = struct {
-		result1 *request.Request
-		result2 *sqs.SendMessageOutput
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) SendMessageBatch(arg1 *sqs.SendMessageBatchInput) (*sqs.SendMessageBatchOutput, error) {
 	fake.sendMessageBatchMutex.Lock()
 	ret, specificReturn := fake.sendMessageBatchReturnsOnCall[len(fake.sendMessageBatchArgsForCall)]
 	fake.sendMessageBatchArgsForCall = append(fake.sendMessageBatchArgsForCall, struct {
 		arg1 *sqs.SendMessageBatchInput
 	}{arg1})
+	stub := fake.SendMessageBatchStub
+	fakeReturns := fake.sendMessageBatchReturns
 	fake.recordInvocation("SendMessageBatch", []interface{}{arg1})
 	fake.sendMessageBatchMutex.Unlock()
-	if fake.SendMessageBatchStub != nil {
-		return fake.SendMessageBatchStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.sendMessageBatchReturns.result1, fake.sendMessageBatchReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) SendMessageBatchCallCount() int {
@@ -3338,13 +4138,22 @@ func (fake *FakeSQSAPI) SendMessageBatchCallCount() int {
 	return len(fake.sendMessageBatchArgsForCall)
 }
 
+func (fake *FakeSQSAPI) SendMessageBatchCalls(stub func(*sqs.SendMessageBatchInput) (*sqs.SendMessageBatchOutput, error)) {
+	fake.sendMessageBatchMutex.Lock()
+	defer fake.sendMessageBatchMutex.Unlock()
+	fake.SendMessageBatchStub = stub
+}
+
 func (fake *FakeSQSAPI) SendMessageBatchArgsForCall(i int) *sqs.SendMessageBatchInput {
 	fake.sendMessageBatchMutex.RLock()
 	defer fake.sendMessageBatchMutex.RUnlock()
-	return fake.sendMessageBatchArgsForCall[i].arg1
+	argsForCall := fake.sendMessageBatchArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) SendMessageBatchReturns(result1 *sqs.SendMessageBatchOutput, result2 error) {
+	fake.sendMessageBatchMutex.Lock()
+	defer fake.sendMessageBatchMutex.Unlock()
 	fake.SendMessageBatchStub = nil
 	fake.sendMessageBatchReturns = struct {
 		result1 *sqs.SendMessageBatchOutput
@@ -3353,6 +4162,8 @@ func (fake *FakeSQSAPI) SendMessageBatchReturns(result1 *sqs.SendMessageBatchOut
 }
 
 func (fake *FakeSQSAPI) SendMessageBatchReturnsOnCall(i int, result1 *sqs.SendMessageBatchOutput, result2 error) {
+	fake.sendMessageBatchMutex.Lock()
+	defer fake.sendMessageBatchMutex.Unlock()
 	fake.SendMessageBatchStub = nil
 	if fake.sendMessageBatchReturnsOnCall == nil {
 		fake.sendMessageBatchReturnsOnCall = make(map[int]struct {
@@ -3366,74 +4177,23 @@ func (fake *FakeSQSAPI) SendMessageBatchReturnsOnCall(i int, result1 *sqs.SendMe
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) SendMessageBatchWithContext(arg1 aws.Context, arg2 *sqs.SendMessageBatchInput, arg3 ...request.Option) (*sqs.SendMessageBatchOutput, error) {
-	fake.sendMessageBatchWithContextMutex.Lock()
-	ret, specificReturn := fake.sendMessageBatchWithContextReturnsOnCall[len(fake.sendMessageBatchWithContextArgsForCall)]
-	fake.sendMessageBatchWithContextArgsForCall = append(fake.sendMessageBatchWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.SendMessageBatchInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("SendMessageBatchWithContext", []interface{}{arg1, arg2, arg3})
-	fake.sendMessageBatchWithContextMutex.Unlock()
-	if fake.SendMessageBatchWithContextStub != nil {
-		return fake.SendMessageBatchWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.sendMessageBatchWithContextReturns.result1, fake.sendMessageBatchWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) SendMessageBatchWithContextCallCount() int {
-	fake.sendMessageBatchWithContextMutex.RLock()
-	defer fake.sendMessageBatchWithContextMutex.RUnlock()
-	return len(fake.sendMessageBatchWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) SendMessageBatchWithContextArgsForCall(i int) (aws.Context, *sqs.SendMessageBatchInput, []request.Option) {
-	fake.sendMessageBatchWithContextMutex.RLock()
-	defer fake.sendMessageBatchWithContextMutex.RUnlock()
-	return fake.sendMessageBatchWithContextArgsForCall[i].arg1, fake.sendMessageBatchWithContextArgsForCall[i].arg2, fake.sendMessageBatchWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) SendMessageBatchWithContextReturns(result1 *sqs.SendMessageBatchOutput, result2 error) {
-	fake.SendMessageBatchWithContextStub = nil
-	fake.sendMessageBatchWithContextReturns = struct {
-		result1 *sqs.SendMessageBatchOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) SendMessageBatchWithContextReturnsOnCall(i int, result1 *sqs.SendMessageBatchOutput, result2 error) {
-	fake.SendMessageBatchWithContextStub = nil
-	if fake.sendMessageBatchWithContextReturnsOnCall == nil {
-		fake.sendMessageBatchWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.SendMessageBatchOutput
-			result2 error
-		})
-	}
-	fake.sendMessageBatchWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.SendMessageBatchOutput
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) SendMessageBatchRequest(arg1 *sqs.SendMessageBatchInput) (*request.Request, *sqs.SendMessageBatchOutput) {
 	fake.sendMessageBatchRequestMutex.Lock()
 	ret, specificReturn := fake.sendMessageBatchRequestReturnsOnCall[len(fake.sendMessageBatchRequestArgsForCall)]
 	fake.sendMessageBatchRequestArgsForCall = append(fake.sendMessageBatchRequestArgsForCall, struct {
 		arg1 *sqs.SendMessageBatchInput
 	}{arg1})
+	stub := fake.SendMessageBatchRequestStub
+	fakeReturns := fake.sendMessageBatchRequestReturns
 	fake.recordInvocation("SendMessageBatchRequest", []interface{}{arg1})
 	fake.sendMessageBatchRequestMutex.Unlock()
-	if fake.SendMessageBatchRequestStub != nil {
-		return fake.SendMessageBatchRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.sendMessageBatchRequestReturns.result1, fake.sendMessageBatchRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) SendMessageBatchRequestCallCount() int {
@@ -3442,13 +4202,22 @@ func (fake *FakeSQSAPI) SendMessageBatchRequestCallCount() int {
 	return len(fake.sendMessageBatchRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) SendMessageBatchRequestCalls(stub func(*sqs.SendMessageBatchInput) (*request.Request, *sqs.SendMessageBatchOutput)) {
+	fake.sendMessageBatchRequestMutex.Lock()
+	defer fake.sendMessageBatchRequestMutex.Unlock()
+	fake.SendMessageBatchRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) SendMessageBatchRequestArgsForCall(i int) *sqs.SendMessageBatchInput {
 	fake.sendMessageBatchRequestMutex.RLock()
 	defer fake.sendMessageBatchRequestMutex.RUnlock()
-	return fake.sendMessageBatchRequestArgsForCall[i].arg1
+	argsForCall := fake.sendMessageBatchRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) SendMessageBatchRequestReturns(result1 *request.Request, result2 *sqs.SendMessageBatchOutput) {
+	fake.sendMessageBatchRequestMutex.Lock()
+	defer fake.sendMessageBatchRequestMutex.Unlock()
 	fake.SendMessageBatchRequestStub = nil
 	fake.sendMessageBatchRequestReturns = struct {
 		result1 *request.Request
@@ -3457,6 +4226,8 @@ func (fake *FakeSQSAPI) SendMessageBatchRequestReturns(result1 *request.Request,
 }
 
 func (fake *FakeSQSAPI) SendMessageBatchRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.SendMessageBatchOutput) {
+	fake.sendMessageBatchRequestMutex.Lock()
+	defer fake.sendMessageBatchRequestMutex.Unlock()
 	fake.SendMessageBatchRequestStub = nil
 	if fake.sendMessageBatchRequestReturnsOnCall == nil {
 		fake.sendMessageBatchRequestReturnsOnCall = make(map[int]struct {
@@ -3470,21 +4241,219 @@ func (fake *FakeSQSAPI) SendMessageBatchRequestReturnsOnCall(i int, result1 *req
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) SendMessageBatchWithContext(arg1 context.Context, arg2 *sqs.SendMessageBatchInput, arg3 ...request.Option) (*sqs.SendMessageBatchOutput, error) {
+	fake.sendMessageBatchWithContextMutex.Lock()
+	ret, specificReturn := fake.sendMessageBatchWithContextReturnsOnCall[len(fake.sendMessageBatchWithContextArgsForCall)]
+	fake.sendMessageBatchWithContextArgsForCall = append(fake.sendMessageBatchWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.SendMessageBatchInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.SendMessageBatchWithContextStub
+	fakeReturns := fake.sendMessageBatchWithContextReturns
+	fake.recordInvocation("SendMessageBatchWithContext", []interface{}{arg1, arg2, arg3})
+	fake.sendMessageBatchWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) SendMessageBatchWithContextCallCount() int {
+	fake.sendMessageBatchWithContextMutex.RLock()
+	defer fake.sendMessageBatchWithContextMutex.RUnlock()
+	return len(fake.sendMessageBatchWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) SendMessageBatchWithContextCalls(stub func(context.Context, *sqs.SendMessageBatchInput, ...request.Option) (*sqs.SendMessageBatchOutput, error)) {
+	fake.sendMessageBatchWithContextMutex.Lock()
+	defer fake.sendMessageBatchWithContextMutex.Unlock()
+	fake.SendMessageBatchWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) SendMessageBatchWithContextArgsForCall(i int) (context.Context, *sqs.SendMessageBatchInput, []request.Option) {
+	fake.sendMessageBatchWithContextMutex.RLock()
+	defer fake.sendMessageBatchWithContextMutex.RUnlock()
+	argsForCall := fake.sendMessageBatchWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) SendMessageBatchWithContextReturns(result1 *sqs.SendMessageBatchOutput, result2 error) {
+	fake.sendMessageBatchWithContextMutex.Lock()
+	defer fake.sendMessageBatchWithContextMutex.Unlock()
+	fake.SendMessageBatchWithContextStub = nil
+	fake.sendMessageBatchWithContextReturns = struct {
+		result1 *sqs.SendMessageBatchOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) SendMessageBatchWithContextReturnsOnCall(i int, result1 *sqs.SendMessageBatchOutput, result2 error) {
+	fake.sendMessageBatchWithContextMutex.Lock()
+	defer fake.sendMessageBatchWithContextMutex.Unlock()
+	fake.SendMessageBatchWithContextStub = nil
+	if fake.sendMessageBatchWithContextReturnsOnCall == nil {
+		fake.sendMessageBatchWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.SendMessageBatchOutput
+			result2 error
+		})
+	}
+	fake.sendMessageBatchWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.SendMessageBatchOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) SendMessageRequest(arg1 *sqs.SendMessageInput) (*request.Request, *sqs.SendMessageOutput) {
+	fake.sendMessageRequestMutex.Lock()
+	ret, specificReturn := fake.sendMessageRequestReturnsOnCall[len(fake.sendMessageRequestArgsForCall)]
+	fake.sendMessageRequestArgsForCall = append(fake.sendMessageRequestArgsForCall, struct {
+		arg1 *sqs.SendMessageInput
+	}{arg1})
+	stub := fake.SendMessageRequestStub
+	fakeReturns := fake.sendMessageRequestReturns
+	fake.recordInvocation("SendMessageRequest", []interface{}{arg1})
+	fake.sendMessageRequestMutex.Unlock()
+	if stub != nil {
+		return stub(arg1)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) SendMessageRequestCallCount() int {
+	fake.sendMessageRequestMutex.RLock()
+	defer fake.sendMessageRequestMutex.RUnlock()
+	return len(fake.sendMessageRequestArgsForCall)
+}
+
+func (fake *FakeSQSAPI) SendMessageRequestCalls(stub func(*sqs.SendMessageInput) (*request.Request, *sqs.SendMessageOutput)) {
+	fake.sendMessageRequestMutex.Lock()
+	defer fake.sendMessageRequestMutex.Unlock()
+	fake.SendMessageRequestStub = stub
+}
+
+func (fake *FakeSQSAPI) SendMessageRequestArgsForCall(i int) *sqs.SendMessageInput {
+	fake.sendMessageRequestMutex.RLock()
+	defer fake.sendMessageRequestMutex.RUnlock()
+	argsForCall := fake.sendMessageRequestArgsForCall[i]
+	return argsForCall.arg1
+}
+
+func (fake *FakeSQSAPI) SendMessageRequestReturns(result1 *request.Request, result2 *sqs.SendMessageOutput) {
+	fake.sendMessageRequestMutex.Lock()
+	defer fake.sendMessageRequestMutex.Unlock()
+	fake.SendMessageRequestStub = nil
+	fake.sendMessageRequestReturns = struct {
+		result1 *request.Request
+		result2 *sqs.SendMessageOutput
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) SendMessageRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.SendMessageOutput) {
+	fake.sendMessageRequestMutex.Lock()
+	defer fake.sendMessageRequestMutex.Unlock()
+	fake.SendMessageRequestStub = nil
+	if fake.sendMessageRequestReturnsOnCall == nil {
+		fake.sendMessageRequestReturnsOnCall = make(map[int]struct {
+			result1 *request.Request
+			result2 *sqs.SendMessageOutput
+		})
+	}
+	fake.sendMessageRequestReturnsOnCall[i] = struct {
+		result1 *request.Request
+		result2 *sqs.SendMessageOutput
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) SendMessageWithContext(arg1 context.Context, arg2 *sqs.SendMessageInput, arg3 ...request.Option) (*sqs.SendMessageOutput, error) {
+	fake.sendMessageWithContextMutex.Lock()
+	ret, specificReturn := fake.sendMessageWithContextReturnsOnCall[len(fake.sendMessageWithContextArgsForCall)]
+	fake.sendMessageWithContextArgsForCall = append(fake.sendMessageWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.SendMessageInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.SendMessageWithContextStub
+	fakeReturns := fake.sendMessageWithContextReturns
+	fake.recordInvocation("SendMessageWithContext", []interface{}{arg1, arg2, arg3})
+	fake.sendMessageWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) SendMessageWithContextCallCount() int {
+	fake.sendMessageWithContextMutex.RLock()
+	defer fake.sendMessageWithContextMutex.RUnlock()
+	return len(fake.sendMessageWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) SendMessageWithContextCalls(stub func(context.Context, *sqs.SendMessageInput, ...request.Option) (*sqs.SendMessageOutput, error)) {
+	fake.sendMessageWithContextMutex.Lock()
+	defer fake.sendMessageWithContextMutex.Unlock()
+	fake.SendMessageWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) SendMessageWithContextArgsForCall(i int) (context.Context, *sqs.SendMessageInput, []request.Option) {
+	fake.sendMessageWithContextMutex.RLock()
+	defer fake.sendMessageWithContextMutex.RUnlock()
+	argsForCall := fake.sendMessageWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) SendMessageWithContextReturns(result1 *sqs.SendMessageOutput, result2 error) {
+	fake.sendMessageWithContextMutex.Lock()
+	defer fake.sendMessageWithContextMutex.Unlock()
+	fake.SendMessageWithContextStub = nil
+	fake.sendMessageWithContextReturns = struct {
+		result1 *sqs.SendMessageOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) SendMessageWithContextReturnsOnCall(i int, result1 *sqs.SendMessageOutput, result2 error) {
+	fake.sendMessageWithContextMutex.Lock()
+	defer fake.sendMessageWithContextMutex.Unlock()
+	fake.SendMessageWithContextStub = nil
+	if fake.sendMessageWithContextReturnsOnCall == nil {
+		fake.sendMessageWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.SendMessageOutput
+			result2 error
+		})
+	}
+	fake.sendMessageWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.SendMessageOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) SetQueueAttributes(arg1 *sqs.SetQueueAttributesInput) (*sqs.SetQueueAttributesOutput, error) {
 	fake.setQueueAttributesMutex.Lock()
 	ret, specificReturn := fake.setQueueAttributesReturnsOnCall[len(fake.setQueueAttributesArgsForCall)]
 	fake.setQueueAttributesArgsForCall = append(fake.setQueueAttributesArgsForCall, struct {
 		arg1 *sqs.SetQueueAttributesInput
 	}{arg1})
+	stub := fake.SetQueueAttributesStub
+	fakeReturns := fake.setQueueAttributesReturns
 	fake.recordInvocation("SetQueueAttributes", []interface{}{arg1})
 	fake.setQueueAttributesMutex.Unlock()
-	if fake.SetQueueAttributesStub != nil {
-		return fake.SetQueueAttributesStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.setQueueAttributesReturns.result1, fake.setQueueAttributesReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) SetQueueAttributesCallCount() int {
@@ -3493,13 +4462,22 @@ func (fake *FakeSQSAPI) SetQueueAttributesCallCount() int {
 	return len(fake.setQueueAttributesArgsForCall)
 }
 
+func (fake *FakeSQSAPI) SetQueueAttributesCalls(stub func(*sqs.SetQueueAttributesInput) (*sqs.SetQueueAttributesOutput, error)) {
+	fake.setQueueAttributesMutex.Lock()
+	defer fake.setQueueAttributesMutex.Unlock()
+	fake.SetQueueAttributesStub = stub
+}
+
 func (fake *FakeSQSAPI) SetQueueAttributesArgsForCall(i int) *sqs.SetQueueAttributesInput {
 	fake.setQueueAttributesMutex.RLock()
 	defer fake.setQueueAttributesMutex.RUnlock()
-	return fake.setQueueAttributesArgsForCall[i].arg1
+	argsForCall := fake.setQueueAttributesArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) SetQueueAttributesReturns(result1 *sqs.SetQueueAttributesOutput, result2 error) {
+	fake.setQueueAttributesMutex.Lock()
+	defer fake.setQueueAttributesMutex.Unlock()
 	fake.SetQueueAttributesStub = nil
 	fake.setQueueAttributesReturns = struct {
 		result1 *sqs.SetQueueAttributesOutput
@@ -3508,6 +4486,8 @@ func (fake *FakeSQSAPI) SetQueueAttributesReturns(result1 *sqs.SetQueueAttribute
 }
 
 func (fake *FakeSQSAPI) SetQueueAttributesReturnsOnCall(i int, result1 *sqs.SetQueueAttributesOutput, result2 error) {
+	fake.setQueueAttributesMutex.Lock()
+	defer fake.setQueueAttributesMutex.Unlock()
 	fake.SetQueueAttributesStub = nil
 	if fake.setQueueAttributesReturnsOnCall == nil {
 		fake.setQueueAttributesReturnsOnCall = make(map[int]struct {
@@ -3521,74 +4501,23 @@ func (fake *FakeSQSAPI) SetQueueAttributesReturnsOnCall(i int, result1 *sqs.SetQ
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) SetQueueAttributesWithContext(arg1 aws.Context, arg2 *sqs.SetQueueAttributesInput, arg3 ...request.Option) (*sqs.SetQueueAttributesOutput, error) {
-	fake.setQueueAttributesWithContextMutex.Lock()
-	ret, specificReturn := fake.setQueueAttributesWithContextReturnsOnCall[len(fake.setQueueAttributesWithContextArgsForCall)]
-	fake.setQueueAttributesWithContextArgsForCall = append(fake.setQueueAttributesWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.SetQueueAttributesInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("SetQueueAttributesWithContext", []interface{}{arg1, arg2, arg3})
-	fake.setQueueAttributesWithContextMutex.Unlock()
-	if fake.SetQueueAttributesWithContextStub != nil {
-		return fake.SetQueueAttributesWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.setQueueAttributesWithContextReturns.result1, fake.setQueueAttributesWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) SetQueueAttributesWithContextCallCount() int {
-	fake.setQueueAttributesWithContextMutex.RLock()
-	defer fake.setQueueAttributesWithContextMutex.RUnlock()
-	return len(fake.setQueueAttributesWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) SetQueueAttributesWithContextArgsForCall(i int) (aws.Context, *sqs.SetQueueAttributesInput, []request.Option) {
-	fake.setQueueAttributesWithContextMutex.RLock()
-	defer fake.setQueueAttributesWithContextMutex.RUnlock()
-	return fake.setQueueAttributesWithContextArgsForCall[i].arg1, fake.setQueueAttributesWithContextArgsForCall[i].arg2, fake.setQueueAttributesWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) SetQueueAttributesWithContextReturns(result1 *sqs.SetQueueAttributesOutput, result2 error) {
-	fake.SetQueueAttributesWithContextStub = nil
-	fake.setQueueAttributesWithContextReturns = struct {
-		result1 *sqs.SetQueueAttributesOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) SetQueueAttributesWithContextReturnsOnCall(i int, result1 *sqs.SetQueueAttributesOutput, result2 error) {
-	fake.SetQueueAttributesWithContextStub = nil
-	if fake.setQueueAttributesWithContextReturnsOnCall == nil {
-		fake.setQueueAttributesWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.SetQueueAttributesOutput
-			result2 error
-		})
-	}
-	fake.setQueueAttributesWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.SetQueueAttributesOutput
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) SetQueueAttributesRequest(arg1 *sqs.SetQueueAttributesInput) (*request.Request, *sqs.SetQueueAttributesOutput) {
 	fake.setQueueAttributesRequestMutex.Lock()
 	ret, specificReturn := fake.setQueueAttributesRequestReturnsOnCall[len(fake.setQueueAttributesRequestArgsForCall)]
 	fake.setQueueAttributesRequestArgsForCall = append(fake.setQueueAttributesRequestArgsForCall, struct {
 		arg1 *sqs.SetQueueAttributesInput
 	}{arg1})
+	stub := fake.SetQueueAttributesRequestStub
+	fakeReturns := fake.setQueueAttributesRequestReturns
 	fake.recordInvocation("SetQueueAttributesRequest", []interface{}{arg1})
 	fake.setQueueAttributesRequestMutex.Unlock()
-	if fake.SetQueueAttributesRequestStub != nil {
-		return fake.SetQueueAttributesRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.setQueueAttributesRequestReturns.result1, fake.setQueueAttributesRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) SetQueueAttributesRequestCallCount() int {
@@ -3597,13 +4526,22 @@ func (fake *FakeSQSAPI) SetQueueAttributesRequestCallCount() int {
 	return len(fake.setQueueAttributesRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) SetQueueAttributesRequestCalls(stub func(*sqs.SetQueueAttributesInput) (*request.Request, *sqs.SetQueueAttributesOutput)) {
+	fake.setQueueAttributesRequestMutex.Lock()
+	defer fake.setQueueAttributesRequestMutex.Unlock()
+	fake.SetQueueAttributesRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) SetQueueAttributesRequestArgsForCall(i int) *sqs.SetQueueAttributesInput {
 	fake.setQueueAttributesRequestMutex.RLock()
 	defer fake.setQueueAttributesRequestMutex.RUnlock()
-	return fake.setQueueAttributesRequestArgsForCall[i].arg1
+	argsForCall := fake.setQueueAttributesRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) SetQueueAttributesRequestReturns(result1 *request.Request, result2 *sqs.SetQueueAttributesOutput) {
+	fake.setQueueAttributesRequestMutex.Lock()
+	defer fake.setQueueAttributesRequestMutex.Unlock()
 	fake.SetQueueAttributesRequestStub = nil
 	fake.setQueueAttributesRequestReturns = struct {
 		result1 *request.Request
@@ -3612,6 +4550,8 @@ func (fake *FakeSQSAPI) SetQueueAttributesRequestReturns(result1 *request.Reques
 }
 
 func (fake *FakeSQSAPI) SetQueueAttributesRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.SetQueueAttributesOutput) {
+	fake.setQueueAttributesRequestMutex.Lock()
+	defer fake.setQueueAttributesRequestMutex.Unlock()
 	fake.SetQueueAttributesRequestStub = nil
 	if fake.setQueueAttributesRequestReturnsOnCall == nil {
 		fake.setQueueAttributesRequestReturnsOnCall = make(map[int]struct {
@@ -3625,21 +4565,89 @@ func (fake *FakeSQSAPI) SetQueueAttributesRequestReturnsOnCall(i int, result1 *r
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) SetQueueAttributesWithContext(arg1 context.Context, arg2 *sqs.SetQueueAttributesInput, arg3 ...request.Option) (*sqs.SetQueueAttributesOutput, error) {
+	fake.setQueueAttributesWithContextMutex.Lock()
+	ret, specificReturn := fake.setQueueAttributesWithContextReturnsOnCall[len(fake.setQueueAttributesWithContextArgsForCall)]
+	fake.setQueueAttributesWithContextArgsForCall = append(fake.setQueueAttributesWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.SetQueueAttributesInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.SetQueueAttributesWithContextStub
+	fakeReturns := fake.setQueueAttributesWithContextReturns
+	fake.recordInvocation("SetQueueAttributesWithContext", []interface{}{arg1, arg2, arg3})
+	fake.setQueueAttributesWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) SetQueueAttributesWithContextCallCount() int {
+	fake.setQueueAttributesWithContextMutex.RLock()
+	defer fake.setQueueAttributesWithContextMutex.RUnlock()
+	return len(fake.setQueueAttributesWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) SetQueueAttributesWithContextCalls(stub func(context.Context, *sqs.SetQueueAttributesInput, ...request.Option) (*sqs.SetQueueAttributesOutput, error)) {
+	fake.setQueueAttributesWithContextMutex.Lock()
+	defer fake.setQueueAttributesWithContextMutex.Unlock()
+	fake.SetQueueAttributesWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) SetQueueAttributesWithContextArgsForCall(i int) (context.Context, *sqs.SetQueueAttributesInput, []request.Option) {
+	fake.setQueueAttributesWithContextMutex.RLock()
+	defer fake.setQueueAttributesWithContextMutex.RUnlock()
+	argsForCall := fake.setQueueAttributesWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) SetQueueAttributesWithContextReturns(result1 *sqs.SetQueueAttributesOutput, result2 error) {
+	fake.setQueueAttributesWithContextMutex.Lock()
+	defer fake.setQueueAttributesWithContextMutex.Unlock()
+	fake.SetQueueAttributesWithContextStub = nil
+	fake.setQueueAttributesWithContextReturns = struct {
+		result1 *sqs.SetQueueAttributesOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) SetQueueAttributesWithContextReturnsOnCall(i int, result1 *sqs.SetQueueAttributesOutput, result2 error) {
+	fake.setQueueAttributesWithContextMutex.Lock()
+	defer fake.setQueueAttributesWithContextMutex.Unlock()
+	fake.SetQueueAttributesWithContextStub = nil
+	if fake.setQueueAttributesWithContextReturnsOnCall == nil {
+		fake.setQueueAttributesWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.SetQueueAttributesOutput
+			result2 error
+		})
+	}
+	fake.setQueueAttributesWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.SetQueueAttributesOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) TagQueue(arg1 *sqs.TagQueueInput) (*sqs.TagQueueOutput, error) {
 	fake.tagQueueMutex.Lock()
 	ret, specificReturn := fake.tagQueueReturnsOnCall[len(fake.tagQueueArgsForCall)]
 	fake.tagQueueArgsForCall = append(fake.tagQueueArgsForCall, struct {
 		arg1 *sqs.TagQueueInput
 	}{arg1})
+	stub := fake.TagQueueStub
+	fakeReturns := fake.tagQueueReturns
 	fake.recordInvocation("TagQueue", []interface{}{arg1})
 	fake.tagQueueMutex.Unlock()
-	if fake.TagQueueStub != nil {
-		return fake.TagQueueStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.tagQueueReturns.result1, fake.tagQueueReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) TagQueueCallCount() int {
@@ -3648,13 +4656,22 @@ func (fake *FakeSQSAPI) TagQueueCallCount() int {
 	return len(fake.tagQueueArgsForCall)
 }
 
+func (fake *FakeSQSAPI) TagQueueCalls(stub func(*sqs.TagQueueInput) (*sqs.TagQueueOutput, error)) {
+	fake.tagQueueMutex.Lock()
+	defer fake.tagQueueMutex.Unlock()
+	fake.TagQueueStub = stub
+}
+
 func (fake *FakeSQSAPI) TagQueueArgsForCall(i int) *sqs.TagQueueInput {
 	fake.tagQueueMutex.RLock()
 	defer fake.tagQueueMutex.RUnlock()
-	return fake.tagQueueArgsForCall[i].arg1
+	argsForCall := fake.tagQueueArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) TagQueueReturns(result1 *sqs.TagQueueOutput, result2 error) {
+	fake.tagQueueMutex.Lock()
+	defer fake.tagQueueMutex.Unlock()
 	fake.TagQueueStub = nil
 	fake.tagQueueReturns = struct {
 		result1 *sqs.TagQueueOutput
@@ -3663,6 +4680,8 @@ func (fake *FakeSQSAPI) TagQueueReturns(result1 *sqs.TagQueueOutput, result2 err
 }
 
 func (fake *FakeSQSAPI) TagQueueReturnsOnCall(i int, result1 *sqs.TagQueueOutput, result2 error) {
+	fake.tagQueueMutex.Lock()
+	defer fake.tagQueueMutex.Unlock()
 	fake.TagQueueStub = nil
 	if fake.tagQueueReturnsOnCall == nil {
 		fake.tagQueueReturnsOnCall = make(map[int]struct {
@@ -3676,74 +4695,23 @@ func (fake *FakeSQSAPI) TagQueueReturnsOnCall(i int, result1 *sqs.TagQueueOutput
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) TagQueueWithContext(arg1 aws.Context, arg2 *sqs.TagQueueInput, arg3 ...request.Option) (*sqs.TagQueueOutput, error) {
-	fake.tagQueueWithContextMutex.Lock()
-	ret, specificReturn := fake.tagQueueWithContextReturnsOnCall[len(fake.tagQueueWithContextArgsForCall)]
-	fake.tagQueueWithContextArgsForCall = append(fake.tagQueueWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.TagQueueInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("TagQueueWithContext", []interface{}{arg1, arg2, arg3})
-	fake.tagQueueWithContextMutex.Unlock()
-	if fake.TagQueueWithContextStub != nil {
-		return fake.TagQueueWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.tagQueueWithContextReturns.result1, fake.tagQueueWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) TagQueueWithContextCallCount() int {
-	fake.tagQueueWithContextMutex.RLock()
-	defer fake.tagQueueWithContextMutex.RUnlock()
-	return len(fake.tagQueueWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) TagQueueWithContextArgsForCall(i int) (aws.Context, *sqs.TagQueueInput, []request.Option) {
-	fake.tagQueueWithContextMutex.RLock()
-	defer fake.tagQueueWithContextMutex.RUnlock()
-	return fake.tagQueueWithContextArgsForCall[i].arg1, fake.tagQueueWithContextArgsForCall[i].arg2, fake.tagQueueWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) TagQueueWithContextReturns(result1 *sqs.TagQueueOutput, result2 error) {
-	fake.TagQueueWithContextStub = nil
-	fake.tagQueueWithContextReturns = struct {
-		result1 *sqs.TagQueueOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) TagQueueWithContextReturnsOnCall(i int, result1 *sqs.TagQueueOutput, result2 error) {
-	fake.TagQueueWithContextStub = nil
-	if fake.tagQueueWithContextReturnsOnCall == nil {
-		fake.tagQueueWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.TagQueueOutput
-			result2 error
-		})
-	}
-	fake.tagQueueWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.TagQueueOutput
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) TagQueueRequest(arg1 *sqs.TagQueueInput) (*request.Request, *sqs.TagQueueOutput) {
 	fake.tagQueueRequestMutex.Lock()
 	ret, specificReturn := fake.tagQueueRequestReturnsOnCall[len(fake.tagQueueRequestArgsForCall)]
 	fake.tagQueueRequestArgsForCall = append(fake.tagQueueRequestArgsForCall, struct {
 		arg1 *sqs.TagQueueInput
 	}{arg1})
+	stub := fake.TagQueueRequestStub
+	fakeReturns := fake.tagQueueRequestReturns
 	fake.recordInvocation("TagQueueRequest", []interface{}{arg1})
 	fake.tagQueueRequestMutex.Unlock()
-	if fake.TagQueueRequestStub != nil {
-		return fake.TagQueueRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.tagQueueRequestReturns.result1, fake.tagQueueRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) TagQueueRequestCallCount() int {
@@ -3752,13 +4720,22 @@ func (fake *FakeSQSAPI) TagQueueRequestCallCount() int {
 	return len(fake.tagQueueRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) TagQueueRequestCalls(stub func(*sqs.TagQueueInput) (*request.Request, *sqs.TagQueueOutput)) {
+	fake.tagQueueRequestMutex.Lock()
+	defer fake.tagQueueRequestMutex.Unlock()
+	fake.TagQueueRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) TagQueueRequestArgsForCall(i int) *sqs.TagQueueInput {
 	fake.tagQueueRequestMutex.RLock()
 	defer fake.tagQueueRequestMutex.RUnlock()
-	return fake.tagQueueRequestArgsForCall[i].arg1
+	argsForCall := fake.tagQueueRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) TagQueueRequestReturns(result1 *request.Request, result2 *sqs.TagQueueOutput) {
+	fake.tagQueueRequestMutex.Lock()
+	defer fake.tagQueueRequestMutex.Unlock()
 	fake.TagQueueRequestStub = nil
 	fake.tagQueueRequestReturns = struct {
 		result1 *request.Request
@@ -3767,6 +4744,8 @@ func (fake *FakeSQSAPI) TagQueueRequestReturns(result1 *request.Request, result2
 }
 
 func (fake *FakeSQSAPI) TagQueueRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.TagQueueOutput) {
+	fake.tagQueueRequestMutex.Lock()
+	defer fake.tagQueueRequestMutex.Unlock()
 	fake.TagQueueRequestStub = nil
 	if fake.tagQueueRequestReturnsOnCall == nil {
 		fake.tagQueueRequestReturnsOnCall = make(map[int]struct {
@@ -3780,21 +4759,89 @@ func (fake *FakeSQSAPI) TagQueueRequestReturnsOnCall(i int, result1 *request.Req
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) TagQueueWithContext(arg1 context.Context, arg2 *sqs.TagQueueInput, arg3 ...request.Option) (*sqs.TagQueueOutput, error) {
+	fake.tagQueueWithContextMutex.Lock()
+	ret, specificReturn := fake.tagQueueWithContextReturnsOnCall[len(fake.tagQueueWithContextArgsForCall)]
+	fake.tagQueueWithContextArgsForCall = append(fake.tagQueueWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.TagQueueInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.TagQueueWithContextStub
+	fakeReturns := fake.tagQueueWithContextReturns
+	fake.recordInvocation("TagQueueWithContext", []interface{}{arg1, arg2, arg3})
+	fake.tagQueueWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) TagQueueWithContextCallCount() int {
+	fake.tagQueueWithContextMutex.RLock()
+	defer fake.tagQueueWithContextMutex.RUnlock()
+	return len(fake.tagQueueWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) TagQueueWithContextCalls(stub func(context.Context, *sqs.TagQueueInput, ...request.Option) (*sqs.TagQueueOutput, error)) {
+	fake.tagQueueWithContextMutex.Lock()
+	defer fake.tagQueueWithContextMutex.Unlock()
+	fake.TagQueueWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) TagQueueWithContextArgsForCall(i int) (context.Context, *sqs.TagQueueInput, []request.Option) {
+	fake.tagQueueWithContextMutex.RLock()
+	defer fake.tagQueueWithContextMutex.RUnlock()
+	argsForCall := fake.tagQueueWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) TagQueueWithContextReturns(result1 *sqs.TagQueueOutput, result2 error) {
+	fake.tagQueueWithContextMutex.Lock()
+	defer fake.tagQueueWithContextMutex.Unlock()
+	fake.TagQueueWithContextStub = nil
+	fake.tagQueueWithContextReturns = struct {
+		result1 *sqs.TagQueueOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) TagQueueWithContextReturnsOnCall(i int, result1 *sqs.TagQueueOutput, result2 error) {
+	fake.tagQueueWithContextMutex.Lock()
+	defer fake.tagQueueWithContextMutex.Unlock()
+	fake.TagQueueWithContextStub = nil
+	if fake.tagQueueWithContextReturnsOnCall == nil {
+		fake.tagQueueWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.TagQueueOutput
+			result2 error
+		})
+	}
+	fake.tagQueueWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.TagQueueOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) UntagQueue(arg1 *sqs.UntagQueueInput) (*sqs.UntagQueueOutput, error) {
 	fake.untagQueueMutex.Lock()
 	ret, specificReturn := fake.untagQueueReturnsOnCall[len(fake.untagQueueArgsForCall)]
 	fake.untagQueueArgsForCall = append(fake.untagQueueArgsForCall, struct {
 		arg1 *sqs.UntagQueueInput
 	}{arg1})
+	stub := fake.UntagQueueStub
+	fakeReturns := fake.untagQueueReturns
 	fake.recordInvocation("UntagQueue", []interface{}{arg1})
 	fake.untagQueueMutex.Unlock()
-	if fake.UntagQueueStub != nil {
-		return fake.UntagQueueStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.untagQueueReturns.result1, fake.untagQueueReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) UntagQueueCallCount() int {
@@ -3803,13 +4850,22 @@ func (fake *FakeSQSAPI) UntagQueueCallCount() int {
 	return len(fake.untagQueueArgsForCall)
 }
 
+func (fake *FakeSQSAPI) UntagQueueCalls(stub func(*sqs.UntagQueueInput) (*sqs.UntagQueueOutput, error)) {
+	fake.untagQueueMutex.Lock()
+	defer fake.untagQueueMutex.Unlock()
+	fake.UntagQueueStub = stub
+}
+
 func (fake *FakeSQSAPI) UntagQueueArgsForCall(i int) *sqs.UntagQueueInput {
 	fake.untagQueueMutex.RLock()
 	defer fake.untagQueueMutex.RUnlock()
-	return fake.untagQueueArgsForCall[i].arg1
+	argsForCall := fake.untagQueueArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) UntagQueueReturns(result1 *sqs.UntagQueueOutput, result2 error) {
+	fake.untagQueueMutex.Lock()
+	defer fake.untagQueueMutex.Unlock()
 	fake.UntagQueueStub = nil
 	fake.untagQueueReturns = struct {
 		result1 *sqs.UntagQueueOutput
@@ -3818,6 +4874,8 @@ func (fake *FakeSQSAPI) UntagQueueReturns(result1 *sqs.UntagQueueOutput, result2
 }
 
 func (fake *FakeSQSAPI) UntagQueueReturnsOnCall(i int, result1 *sqs.UntagQueueOutput, result2 error) {
+	fake.untagQueueMutex.Lock()
+	defer fake.untagQueueMutex.Unlock()
 	fake.UntagQueueStub = nil
 	if fake.untagQueueReturnsOnCall == nil {
 		fake.untagQueueReturnsOnCall = make(map[int]struct {
@@ -3831,74 +4889,23 @@ func (fake *FakeSQSAPI) UntagQueueReturnsOnCall(i int, result1 *sqs.UntagQueueOu
 	}{result1, result2}
 }
 
-func (fake *FakeSQSAPI) UntagQueueWithContext(arg1 aws.Context, arg2 *sqs.UntagQueueInput, arg3 ...request.Option) (*sqs.UntagQueueOutput, error) {
-	fake.untagQueueWithContextMutex.Lock()
-	ret, specificReturn := fake.untagQueueWithContextReturnsOnCall[len(fake.untagQueueWithContextArgsForCall)]
-	fake.untagQueueWithContextArgsForCall = append(fake.untagQueueWithContextArgsForCall, struct {
-		arg1 aws.Context
-		arg2 *sqs.UntagQueueInput
-		arg3 []request.Option
-	}{arg1, arg2, arg3})
-	fake.recordInvocation("UntagQueueWithContext", []interface{}{arg1, arg2, arg3})
-	fake.untagQueueWithContextMutex.Unlock()
-	if fake.UntagQueueWithContextStub != nil {
-		return fake.UntagQueueWithContextStub(arg1, arg2, arg3...)
-	}
-	if specificReturn {
-		return ret.result1, ret.result2
-	}
-	return fake.untagQueueWithContextReturns.result1, fake.untagQueueWithContextReturns.result2
-}
-
-func (fake *FakeSQSAPI) UntagQueueWithContextCallCount() int {
-	fake.untagQueueWithContextMutex.RLock()
-	defer fake.untagQueueWithContextMutex.RUnlock()
-	return len(fake.untagQueueWithContextArgsForCall)
-}
-
-func (fake *FakeSQSAPI) UntagQueueWithContextArgsForCall(i int) (aws.Context, *sqs.UntagQueueInput, []request.Option) {
-	fake.untagQueueWithContextMutex.RLock()
-	defer fake.untagQueueWithContextMutex.RUnlock()
-	return fake.untagQueueWithContextArgsForCall[i].arg1, fake.untagQueueWithContextArgsForCall[i].arg2, fake.untagQueueWithContextArgsForCall[i].arg3
-}
-
-func (fake *FakeSQSAPI) UntagQueueWithContextReturns(result1 *sqs.UntagQueueOutput, result2 error) {
-	fake.UntagQueueWithContextStub = nil
-	fake.untagQueueWithContextReturns = struct {
-		result1 *sqs.UntagQueueOutput
-		result2 error
-	}{result1, result2}
-}
-
-func (fake *FakeSQSAPI) UntagQueueWithContextReturnsOnCall(i int, result1 *sqs.UntagQueueOutput, result2 error) {
-	fake.UntagQueueWithContextStub = nil
-	if fake.untagQueueWithContextReturnsOnCall == nil {
-		fake.untagQueueWithContextReturnsOnCall = make(map[int]struct {
-			result1 *sqs.UntagQueueOutput
-			result2 error
-		})
-	}
-	fake.untagQueueWithContextReturnsOnCall[i] = struct {
-		result1 *sqs.UntagQueueOutput
-		result2 error
-	}{result1, result2}
-}
-
 func (fake *FakeSQSAPI) UntagQueueRequest(arg1 *sqs.UntagQueueInput) (*request.Request, *sqs.UntagQueueOutput) {
 	fake.untagQueueRequestMutex.Lock()
 	ret, specificReturn := fake.untagQueueRequestReturnsOnCall[len(fake.untagQueueRequestArgsForCall)]
 	fake.untagQueueRequestArgsForCall = append(fake.untagQueueRequestArgsForCall, struct {
 		arg1 *sqs.UntagQueueInput
 	}{arg1})
+	stub := fake.UntagQueueRequestStub
+	fakeReturns := fake.untagQueueRequestReturns
 	fake.recordInvocation("UntagQueueRequest", []interface{}{arg1})
 	fake.untagQueueRequestMutex.Unlock()
-	if fake.UntagQueueRequestStub != nil {
-		return fake.UntagQueueRequestStub(arg1)
+	if stub != nil {
+		return stub(arg1)
 	}
 	if specificReturn {
 		return ret.result1, ret.result2
 	}
-	return fake.untagQueueRequestReturns.result1, fake.untagQueueRequestReturns.result2
+	return fakeReturns.result1, fakeReturns.result2
 }
 
 func (fake *FakeSQSAPI) UntagQueueRequestCallCount() int {
@@ -3907,13 +4914,22 @@ func (fake *FakeSQSAPI) UntagQueueRequestCallCount() int {
 	return len(fake.untagQueueRequestArgsForCall)
 }
 
+func (fake *FakeSQSAPI) UntagQueueRequestCalls(stub func(*sqs.UntagQueueInput) (*request.Request, *sqs.UntagQueueOutput)) {
+	fake.untagQueueRequestMutex.Lock()
+	defer fake.untagQueueRequestMutex.Unlock()
+	fake.UntagQueueRequestStub = stub
+}
+
 func (fake *FakeSQSAPI) UntagQueueRequestArgsForCall(i int) *sqs.UntagQueueInput {
 	fake.untagQueueRequestMutex.RLock()
 	defer fake.untagQueueRequestMutex.RUnlock()
-	return fake.untagQueueRequestArgsForCall[i].arg1
+	argsForCall := fake.untagQueueRequestArgsForCall[i]
+	return argsForCall.arg1
 }
 
 func (fake *FakeSQSAPI) UntagQueueRequestReturns(result1 *request.Request, result2 *sqs.UntagQueueOutput) {
+	fake.untagQueueRequestMutex.Lock()
+	defer fake.untagQueueRequestMutex.Unlock()
 	fake.UntagQueueRequestStub = nil
 	fake.untagQueueRequestReturns = struct {
 		result1 *request.Request
@@ -3922,6 +4938,8 @@ func (fake *FakeSQSAPI) UntagQueueRequestReturns(result1 *request.Request, resul
 }
 
 func (fake *FakeSQSAPI) UntagQueueRequestReturnsOnCall(i int, result1 *request.Request, result2 *sqs.UntagQueueOutput) {
+	fake.untagQueueRequestMutex.Lock()
+	defer fake.untagQueueRequestMutex.Unlock()
 	fake.UntagQueueRequestStub = nil
 	if fake.untagQueueRequestReturnsOnCall == nil {
 		fake.untagQueueRequestReturnsOnCall = make(map[int]struct {
@@ -3935,129 +4953,203 @@ func (fake *FakeSQSAPI) UntagQueueRequestReturnsOnCall(i int, result1 *request.R
 	}{result1, result2}
 }
 
+func (fake *FakeSQSAPI) UntagQueueWithContext(arg1 context.Context, arg2 *sqs.UntagQueueInput, arg3 ...request.Option) (*sqs.UntagQueueOutput, error) {
+	fake.untagQueueWithContextMutex.Lock()
+	ret, specificReturn := fake.untagQueueWithContextReturnsOnCall[len(fake.untagQueueWithContextArgsForCall)]
+	fake.untagQueueWithContextArgsForCall = append(fake.untagQueueWithContextArgsForCall, struct {
+		arg1 context.Context
+		arg2 *sqs.UntagQueueInput
+		arg3 []request.Option
+	}{arg1, arg2, arg3})
+	stub := fake.UntagQueueWithContextStub
+	fakeReturns := fake.untagQueueWithContextReturns
+	fake.recordInvocation("UntagQueueWithContext", []interface{}{arg1, arg2, arg3})
+	fake.untagQueueWithContextMutex.Unlock()
+	if stub != nil {
+		return stub(arg1, arg2, arg3...)
+	}
+	if specificReturn {
+		return ret.result1, ret.result2
+	}
+	return fakeReturns.result1, fakeReturns.result2
+}
+
+func (fake *FakeSQSAPI) UntagQueueWithContextCallCount() int {
+	fake.untagQueueWithContextMutex.RLock()
+	defer fake.untagQueueWithContextMutex.RUnlock()
+	return len(fake.untagQueueWithContextArgsForCall)
+}
+
+func (fake *FakeSQSAPI) UntagQueueWithContextCalls(stub func(context.Context, *sqs.UntagQueueInput, ...request.Option) (*sqs.UntagQueueOutput, error)) {
+	fake.untagQueueWithContextMutex.Lock()
+	defer fake.untagQueueWithContextMutex.Unlock()
+	fake.UntagQueueWithContextStub = stub
+}
+
+func (fake *FakeSQSAPI) UntagQueueWithContextArgsForCall(i int) (context.Context, *sqs.UntagQueueInput, []request.Option) {
+	fake.untagQueueWithContextMutex.RLock()
+	defer fake.untagQueueWithContextMutex.RUnlock()
+	argsForCall := fake.untagQueueWithContextArgsForCall[i]
+	return argsForCall.arg1, argsForCall.arg2, argsForCall.arg3
+}
+
+func (fake *FakeSQSAPI) UntagQueueWithContextReturns(result1 *sqs.UntagQueueOutput, result2 error) {
+	fake.untagQueueWithContextMutex.Lock()
+	defer fake.untagQueueWithContextMutex.Unlock()
+	fake.UntagQueueWithContextStub = nil
+	fake.untagQueueWithContextReturns = struct {
+		result1 *sqs.UntagQueueOutput
+		result2 error
+	}{result1, result2}
+}
+
+func (fake *FakeSQSAPI) UntagQueueWithContextReturnsOnCall(i int, result1 *sqs.UntagQueueOutput, result2 error) {
+	fake.untagQueueWithContextMutex.Lock()
+	defer fake.untagQueueWithContextMutex.Unlock()
+	fake.UntagQueueWithContextStub = nil
+	if fake.untagQueueWithContextReturnsOnCall == nil {
+		fake.untagQueueWithContextReturnsOnCall = make(map[int]struct {
+			result1 *sqs.UntagQueueOutput
+			result2 error
+		})
+	}
+	fake.untagQueueWithContextReturnsOnCall[i] = struct {
+		result1 *sqs.UntagQueueOutput
+		result2 error
+	}{result1, result2}
+}
+
 func (fake *FakeSQSAPI) Invocations() map[string][][]interface{} {
 	fake.invocationsMutex.RLock()
 	defer fake.invocationsMutex.RUnlock()
 	fake.addPermissionMutex.RLock()
 	defer fake.addPermissionMutex.RUnlock()
-	fake.addPermissionWithContextMutex.RLock()
-	defer fake.addPermissionWithContextMutex.RUnlock()
 	fake.addPermissionRequestMutex.RLock()
 	defer fake.addPermissionRequestMutex.RUnlock()
+	fake.addPermissionWithContextMutex.RLock()
+	defer fake.addPermissionWithContextMutex.RUnlock()
 	fake.changeMessageVisibilityMutex.RLock()
 	defer fake.changeMessageVisibilityMutex.RUnlock()
-	fake.changeMessageVisibilityWithContextMutex.RLock()
-	defer fake.changeMessageVisibilityWithContextMutex.RUnlock()
-	fake.changeMessageVisibilityRequestMutex.RLock()
-	defer fake.changeMessageVisibilityRequestMutex.RUnlock()
 	fake.changeMessageVisibilityBatchMutex.RLock()
 	defer fake.changeMessageVisibilityBatchMutex.RUnlock()
-	fake.changeMessageVisibilityBatchWithContextMutex.RLock()
-	defer fake.changeMessageVisibilityBatchWithContextMutex.RUnlock()
 	fake.changeMessageVisibilityBatchRequestMutex.RLock()
 	defer fake.changeMessageVisibilityBatchRequestMutex.RUnlock()
+	fake.changeMessageVisibilityBatchWithContextMutex.RLock()
+	defer fake.changeMessageVisibilityBatchWithContextMutex.RUnlock()
+	fake.changeMessageVisibilityRequestMutex.RLock()
+	defer fake.changeMessageVisibilityRequestMutex.RUnlock()
+	fake.changeMessageVisibilityWithContextMutex.RLock()
+	defer fake.changeMessageVisibilityWithContextMutex.RUnlock()
 	fake.createQueueMutex.RLock()
 	defer fake.createQueueMutex.RUnlock()
-	fake.createQueueWithContextMutex.RLock()
-	defer fake.createQueueWithContextMutex.RUnlock()
 	fake.createQueueRequestMutex.RLock()
 	defer fake.createQueueRequestMutex.RUnlock()
+	fake.createQueueWithContextMutex.RLock()
+	defer fake.createQueueWithContextMutex.RUnlock()
 	fake.deleteMessageMutex.RLock()
 	defer fake.deleteMessageMutex.RUnlock()
-	fake.deleteMessageWithContextMutex.RLock()
-	defer fake.deleteMessageWithContextMutex.RUnlock()
-	fake.deleteMessageRequestMutex.RLock()
-	defer fake.deleteMessageRequestMutex.RUnlock()
 	fake.deleteMessageBatchMutex.RLock()
 	defer fake.deleteMessageBatchMutex.RUnlock()
-	fake.deleteMessageBatchWithContextMutex.RLock()
-	defer fake.deleteMessageBatchWithContextMutex.RUnlock()
 	fake.deleteMessageBatchRequestMutex.RLock()
 	defer fake.deleteMessageBatchRequestMutex.RUnlock()
+	fake.deleteMessageBatchWithContextMutex.RLock()
+	defer fake.deleteMessageBatchWithContextMutex.RUnlock()
+	fake.deleteMessageRequestMutex.RLock()
+	defer fake.deleteMessageRequestMutex.RUnlock()
+	fake.deleteMessageWithContextMutex.RLock()
+	defer fake.deleteMessageWithContextMutex.RUnlock()
 	fake.deleteQueueMutex.RLock()
 	defer fake.deleteQueueMutex.RUnlock()
-	fake.deleteQueueWithContextMutex.RLock()
-	defer fake.deleteQueueWithContextMutex.RUnlock()
 	fake.deleteQueueRequestMutex.RLock()
 	defer fake.deleteQueueRequestMutex.RUnlock()
+	fake.deleteQueueWithContextMutex.RLock()
+	defer fake.deleteQueueWithContextMutex.RUnlock()
 	fake.getQueueAttributesMutex.RLock()
 	defer fake.getQueueAttributesMutex.RUnlock()
-	fake.getQueueAttributesWithContextMutex.RLock()
-	defer fake.getQueueAttributesWithContextMutex.RUnlock()
 	fake.getQueueAttributesRequestMutex.RLock()
 	defer fake.getQueueAttributesRequestMutex.RUnlock()
+	fake.getQueueAttributesWithContextMutex.RLock()
+	defer fake.getQueueAttributesWithContextMutex.RUnlock()
 	fake.getQueueUrlMutex.RLock()
 	defer fake.getQueueUrlMutex.RUnlock()
-	fake.getQueueUrlWithContextMutex.RLock()
-	defer fake.getQueueUrlWithContextMutex.RUnlock()
 	fake.getQueueUrlRequestMutex.RLock()
 	defer fake.getQueueUrlRequestMutex.RUnlock()
+	fake.getQueueUrlWithContextMutex.RLock()
+	defer fake.getQueueUrlWithContextMutex.RUnlock()
 	fake.listDeadLetterSourceQueuesMutex.RLock()
 	defer fake.listDeadLetterSourceQueuesMutex.RUnlock()
-	fake.listDeadLetterSourceQueuesWithContextMutex.RLock()
-	defer fake.listDeadLetterSourceQueuesWithContextMutex.RUnlock()
+	fake.listDeadLetterSourceQueuesPagesMutex.RLock()
+	defer fake.listDeadLetterSourceQueuesPagesMutex.RUnlock()
+	fake.listDeadLetterSourceQueuesPagesWithContextMutex.RLock()
+	defer fake.listDeadLetterSourceQueuesPagesWithContextMutex.RUnlock()
 	fake.listDeadLetterSourceQueuesRequestMutex.RLock()
 	defer fake.listDeadLetterSourceQueuesRequestMutex.RUnlock()
+	fake.listDeadLetterSourceQueuesWithContextMutex.RLock()
+	defer fake.listDeadLetterSourceQueuesWithContextMutex.RUnlock()
 	fake.listQueueTagsMutex.RLock()
 	defer fake.listQueueTagsMutex.RUnlock()
-	fake.listQueueTagsWithContextMutex.RLock()
-	defer fake.listQueueTagsWithContextMutex.RUnlock()
 	fake.listQueueTagsRequestMutex.RLock()
 	defer fake.listQueueTagsRequestMutex.RUnlock()
+	fake.listQueueTagsWithContextMutex.RLock()
+	defer fake.listQueueTagsWithContextMutex.RUnlock()
 	fake.listQueuesMutex.RLock()
 	defer fake.listQueuesMutex.RUnlock()
-	fake.listQueuesWithContextMutex.RLock()
-	defer fake.listQueuesWithContextMutex.RUnlock()
+	fake.listQueuesPagesMutex.RLock()
+	defer fake.listQueuesPagesMutex.RUnlock()
+	fake.listQueuesPagesWithContextMutex.RLock()
+	defer fake.listQueuesPagesWithContextMutex.RUnlock()
 	fake.listQueuesRequestMutex.RLock()
 	defer fake.listQueuesRequestMutex.RUnlock()
+	fake.listQueuesWithContextMutex.RLock()
+	defer fake.listQueuesWithContextMutex.RUnlock()
 	fake.purgeQueueMutex.RLock()
 	defer fake.purgeQueueMutex.RUnlock()
-	fake.purgeQueueWithContextMutex.RLock()
-	defer fake.purgeQueueWithContextMutex.RUnlock()
 	fake.purgeQueueRequestMutex.RLock()
 	defer fake.purgeQueueRequestMutex.RUnlock()
+	fake.purgeQueueWithContextMutex.RLock()
+	defer fake.purgeQueueWithContextMutex.RUnlock()
 	fake.receiveMessageMutex.RLock()
 	defer fake.receiveMessageMutex.RUnlock()
-	fake.receiveMessageWithContextMutex.RLock()
-	defer fake.receiveMessageWithContextMutex.RUnlock()
 	fake.receiveMessageRequestMutex.RLock()
 	defer fake.receiveMessageRequestMutex.RUnlock()
+	fake.receiveMessageWithContextMutex.RLock()
+	defer fake.receiveMessageWithContextMutex.RUnlock()
 	fake.removePermissionMutex.RLock()
 	defer fake.removePermissionMutex.RUnlock()
-	fake.removePermissionWithContextMutex.RLock()
-	defer fake.removePermissionWithContextMutex.RUnlock()
 	fake.removePermissionRequestMutex.RLock()
 	defer fake.removePermissionRequestMutex.RUnlock()
+	fake.removePermissionWithContextMutex.RLock()
+	defer fake.removePermissionWithContextMutex.RUnlock()
 	fake.sendMessageMutex.RLock()
 	defer fake.sendMessageMutex.RUnlock()
-	fake.sendMessageWithContextMutex.RLock()
-	defer fake.sendMessageWithContextMutex.RUnlock()
-	fake.sendMessageRequestMutex.RLock()
-	defer fake.sendMessageRequestMutex.RUnlock()
 	fake.sendMessageBatchMutex.RLock()
 	defer fake.sendMessageBatchMutex.RUnlock()
-	fake.sendMessageBatchWithContextMutex.RLock()
-	defer fake.sendMessageBatchWithContextMutex.RUnlock()
 	fake.sendMessageBatchRequestMutex.RLock()
 	defer fake.sendMessageBatchRequestMutex.RUnlock()
+	fake.sendMessageBatchWithContextMutex.RLock()
+	defer fake.sendMessageBatchWithContextMutex.RUnlock()
+	fake.sendMessageRequestMutex.RLock()
+	defer fake.sendMessageRequestMutex.RUnlock()
+	fake.sendMessageWithContextMutex.RLock()
+	defer fake.sendMessageWithContextMutex.RUnlock()
 	fake.setQueueAttributesMutex.RLock()
 	defer fake.setQueueAttributesMutex.RUnlock()
-	fake.setQueueAttributesWithContextMutex.RLock()
-	defer fake.setQueueAttributesWithContextMutex.RUnlock()
 	fake.setQueueAttributesRequestMutex.RLock()
 	defer fake.setQueueAttributesRequestMutex.RUnlock()
+	fake.setQueueAttributesWithContextMutex.RLock()
+	defer fake.setQueueAttributesWithContextMutex.RUnlock()
 	fake.tagQueueMutex.RLock()
 	defer fake.tagQueueMutex.RUnlock()
-	fake.tagQueueWithContextMutex.RLock()
-	defer fake.tagQueueWithContextMutex.RUnlock()
 	fake.tagQueueRequestMutex.RLock()
 	defer fake.tagQueueRequestMutex.RUnlock()
+	fake.tagQueueWithContextMutex.RLock()
+	defer fake.tagQueueWithContextMutex.RUnlock()
 	fake.untagQueueMutex.RLock()
 	defer fake.untagQueueMutex.RUnlock()
-	fake.untagQueueWithContextMutex.RLock()
-	defer fake.untagQueueWithContextMutex.RUnlock()
 	fake.untagQueueRequestMutex.RLock()
 	defer fake.untagQueueRequestMutex.RUnlock()
+	fake.untagQueueWithContextMutex.RLock()
+	defer fake.untagQueueWithContextMutex.RUnlock()
 	copiedInvocations := map[string][][]interface{}{}
 	for key, value := range fake.invocations {
 		copiedInvocations[key] = value
