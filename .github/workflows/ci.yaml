@@ -15,18 +15,6 @@ jobs:
           - 1.17.x
     name: Go test
     runs-on: ubuntu-latest
-    steps:
-      - name: Setup Go
-        uses: actions/setup-go@v3
-        with:
-          go-version: ${{ matrix.go-version }}
-
-      - name: Get source
-        uses: actions/checkout@v3
-
-      - name: Go test
-        run: go test -v -timeout 30s -race ./...
-
     services:
       redis:
         image: "redis:7"
@@ -41,9 +29,20 @@ jobs:
         ports:
           - "4150:4150"
       nats:
-        image: "nats:2"
+        image: "bitnami/nats:1.4.0"
         ports:
           - "4222:4222"
+    steps:
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Get source
+        uses: actions/checkout@v3
+
+      - name: Go test
+        run: go test -v -timeout 30s -race ./...
 
   go-vet:
     strategy:
