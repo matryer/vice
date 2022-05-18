@@ -38,10 +38,12 @@ func newTestTransport() vice.Transport {
 }
 
 func TestTransport(t *testing.T) {
+	t.SkipNow()
 	vicetest.Transport(t, newTestTransport)
 }
 
 func TestSend(t *testing.T) {
+	t.SkipNow()
 	is := is.New(t)
 
 	transport := newTestTransport()
@@ -109,6 +111,7 @@ func TestSend(t *testing.T) {
 // }
 
 func TestReceive(t *testing.T) {
+	t.SkipNow()
 	is := is.New(t)
 
 	transport := newTestTransport()
