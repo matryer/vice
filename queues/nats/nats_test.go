@@ -5,12 +5,12 @@ import (
 	"testing"
 	"time"
 
+	uuid "github.com/gofrs/uuid"
 	"github.com/matryer/is"
 	"github.com/matryer/vice"
 	"github.com/matryer/vice/vicetest"
-	"github.com/nats-io/go-nats"
-	"github.com/nats-io/go-nats-streaming"
-	uuid "github.com/satori/go.uuid"
+	"github.com/nats-io/nats.go"
+	"github.com/nats-io/stan.go"
 )
 
 func TestDefaultTransport(t *testing.T) {
