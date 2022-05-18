@@ -25,7 +25,7 @@ jobs:
         ports:
           - "5672:5672"
       nsq:
-        image: "nsqio/nsq:v1.0.0"
+        image: "nsqio/nsq:v1.0.0-compat"
         ports:
           - "4150:4150"
       nats:
