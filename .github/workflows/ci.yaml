@@ -63,3 +63,39 @@ jobs:
 
       - name: Go vet
         run: go vet ./...
+
+  golint:
+    name: Golint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18.x
+
+      - name: Get source
+        uses: actions/checkout@v3
+
+      - name: Go get golint
+        run: go get -u golang.org/x/lint/golint
+
+      - name: Golint
+        run: go run golang.org/x/lint/golint ./...
+
+  staticcheck:
+    name: Golint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18.x
+
+      - name: Get source
+        uses: actions/checkout@v3
+
+      - name: Go get staticcheck
+        run: go get -u honnef.co/go/tools/cmd/staticcheck
+
+      - name: Golint
+        run: go run honnef.co/go/tools/cmd/staticcheck ./...
