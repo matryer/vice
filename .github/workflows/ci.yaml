@@ -83,7 +83,7 @@ jobs:
         run: go run golang.org/x/lint/golint ./...
 
   staticcheck:
-    name: Golint
+    name: Staticcheck
     runs-on: ubuntu-latest
     steps:
       - name: Setup Go
