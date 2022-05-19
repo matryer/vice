@@ -22,9 +22,10 @@ jobs:
         ports:
           - "5672:5672"
       nsq:
-        image: "nsqio/nsq:v1.2.1"
+        image: "nsqio/nsq:v1.0.0-compat"
         ports:
           - "4150:4150"
+        options: nsqd
       nats:
         image: "nats-streaming:0.5.0"
         ports:
