@@ -1,8 +1,5 @@
 package nsq
 
-// NOTE: tests currently skipped since I can't get NSQ
-//       to properly setup withing GitHub Actions.
-
 import (
 	"io/ioutil"
 	"log"
