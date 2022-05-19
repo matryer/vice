@@ -13,8 +13,7 @@ import (
 // Send a name: curl -d 'Mat' 'http://127.0.0.1:4151/pub?topic=names'
 
 // Greeter is a service that greets people.
-func Greeter(ctx context.Context, names <-chan []byte,
-	greetings chan<- []byte, errs <-chan error) {
+func Greeter(ctx context.Context, names <-chan []byte, greetings chan<- []byte, errs <-chan error) {
 	for {
 		select {
 		case <-ctx.Done():
