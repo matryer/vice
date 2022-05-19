@@ -25,7 +25,7 @@ jobs:
         image: "nsqio/nsq:v1.0.0-compat"
         ports:
           - "4150:4150"
-        options: nsqd
+        options: --entrypoint nsqd
       nats:
         image: "nats-streaming:0.5.0"
         ports:
