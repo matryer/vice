@@ -72,7 +72,7 @@ jobs:
         run: go mod download
 
       - name: Golint
-        run: go run golang.org/x/lint/golint ./...
+        run: go run golang.org/x/lint/golint -set_exit_status ./...
 
   staticcheck:
     name: Staticcheck
