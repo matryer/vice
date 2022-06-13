@@ -1,4 +1,4 @@
-module github.com/matryer/vice
+module github.com/matryer/vice/v2
 
 go 1.17
 
@@ -7,6 +7,7 @@ require (
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/gofrs/uuid v4.2.0+incompatible
 	github.com/matryer/is v1.4.0
+	github.com/matryer/vice v1.0.0
 	github.com/maxbrunsfeld/counterfeiter/v6 v6.5.0
 	github.com/nats-io/nats.go v1.15.0
 	github.com/nats-io/stan.go v0.10.2

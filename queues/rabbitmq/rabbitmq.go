@@ -4,7 +4,7 @@ package rabbitmq
 import (
 	"sync"
 
-	"github.com/matryer/vice"
+	"github.com/matryer/vice/v2"
 	"github.com/streadway/amqp"
 )
 
