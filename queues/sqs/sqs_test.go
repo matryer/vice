@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/matryer/vice/queues/sqs/sqsfakes"
 	"github.com/matryer/vice/v2"
+	"github.com/matryer/vice/v2/queues/sqs/sqsfakes"
 	"github.com/matryer/vice/v2/vicetest"
 
 	"github.com/aws/aws-sdk-go/service/sqs"
