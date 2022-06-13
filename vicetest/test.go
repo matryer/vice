@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/matryer/is"
-	"github.com/matryer/vice"
+	"github.com/matryer/vice/v2"
 )
 
 // Transport runs standard transport tests. All Transport types pass

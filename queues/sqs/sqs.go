@@ -11,7 +11,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/sqs"
 	"github.com/aws/aws-sdk-go/service/sqs/sqsiface"
-	"github.com/matryer/vice"
+	"github.com/matryer/vice/v2"
 )
 
 // Transport is a vice.Transport for Amazon's SQS
