@@ -8,7 +8,7 @@ import (
 
 	"github.com/matryer/is"
 	"github.com/matryer/vice/v2"
-	"github.com/matryer/vice/vicetest"
+	"github.com/matryer/vice/v2/vicetest"
 	"github.com/streadway/amqp"
 )
 
