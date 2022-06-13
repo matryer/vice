@@ -2,6 +2,7 @@ package rabbitmq
 
 import (
 	"fmt"
+	"strconv"
 	"sync"
 	"testing"
 	"time"
@@ -141,6 +142,56 @@ func TestPublisher(t *testing.T) {
 
 	wg.Add(1)
 	transport.Send("test_send") <- msgToSend
+
+	wg.Wait()
+	transport.Stop()
+	<-doneChan
+}
+
+// 1. Start RabbitMQ
+// 2. Start this test
+// 3. After receiving some messages, shutdown RabbitMQ (or somehow drop connection)
+// 4. Restore connection by starting RabbitMQ
+// 5. Messages should continue to receive
+func TestLong(t *testing.T) {
+	is := is.New(t)
+
+	transport := New()
+	var wg sync.WaitGroup
+	doneChan := make(chan struct{})
+
+	waitChan := make(chan struct{})
+	var once sync.Once
+
+	go func() {
+		receiveChan := transport.Receive("test_send")
+		defer close(doneChan)
+		defer fmt.Println("receiving done")
+		for {
+			select {
+			case <-transport.Done():
+				return
+			case err := <-transport.ErrChan():
+				is.NoErr(err)
+			case msg := <-receiveChan:
+				fmt.Println("receive", string(msg))
+			default:
+				once.Do(func() {
+					close(waitChan)
+				})
+			}
+		}
+	}()
+
+	<-waitChan
+
+	wg.Add(1)
+	sendChan := transport.Send("test_send")
+	for i := 0; i < 1000; i++ {
+		fmt.Println("send", i, "message")
+		sendChan <- []byte(strconv.Itoa(i))
+		time.Sleep(time.Second)
+	}
 
 	wg.Wait()
 	transport.Stop()
