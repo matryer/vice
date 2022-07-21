@@ -2,7 +2,7 @@
 
 # Go channels at horizontal scale [![Build Status](https://travis-ci.org/matryer/vice.svg?branch=master)](https://travis-ci.org/matryer/vice)
 
-* Use Go channels transparently over a [messaging queue technology of your choice](https://github.com/matryer/vice/tree/master/queues) (Currently [NATS](http://nats.io), [Redis](http://redis.io) or [NSQ](http://nsq.io), [Amazon SQS](https://aws.amazon.com/sqs/))
+* Use Go channels transparently over a [messaging queue technology of your choice](https://github.com/matryer/vice/tree/master/queues) (Currently [NATS](http://nats.io), [Redis](http://redis.io), [NSQ](http://nsq.io), [Amazon SQS](https://aws.amazon.com/sqs/), or [Emitter](https://emitter.io))
 * Swap `vice.Transport` to change underlying queueing technologies transparently
 * Write idiomatic Go code instead of learning queue specific APIs
 * Develop against in-memory implementation before putting it into the wild
