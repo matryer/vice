@@ -3,15 +3,15 @@ package emitter
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	eio "github.com/emitter-io/go/v2"
 )
 
 func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
-	if t.c == nil {
-		if err := t.newClient(); err != nil {
-			return nil, err
-		}
+	c, err := t.newClient()
+	if err != nil {
+		return nil, err
 	}
 
 	channelName := name
@@ -19,16 +19,18 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 		channelName += "/" // emitter channel names end with a slash.
 	}
 
-	key, err := t.c.GenerateKey(t.secretKey, channelName, "r", t.ttl)
+	key, err := c.GenerateKey(t.secretKey, channelName, "r", t.ttl)
 	if err != nil {
 		return nil, fmt.Errorf("emitter.GenerateKey(%q,'r',%v): %w", channelName, t.ttl, err)
 	}
 
 	msgs := make(chan []byte, 1024)
 	ch := make(chan []byte)
+	t.wg.Add(1)
 	go func() {
+		defer t.wg.Done()
 		// defer func() {
-		// if err := t.c.Unsubscribe(key, name); err != nil {
+		// if err := c.Unsubscribe(key, name); err != nil {
 		// 	t.errChan <- &vice.Err{Message: []byte("Unsubscribe failed"), Name: name, Err: err}
 		// }
 		// close(msgs)
@@ -39,6 +41,7 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 				fmt.Printf("recv: channel=%q, msg=%s\n", name, d)
 				ch <- d
 			case <-t.stopSubChan:
+				c.Disconnect(100 * time.Millisecond)
 				return
 			}
 		}
@@ -48,7 +51,7 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 		msgs <- msg.Payload()
 	}
 
-	if err := t.c.Subscribe(key, name, f, eio.WithAtMostOnce()); err != nil {
+	if err := c.Subscribe(key, name, f, eio.WithoutEcho()); err != nil {
 		return nil, fmt.Errorf("emitter.Subscribe(%q): %w", name, err)
 	}
 

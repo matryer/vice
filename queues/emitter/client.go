@@ -7,18 +7,17 @@ import (
 	eio "github.com/emitter-io/go/v2"
 )
 
-func (t *Transport) newClient() error {
+func (t *Transport) newClient() (*eio.Client, error) {
 	if t.emitterAddress == "" {
-		return errors.New("missing emitter address")
+		return nil, errors.New("missing emitter address")
 	}
 	if t.secretKey == "" {
-		return errors.New("missing emitter secret key")
+		return nil, errors.New("missing emitter secret key")
 	}
 
-	t.c = eio.NewClient(eio.WithBrokers(t.emitterAddress), eio.WithAutoReconnect(true))
-	if err := t.c.Connect(); err != nil {
-		t.c = nil
-		return fmt.Errorf("emitter.Connect(%q): %w - is the emitter service running?", t.emitterAddress, err)
+	c := eio.NewClient(eio.WithBrokers(t.emitterAddress), eio.WithAutoReconnect(true))
+	if err := c.Connect(); err != nil {
+		return nil, fmt.Errorf("emitter.Connect(%q): %w - is the emitter service running?", t.emitterAddress, err)
 	}
-	return nil
+	return c, nil
 }

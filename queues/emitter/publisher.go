@@ -3,16 +3,16 @@ package emitter
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	eio "github.com/emitter-io/go/v2"
 	"github.com/matryer/vice/v2"
 )
 
 func (t *Transport) makePublisher(name string) (chan []byte, error) {
-	if t.c == nil {
-		if err := t.newClient(); err != nil {
-			return nil, err
-		}
+	c, err := t.newClient()
+	if err != nil {
+		return nil, err
 	}
 
 	channelName := name
@@ -20,7 +20,7 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 		channelName += "/" // emitter channel names end with a slash.
 	}
 
-	key, err := t.c.GenerateKey(t.secretKey, channelName, "w", t.ttl)
+	key, err := c.GenerateKey(t.secretKey, channelName, "w", t.ttl)
 	if err != nil {
 		return nil, fmt.Errorf("emitter.GenerateKey(%q,'w',%v): %w", channelName, t.ttl, err)
 	}
@@ -38,10 +38,11 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 						continue
 					}
 				*/
+				c.Disconnect(100 * time.Millisecond)
 				return
 			case msg := <-ch:
 				fmt.Printf("send: channel=%q, msg=%s\n", name, msg)
-				if err := t.c.Publish(key, name, msg, eio.WithAtMostOnce()); err != nil {
+				if err := c.Publish(key, name, msg, eio.WithoutEcho()); err != nil {
 					t.errChan <- &vice.Err{Message: msg, Name: name, Err: err}
 				}
 			}

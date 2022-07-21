@@ -5,9 +5,7 @@ import (
 	"log"
 	"os"
 	"sync"
-	"time"
 
-	eio "github.com/emitter-io/go/v2"
 	"github.com/matryer/vice/v2"
 )
 
@@ -30,10 +28,8 @@ type Transport struct {
 	stopPubChan chan struct{}
 	stopSubChan chan struct{}
 
-	c   *eio.Client
-	ttl int
-
 	emitterAddress string
+	ttl            int
 }
 
 // make sure Transport satisfies vice.Transport interface.
@@ -137,7 +133,6 @@ func (t *Transport) Stop() {
 	close(t.stopSubChan)
 	close(t.stopPubChan)
 	t.wg.Wait()
-	t.c.Disconnect(100 * time.Millisecond)
 	close(t.stopchan)
 }
 
