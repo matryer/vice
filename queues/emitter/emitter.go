@@ -28,6 +28,7 @@ type Transport struct {
 	stopPubChan chan struct{}
 	stopSubChan chan struct{}
 
+	sharedGroup    string
 	emitterAddress string
 	ttl            int
 }
@@ -50,6 +51,7 @@ func New(opts ...Option) *Transport {
 		stopchan:       make(chan struct{}),
 		stopPubChan:    make(chan struct{}),
 		stopSubChan:    make(chan struct{}),
+		sharedGroup:    "vice",
 		emitterAddress: defaultAddress,
 	}
 
@@ -73,6 +75,16 @@ func WithAddress(address string) Option {
 // The default is to use the environment variable "EMITTER_SECRET_KEY".
 func WithSecretKey(secretKey string) Option {
 	return func(t *Transport) { t.secretKey = secretKey }
+}
+
+// WithSharedGroup overrides the default MQTT shared group name of "vice".
+// Each individual shared group delivers its message to exactly one subscriber.
+func WithSharedGroup(groupName string) Option {
+	return func(t *Transport) {
+		if groupName != "" {
+			t.sharedGroup = groupName
+		}
+	}
 }
 
 // WithTTL sets the ttl (time to live) value (in seconds) for each message.

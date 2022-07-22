@@ -8,15 +8,13 @@ import (
 	eio "github.com/emitter-io/go/v2"
 )
 
-const groupName = "vice"
-
 func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 	c, err := t.newClient()
 	if err != nil {
 		return nil, err
 	}
 
-	channelName := fmt.Sprintf("$share/%v/%v", groupName, name)
+	channelName := fmt.Sprintf("$share/%v/%v", t.sharedGroup, name)
 	if !strings.HasSuffix(channelName, "/") {
 		channelName += "/" // emitter channel names end with a slash.
 	}
@@ -45,7 +43,7 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 		msgs <- msg.Payload()
 	}
 
-	if err := c.SubscribeWithGroup(key, name, groupName, f, eio.WithoutEcho()); err != nil {
+	if err := c.SubscribeWithGroup(key, name, t.sharedGroup, f, eio.WithoutEcho()); err != nil {
 		return nil, fmt.Errorf("emitter.Subscribe(%q): %w", name, err)
 	}
 
