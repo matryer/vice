@@ -14,7 +14,10 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 		return nil, err
 	}
 
-	channelName := fmt.Sprintf("$share/%v/%v", t.sharedGroup, name)
+	channelName := name
+	if t.sharedGroup != "" {
+		channelName = fmt.Sprintf("$share/%v/%v", t.sharedGroup, name)
+	}
 	if !strings.HasSuffix(channelName, "/") {
 		channelName += "/" // emitter channel names end with a slash.
 	}
@@ -43,8 +46,14 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 		msgs <- msg.Payload()
 	}
 
-	if err := c.SubscribeWithGroup(key, name, t.sharedGroup, f, eio.WithoutEcho()); err != nil {
-		return nil, fmt.Errorf("emitter.Subscribe(%q): %w", name, err)
+	if t.sharedGroup != "" {
+		if err := c.SubscribeWithGroup(key, name, t.sharedGroup, f, eio.WithoutEcho()); err != nil {
+			return nil, fmt.Errorf("emitter.SubscribeWithGroup(%q): %w", name, err)
+		}
+	} else {
+		if err := c.Subscribe(key, name, f, eio.WithoutEcho()); err != nil {
+			return nil, fmt.Errorf("emitter.Subscribe(%q): %w", name, err)
+		}
 	}
 
 	return ch, nil

@@ -79,12 +79,11 @@ func WithSecretKey(secretKey string) Option {
 
 // WithSharedGroup overrides the default MQTT shared group name of "vice".
 // Each individual shared group delivers its message to exactly one subscriber.
+//
+// If you instead want all subscribers to receive a copy of each message,
+// then you can disable the use of shared groups by setting the groupName to "".
 func WithSharedGroup(groupName string) Option {
-	return func(t *Transport) {
-		if groupName != "" {
-			t.sharedGroup = groupName
-		}
-	}
+	return func(t *Transport) { t.sharedGroup = groupName }
 }
 
 // WithTTL sets the ttl (time to live) value (in seconds) for each message.
