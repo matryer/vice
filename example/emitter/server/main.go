@@ -10,11 +10,11 @@ import (
 	"github.com/matryer/vice/v2/queues/emitter"
 )
 
-// To run this, install emitter and start it with emitter command.
+// To run this, install emitter and start it with the "emitter" command.
 // Run this program:
 //   $ export EMITTER_SECRET_KEY=...
 //   $ go run main.go
-// Send a name: curl -d 'Mat' 'http://127.0.0.1:4151/pub?topic=names'
+// Then use the "example/emitter/client" program to send names to the server.
 
 const runDuration = 1 * time.Minute
 
