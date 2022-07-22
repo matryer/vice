@@ -5,7 +5,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/matryer/vice/queues/nsq"
+	"github.com/matryer/vice/v2/queues/nsq"
 )
 
 // To run this, install NSQ and start it with nsqd command.

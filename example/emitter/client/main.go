@@ -10,7 +10,7 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/matryer/vice/queues/emitter"
+	"github.com/matryer/vice/v2/queues/emitter"
 )
 
 func main() {

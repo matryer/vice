@@ -8,7 +8,7 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/matryer/vice/queues/nsq"
+	"github.com/matryer/vice/v2/queues/nsq"
 )
 
 func main() {

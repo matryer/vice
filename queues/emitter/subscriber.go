@@ -8,13 +8,15 @@ import (
 	eio "github.com/emitter-io/go/v2"
 )
 
+const groupName = "vice"
+
 func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 	c, err := t.newClient()
 	if err != nil {
 		return nil, err
 	}
 
-	channelName := name
+	channelName := fmt.Sprintf("$share/%v/%v", groupName, name)
 	if !strings.HasSuffix(channelName, "/") {
 		channelName += "/" // emitter channel names end with a slash.
 	}
@@ -29,16 +31,9 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 	t.wg.Add(1)
 	go func() {
 		defer t.wg.Done()
-		// defer func() {
-		// if err := c.Unsubscribe(key, name); err != nil {
-		// 	t.errChan <- &vice.Err{Message: []byte("Unsubscribe failed"), Name: name, Err: err}
-		// }
-		// close(msgs)
-		// }()
 		for {
 			select {
 			case d := <-msgs:
-				fmt.Printf("recv: channel=%q, msg=%s\n", name, d)
 				ch <- d
 			case <-t.stopSubChan:
 				c.Disconnect(100 * time.Millisecond)
@@ -47,11 +42,10 @@ func (t *Transport) makeSubscriber(name string) (chan []byte, error) {
 		}
 	}()
 	f := func(_ *eio.Client, msg eio.Message) {
-		fmt.Printf("RECV: channel=%q, topic=%q, msg=%s\n", name, msg.Topic(), msg.Payload())
 		msgs <- msg.Payload()
 	}
 
-	if err := c.Subscribe(key, name, f, eio.WithoutEcho()); err != nil {
+	if err := c.SubscribeWithGroup(key, name, groupName, f, eio.WithoutEcho()); err != nil {
 		return nil, fmt.Errorf("emitter.Subscribe(%q): %w", name, err)
 	}
 

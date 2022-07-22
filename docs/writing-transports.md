@@ -15,7 +15,7 @@ package my_transport
 
 import (
 	"testing"
-	"github.com/matryer/vice/vicetest"
+	"github.com/matryer/vice/v2/vicetest"
 )
 
 func TestTransport(t *testing.T) {

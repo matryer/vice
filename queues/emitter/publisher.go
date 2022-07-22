@@ -15,6 +15,8 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 		return nil, err
 	}
 
+	// Note that the $share syntax is not used on the Publish side.
+	// See: https://youtu.be/Vl7iGKEQrTg for details.
 	channelName := name
 	if !strings.HasSuffix(channelName, "/") {
 		channelName += "/" // emitter channel names end with a slash.
@@ -41,7 +43,6 @@ func (t *Transport) makePublisher(name string) (chan []byte, error) {
 				c.Disconnect(100 * time.Millisecond)
 				return
 			case msg := <-ch:
-				fmt.Printf("send: channel=%q, msg=%s\n", name, msg)
 				if err := c.Publish(key, name, msg, eio.WithoutEcho()); err != nil {
 					t.errChan <- &vice.Err{Message: msg, Name: name, Err: err}
 				}

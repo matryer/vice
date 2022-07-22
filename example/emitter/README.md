@@ -17,3 +17,8 @@
    - `export EMITTER_SECRET_KEY=...`
    then navigate to `example/emitter/client` and execute it with `go run main.go`
 6. Type in names into the client, and see the responses coming from the service
+
+Note that there is no reason why you can start up _multiple_ servers and
+_multiple_ clients, but realize that a message from a client will only be
+received (and responded to) by one of the running servers and likewise the
+response will be randomly received by one of the clients.

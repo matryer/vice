@@ -7,7 +7,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/matryer/vice/queues/emitter"
+	"github.com/matryer/vice/v2/queues/emitter"
 )
 
 // To run this, install emitter and start it with emitter command.
@@ -15,6 +15,8 @@ import (
 //   $ export EMITTER_SECRET_KEY=...
 //   $ go run main.go
 // Send a name: curl -d 'Mat' 'http://127.0.0.1:4151/pub?topic=names'
+
+const runDuration = 1 * time.Minute
 
 // Greeter is a service that greets people.
 func Greeter(ctx context.Context, names <-chan []byte, greetings chan<- []byte, errs <-chan error) {
@@ -24,17 +26,18 @@ func Greeter(ctx context.Context, names <-chan []byte, greetings chan<- []byte, 
 			log.Println("finished")
 			return
 		case err := <-errs:
-			log.Println("an error occurred:", err)
+			log.Fatalf("an error occurred: %v", err)
 		case name := <-names:
 			greeting := "Hello " + string(name)
 			greetings <- []byte(greeting)
+			log.Printf("Sent greeting: %v", greeting)
 		}
 	}
 }
 
 func main() {
 	ctx := context.Background()
-	ctx, cancel := context.WithTimeout(ctx, 1*time.Minute)
+	ctx, cancel := context.WithTimeout(ctx, runDuration)
 	defer cancel()
 	transport := emitter.New()
 	defer func() {
@@ -43,5 +46,7 @@ func main() {
 	}()
 	names := transport.Receive("names")
 	greetings := transport.Send("greetings")
+	log.Printf("Greeter server listening on 'names' channel and responding on 'greetings' channel...")
+	log.Printf("Note that this server will automatically shut down in %v", runDuration)
 	Greeter(ctx, names, greetings, transport.ErrChan())
 }
